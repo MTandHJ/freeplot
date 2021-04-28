@@ -54,7 +54,7 @@ class FreePlot(UnitPlot):
         else:
             ax.plot(x, y, **kwargs)
         
-    # @style_env(cfg.scatterplot_style)
+    @style_env(cfg.scatterplot_style)
     def scatterplot(
         self, x: np.ndarray, y: np.ndarray, 
         index: Union[int, str] = 0, 
