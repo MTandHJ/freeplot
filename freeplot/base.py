@@ -2,7 +2,8 @@
 
 
 
-from typing import Tuple, Optional, Dict, Union
+from typing import Iterable, Tuple, Optional, Dict, Union
+from matplotlib.pyplot import xticks
 import numpy as np
 import pandas as pd 
 import seaborn as sns
@@ -95,6 +96,19 @@ class FreePlot(UnitPlot):
         sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
         if auto_fmt:
             self.fig.autofmt_xdate()
+
+    @style_env(cfg.violinplot_style)
+    def violinplot(
+        self, x: str, y: Iterable,
+        index: Union[int, str] = 0,
+        **kwargs
+    ) -> None:
+        ax = self[index]
+        ax.violinplot(dataset=y)
+        ax.set(
+            xticks=range(1, len(y) + 1),
+            xticklabels=x
+        )
 
    
         

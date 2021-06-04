@@ -179,6 +179,7 @@ cfg.scatterplot_style = ["bright"]
 cfg.heatmap_style = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
 cfg.imageplot_style = ["seaborn-white"]
 cfg.barplot_style = ["seaborn-darkgrid", "high-vis", {"axes.facecolor":".9"}]
+cfg.violinplot_style = ["high-vis", "seaborn-whitegrid"]
 
 
 # zoo
