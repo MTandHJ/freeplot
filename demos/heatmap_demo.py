@@ -8,18 +8,12 @@ heatmap demo
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import json
-import os
-import sys
-import seaborn as sns
 from freeplot.base import FreePlot
 
 
-os.chdir(sys.path[0])
 
 
 titles = ("S", "h", "a", "n")
-
 row_labels = ('c', 'u', 't', 'e')
 col_labels = ('l', 'r', 'i', 'g')
 

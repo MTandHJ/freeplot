@@ -19,7 +19,7 @@ class FreePlot(UnitPlot):
     @style_env(cfg.heatmap_style)
     def heatmap(
         self, data: pd.DataFrame, 
-        index: Union[int, str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), 
         annot: bool = True, 
         fmt: str = ".4f",
         cmap: str = 'GnBu', 
@@ -45,7 +45,7 @@ class FreePlot(UnitPlot):
     @style_env(cfg.lineplot_style)
     def lineplot(
         self, x: np.ndarray, y: np.ndarray, 
-        index: Union[int, str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), 
         seaborn: bool = False, 
         **kwargs: "other kwargs of ax.plot or sns.lineplot"
     ) -> None:
@@ -58,7 +58,7 @@ class FreePlot(UnitPlot):
     @style_env(cfg.scatterplot_style)
     def scatterplot(
         self, x: np.ndarray, y: np.ndarray, 
-        index: Union[int, str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), 
         seaborn: bool = False, 
         **kwargs: "other kwargs of ax.scatter or sns.scatterplot"
     ) -> None:
@@ -71,7 +71,7 @@ class FreePlot(UnitPlot):
     @style_env(cfg.imageplot_style)
     def imageplot(
         self, img: np.ndarray, 
-        index: Union[int, str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), 
         show_ticks: bool = False, 
         **kwargs: "other kwargs of ax.imshow"
     ) -> None:
@@ -88,7 +88,7 @@ class FreePlot(UnitPlot):
     def barplot(
         self, x: str, y: str, hue: str, 
         data: pd.DataFrame, 
-        index: Union[int, str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), 
         auto_fmt: bool = False,
         **kwargs: "other kwargs of sns.barplot"
     ) -> None:
@@ -100,7 +100,7 @@ class FreePlot(UnitPlot):
     @style_env(cfg.violinplot_style)
     def violinplot(
         self, y: Iterable, x: Optional[Iterable[str]] = None,
-        index: Union[int, str] = (0, 0),
+        index: Union[Tuple[int], str] = (0, 0),
         **kwargs: "other kwargs of ax.violinplot"
     ) -> None:
         if x is None:
