@@ -27,7 +27,7 @@ for title in titles:
 fp.set_title(y=1.)
 fp.set_label("y", axis='y')
 fp.set(Xlabel="x")
-fp[0].legend()
+fp[0, 0].legend()
 # fp.savefig("line_demo.pdf", format="pdf", tight_layout=False)
 plt.show()
 

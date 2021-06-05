@@ -32,10 +32,10 @@ data = pd.DataFrame(
 
 # shape: 1, 1; figsize: 2.2, 2
 fp = FreePlot((1, 1), (2.2, 2), titles=("Bar Demo",), dpi=200)
-fp.barplot(x='T', y='val', hue='category', data=data, index=0, auto_fmt=True)
+fp.barplot(x='T', y='val', hue='category', data=data, index=(0, 0), auto_fmt=True)
 
 fp.set(xlabel='X')
-fp.set_label('Y', index=0, axis='y')
-fp[0].legend(ncol=2)
+fp.set_label('Y', index=(0, 0), axis='y')
+fp[0, 0].legend(ncol=2)
 # fp.savefig("heatmap_demo.pdf", format="pdf", tight_layout=False)
 plt.show()

@@ -33,9 +33,9 @@ for title in titles:
         fp.scatterplot(data[:, 0], data[:, 1], index=title, label=labels[i])
         
 fp.set_title(y=1.)
-fp.set_label("Y", index=0, axis='y')
+fp.set_label("Y", index=(0, 0), axis='y')
 fp.set_label("X", index=None, axis='x')
-fp[0].legend()
+fp[0, 0].legend()
 # fp.savefig("scatter_demo.pdf", format="pdf", tight_layout=False)
 plt.show()
 

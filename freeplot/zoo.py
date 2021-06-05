@@ -15,7 +15,7 @@ def tsne(
     features: np.ndarray, 
     labels: np.ndarray, 
     fp: FreePlot, 
-    index: Union[int, str] = 0, 
+    index: Union[Tuple[int], str] = (0, 0), 
     **kwargs: "other kwargs of fp.scatterplot"
 ) -> None:
     """
@@ -48,7 +48,7 @@ def roc_curve(
     y_pred: np.ndarray, 
     y_labels: np.ndarray, 
     fp: FreePlot, 
-    index: Union[int, str] = 0, 
+    index: Union[Tuple[int], str] = (0, 0), 
     name: Optional[str] = None,
     estimator_name: Optional[str] = None,
     style: str = "whitegrid",
@@ -154,7 +154,7 @@ def pos_radar(
     labels: np.ndarray, 
     fp: FreePlot, 
     theta: Optional[np.ndarray] = None, 
-    index: Union[int, str] = 0
+    index: Union[Tuple[int], str] = (0, 0)
 ) -> None:
     fp.fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
     theta = np.linspace(0, 2*np.pi, len(labels), endpoint=False) if theta is None else theta

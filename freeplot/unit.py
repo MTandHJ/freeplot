@@ -3,6 +3,7 @@
 
 
 from typing import Tuple, Optional, Dict, Union
+import numpy as np
 import matplotlib.pyplot as plt
 import mpl_toolkits.axisartist as AA
 import os
@@ -56,49 +57,61 @@ class FreeAxes:
 
         self.fig = fig
         self.axes = []
-        self.titles = titles
+        if titles is not None:
+            titles = np.array(titles).reshape(shapes)
 
         grids = fig.add_gridspec(*shapes)
         for i in range(shapes[0]):
+            self.axes.append([])
             anchor = UnitAX(self, grids[i, 0], anchor=None, sharey=False, projection=projection)
-            self.axes.append(anchor)
+            self.axes[-1].append(anchor)
             for j in range(1, shapes[1]):
                 ax = UnitAX(self, grids[i, j], anchor=anchor, sharey=sharey, projection=projection)
-                self.axes.append(ax)
+                self.axes[-1].append(ax)
 
+        self.axes = np.array(self.axes)
         self.links = self._get_links(titles)
+        self.titles = np.array(list(self.links.keys()))
 
     def _get_links(self, titles: Optional[Iterable]) -> Dict:
-        n = len(self.axes)
+        m, n = self.axes.shape
         names = dict()
         if titles is None:
-            for i in range(n):
-                s = "(" + chr(i + 97) + ")"
-                names.update({s:i})
+            for i in range(m):
+                for j in range(n):
+                    s = "(" + chr(i + 97) + ")"
+                    names.update({s:(i, j)})
         else:
-            for i in range(n):
-                title = titles[i]
-                names.update({title:i})
+            for i in range(m):
+                for j in range(n):
+                    title = titles[i, j]
+                    names.update({title:(i, j)})
         return names
 
-    def set(self, index: Union[int, str, Iterable, None] = None, **kwargs) -> None:
-        if isinstance(index, (int, str)):
+    def set(self, index: Union[str, Tuple[int], slice, None] = None, **kwargs) -> None:
+        if isinstance(index, (str, Tuple)):
             index = [index]
+        elif isinstance(index, slice):
+            index = self.titles[index].flatten()
         elif index is None:
-            index = list(range(len(self.axes)))
+            index = self.titles.flatten()
+        else:
+            raise TypeError(f"[str, Tuple, slice, None] expected but {type(index)} received ...")
         for idx in index:
             ax = self[idx]
             ax.set(**kwargs)
 
     def set_title(self, y: float = -0.1) -> None:
-        for title in self.titles:
+        for title in self.links.keys():
             ax = self[title]
             ax.set_title(title, y=y)
 
     def __iter__(self):
         return (ax.ax for ax in self.axes)
 
-    def __getitem__(self, idx: Union[int, str]):
+    def __getitem__(self, idx: Union[Tuple[int], str]):
+        if not isinstance(idx, (Tuple, str)):
+            raise KeyError(f"[Tuple, str] expected but {type(idx)} received ...")
         if isinstance(idx, str):
             idx = self.links[idx]
         ax = self.axes[idx]
@@ -140,13 +153,13 @@ class UnitPlot:
         self.grids = self.fig.add_gridspec(*shape)
         self.axes = FreeAxes(self.fig, shape, titles, sharey, projection=projection)
 
-    def set(self, index: Union[int, str, Iterable, None] = None, **kwargs) -> None:
+    def set(self, index: Union[str, Tuple[int], slice, None] = None, **kwargs) -> None:
         self.axes.set(index=index, **kwargs)
 
     def set_title(self, y: float = -0.3) -> None:
         self.axes.set_title(y=y)
 
-    def set_ticks(self, values, index=0, fmt: str = "%2f", axis: str = 'y') -> Dict:
+    def set_ticks(self, values, index=(0, 0), fmt: str = "%2f", axis: str = 'y') -> Dict:
         labels = [fmt%value for value in values]
         kwargs = dict()
         kwargs['index'] = index
@@ -154,13 +167,13 @@ class UnitPlot:
         kwargs[axis + 'ticklabels'] = labels
         return self.set(**kwargs)
 
-    def set_lim(self, lim: Tuple[float], index=0, axis='y'):
+    def set_lim(self, lim: Tuple[float], index=(0, 0), axis='y'):
         kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'lim'] = lim
         return self.set(**kwargs)
 
-    def set_label(self, label: str, index=0, axis='y'):
+    def set_label(self, label: str, index=(0, 0), axis='y'):
         kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'label'] = label
@@ -169,7 +182,7 @@ class UnitPlot:
     def legend(
         self, 
         x: float, y: float, ncol: int, 
-        index: Union[int, str] = 0, 
+        index: Union[int, str] = (0, 0), 
         loc: str = "lower left",
         **kwargs
     ) -> None:
@@ -206,9 +219,6 @@ class UnitPlot:
             **kwargs
         )
 
-    def __getitem__(self, index: Union[int, str, Iterable]) -> "ax or [axes]":
-        if isinstance(index, (list, tuple)):
-            axes = [self.axes[idx] for idx in index]
-        else:
-            return self.axes[index]
+    def __getitem__(self, idx: Union[str, Tuple[int]]) -> "ax":
+        return self.axes[idx]
 

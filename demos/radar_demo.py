@@ -4,7 +4,6 @@ import seaborn as sns
 from freeplot.base import FreePlot
 from freeplot.zoo import pre_radar, pos_radar
 
-os.chdir(sys.path[0])
 
 
 labels = (
@@ -16,7 +15,7 @@ labels = (
 theta = pre_radar(len(labels), frame="polygon")
 
 # shape: 1, 1; figsize: 4, 4;
-fp = FreePlot((1, 1), (4, 4), dpi=100, titles="RADAR", projection="radar")
+fp = FreePlot((1, 1), (4, 4), dpi=100, titles=["RADAR"], projection="radar")
 
 
 data = {
@@ -27,7 +26,7 @@ data = {
 
 pos_radar(data, labels, fp)
 
-fp[0].legend()
+fp[0, 0].legend()
 
 # fp.savefig("radar_demo.pdf", format="pdf", tight_layout=True)
 plt.show()

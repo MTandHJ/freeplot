@@ -32,6 +32,6 @@ for title in titles:
     fp.heatmap(df, index=title, annot=True, fmt=".4f", cbar=False, linewidth=0.5)
 
 fp.set(Xlabel="X")
-fp.set_label('Y', index=0, axis='y')
+fp.set_label('Y', index=(0, 0), axis='y')
 # fp.savefig("heatmap_demo.pdf", format="pdf", tight_layout=False)
 plt.show()
