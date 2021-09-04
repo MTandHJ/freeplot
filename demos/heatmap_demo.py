@@ -27,5 +27,5 @@ for title in titles:
 
 fp.set(Xlabel="X")
 fp.set_label('Y', index=(0, 0), axis='y')
-# fp.savefig("heatmap_demo.pdf", format="pdf", tight_layout=False)
-plt.show()
+fp.savefig("heatmap_demo.pdf", format="pdf", tight_layout=False)
+# plt.show()

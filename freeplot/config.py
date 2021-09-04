@@ -73,9 +73,10 @@ cfg['root'] = "./media"
 
 _axes = {
     "prop_cycle": cycler(marker=MARKERS, color=COLORS),
-    "titlesize": 'large',
-    "labelsize": 'large',
+    "titlesize": 'x-large',
+    "labelsize": 'x-large',
     "facecolor": 'white',
+    "grid": False
 }
 
 _font = {
@@ -86,11 +87,11 @@ _font = {
 
 _lines = {
     "linewidth": 1.,
-    #"marker": None,
+    # "marker": None,
     "markersize": 4,
     "markeredgewidth": 1.,
-    #"markerfacecolor": "auto",
-    #"markeredgecolor": "white",
+    # "markerfacecolor": "auto",
+    # "markeredgecolor": "white",
 }
 
 _markers = {
@@ -173,12 +174,12 @@ cfg['rc_params'] = Config(
     ytick=_ytick
 )
 
-cfg.default_style = ["science", "no-latex"]  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
-cfg.lineplot_style = ['bright'] # use  'grid' to add markers
+cfg.default_style = ["science"]  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
+cfg.lineplot_style = ['bright'] # use 'grid' to add markers
 cfg.scatterplot_style = ["bright"]
 cfg.heatmap_style = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
 cfg.imageplot_style = ["seaborn-white"]
-cfg.barplot_style = ["seaborn-darkgrid", "high-vis", {"axes.facecolor":".9"}]
+cfg.barplot_style = ["bright", "high-vis"]
 cfg.violinplot_style = ["high-vis", "seaborn-whitegrid"]
 
 
