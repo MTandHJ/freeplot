@@ -174,7 +174,7 @@ cfg['rc_params'] = Config(
     ytick=_ytick
 )
 
-cfg.default_style = ["science"]  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
+cfg.default_style = ["science", 'no-latex']  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
 cfg.lineplot_style = ['bright'] # use 'grid' to add markers
 cfg.scatterplot_style = ["bright"]
 cfg.heatmap_style = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
