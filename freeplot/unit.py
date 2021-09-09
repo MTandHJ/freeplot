@@ -255,6 +255,11 @@ class UnitPlot:
             bbox_inches=bbox_inches,
             **kwargs
         )
+    
+    def show(self, *args, tight_layout: bool = True, **kwargs):
+        if tight_layout:
+            plt.tight_layout()
+        return plt.show(*args, **kwargs)
 
     def __getitem__(self, idx: Union[str, Tuple[int]]) -> "ax":
         return self.axes[idx]
