@@ -106,6 +106,26 @@ class FreeAxes:
             ax = self[title]
             ax.set_title(title, y=y)
 
+    def ticklabel_format(
+        self, 
+        index: Union[str, Tuple[int], slice, None] = None,
+        style: str = 'sci', 
+        scilimits: Tuple[int] = (0, 0),
+        axis: str = 'y', **kwargs
+    ):
+        if isinstance(index, (str, Tuple)):
+            index = [index]
+        elif isinstance(index, slice):
+            index = self.titles[index].flatten()
+        elif index is None:
+            index = self.titles.flatten()
+        else:
+            raise TypeError(f"[str, Tuple, slice, None] expected but {type(index)} received ...")
+        for idx in index:
+            ax = self[idx]
+            ax.ticklabel_format(style=style, scilimits=scilimits, axis=axis, **kwargs)
+        
+
     def __iter__(self):
         return (ax.ax for ax in self.axes)
 
@@ -166,6 +186,23 @@ class UnitPlot:
         kwargs[axis + 'ticks'] = values
         kwargs[axis + 'ticklabels'] = labels
         return self.set(**kwargs)
+    
+    def ticklabel_format(
+        self, style: str = 'sci', scilimits: Tuple[int] = (0, 0),
+        index=None, axis: str = 'y', **kwargs
+    ):
+        """
+        When encountering very big numbers such 7000000,
+        it will be ugly to display them on the ticks directly.
+        By calling ticklabel_format with style=='sci',
+        it will become 7 x 10^6.
+        style: 'sci'|'scientific'|'plain', 'plain' is 7000000 actually.
+        'scilimits': (m, n); Only numbers between 10^m and 10^n will be
+                transformed to scientific notation. The default settings (0, 0)
+                means all numbers will be transformed.
+        axis: 'x'|'y'|'both'
+        """
+        self.axes.ticklabel_format(index=index, style=style, scilimits=scilimits, axis=axis, **kwargs)
 
     def set_lim(self, lim: Tuple[float], index=(0, 0), axis='y'):
         kwargs = dict()
