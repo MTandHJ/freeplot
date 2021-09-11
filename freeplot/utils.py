@@ -1,8 +1,9 @@
 
 from typing import Dict, Iterable, List
 import json
+import inspect
 import matplotlib.pyplot as plt
-from numpy.lib.arraysetops import isin
+from .config import style_cfg
 
 def load(filename: str) -> Dict:
     with open(filename, encoding="utf-8") as j:
@@ -46,14 +47,28 @@ def getmore(doc):
         return wrapper
     return decorator
 
-def style_env(style: List[str]):
-    def decorator(func):
-        def wrapper(*arg, **kwargs):
-            with plt.style.context(style, after_reset=False):
-                results = func(*arg, **kwargs)
-            return results
-        wrapper.__name__ = func.__name__
-        wrapper.__doc__ = func.__doc__
-        return wrapper
-    return decorator
+def _get_style(style_type):
+    assert style_type is not None, "style should not be None ..."
+    try:
+        style = getattr(style_cfg, style_type) 
+    except KeyError:
+        style = [style_type]
+    return style
+
+def style_env(func):
+    def wrapper(*arg, **new_kwargs):
+        style = []
+        kwargs = inspect.getfullargspec(func).kwonlydefaults
+        kwargs.update(**new_kwargs)
+        if isinstance(kwargs['style'], str):
+            style += _get_style(kwargs['style'])
+        else:
+            for item in kwargs['style']:
+                style += _get_style(item)
+        with plt.style.context(style, after_reset=False):
+            results = func(*arg, **kwargs)
+        return results
+    wrapper.__name__ = func.__name__
+    wrapper.__doc__ = func.__doc__
+    return wrapper
 

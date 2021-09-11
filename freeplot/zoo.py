@@ -1,13 +1,13 @@
 
 
-from typing import Tuple, Union, Optional, Dict
+from typing import Tuple, Union, Optional, Dict, Iterable
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
 from .base import *
-from .config import zoo_cfg
+from .utils import style_env
 
 
 
@@ -74,8 +74,8 @@ def roc_curve(
     return tpr, fpr, roc_auc
 
 
-@style_env(zoo_cfg.radar_style)
-def pre_radar(num_vars: int, frame: str = "circle") -> np.ndarray:
+@style_env
+def pre_radar(num_vars: int, frame: str = "circle", *, style: Union[str, Iterable[str]] = 'radar') -> np.ndarray:
     from matplotlib.patches import Circle, RegularPolygon
     from matplotlib.path import Path
     from matplotlib.projections.polar import PolarAxes
@@ -148,13 +148,15 @@ def pre_radar(num_vars: int, frame: str = "circle") -> np.ndarray:
     register_projection(RadarAxes)
     return theta
 
-@style_env(zoo_cfg.radar_style)
+@style_env
 def pos_radar(
     data: Dict, 
     labels: np.ndarray, 
     fp: FreePlot, 
     theta: Optional[np.ndarray] = None, 
-    index: Union[Tuple[int], str] = (0, 0)
+    index: Union[Tuple[int], str] = (0, 0),
+    *,
+    style: Union[str, Iterable[str]] = 'radar'
 ) -> None:
     fp.fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
     theta = np.linspace(0, 2*np.pi, len(labels), endpoint=False) if theta is None else theta

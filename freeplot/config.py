@@ -174,18 +174,19 @@ cfg['rc_params'] = Config(
     ytick=_ytick
 )
 
-cfg.default_style = ["science", 'no-latex']  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
-cfg.lineplot_style = ['bright'] # use 'grid' to add markers
-cfg.scatterplot_style = ["bright"]
-cfg.heatmap_style = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
-cfg.imageplot_style = ["seaborn-white"]
-cfg.barplot_style = ["bright", "high-vis"]
-cfg.violinplot_style = ["high-vis", "seaborn-whitegrid"]
+style_cfg = Config()
 
+style_cfg.basic = ["science", 'no-latex']  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
+style_cfg.line = ['bright'] 
+style_cfg.linemarker = ['grid'] # use 'grid' to add markers
+style_cfg.scatter = ["bright"]
+style_cfg.heatmap = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
+style_cfg.image = ["seaborn-white"]
+style_cfg.bar = ["bright", "high-vis"]
+style_cfg.violin = ["high-vis", "seaborn-whitegrid"]
 
 # zoo
-zoo_cfg = Config()
-zoo_cfg.radar_style = ['seaborn-whitegrid']
+style_cfg.radar = ['seaborn-whitegrid']
 
     
 

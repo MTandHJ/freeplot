@@ -2,7 +2,7 @@
 
 
 
-from typing import List, Tuple, Optional, Dict, Union, Iterable
+from typing import Callable, List, Tuple, Optional, Dict, Union, Iterable
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -10,8 +10,8 @@ from matplotlib.axes._axes import Axes
 import mpl_toolkits.axisartist as AA
 import os
 
-from .config import cfg
-from .utils import getmore
+from .config import cfg, style_cfg
+from .utils import getmore, style_env
 
 
 
@@ -167,7 +167,7 @@ class UnitPlot:
         different titles together.
         """
         # the default settings
-        plt.style.use(cfg.default_style)
+        plt.style.use(style_cfg.basic)
         for group, params in cfg['rc_params'].items():
             plt.rc(group, **params)
 
@@ -257,6 +257,34 @@ class UnitPlot:
 
     @getmore("return the yaxis' tick locations in data coordinates")
     def get_yticks(self, index=(0, 0)) -> np.ndarray: ...
+
+    @style_env
+    def inset_axes(
+        self, 
+        xlims: Iterable[float],
+        ylims: Iterable[float],
+        bounds: Iterable[float],
+        *,
+        style: Union[str, Iterable[str]] = None,
+        index=(0, 0),
+        color='black',
+        linewidth=.5,
+        alpha=0.7,
+    ) -> "Axes, Patch, Line":
+        axins = self[index].inset_axes(bounds)
+        axins.set_xlim(xlims[0], xlims[1])
+        axins.set_ylim(ylims[0], ylims[1])
+        patch, lines = self[index].indicate_inset_zoom(axins, edgecolor='black')
+        for line in lines:
+            line.set_color(color)
+            line.set_linewidth(linewidth)
+            line.set_alpha(alpha)
+        try:
+            axins.get_legend().remove()
+        except AttributeError:
+            pass
+        axins.set(xlabel=None, ylabel=None, title=None)
+        return axins, patch, lines
 
     def legend(
         self, 
