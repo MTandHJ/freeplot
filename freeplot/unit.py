@@ -2,15 +2,16 @@
 
 
 
-from typing import Tuple, Optional, Dict, Union
+from typing import List, Tuple, Optional, Dict, Union, Iterable
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
+from matplotlib.axes._axes import Axes
 import mpl_toolkits.axisartist as AA
 import os
-from collections.abc import Iterable
 
 from .config import cfg
-from .utils import axis, reset
+from .utils import getmore
 
 
 
@@ -129,9 +130,11 @@ class FreeAxes:
     def __iter__(self):
         return (ax.ax for ax in self.axes)
 
-    def __getitem__(self, idx: Union[Tuple[int], str]):
-        if not isinstance(idx, (Tuple, str)):
-            raise KeyError(f"[Tuple, str] expected but {type(idx)} received ...")
+    def __getitem__(self, idx: Union[Iterable[int], str, Axes]):
+        if not isinstance(idx, (Iterable, str, Axes)):
+            raise KeyError(f"[Iterable, str, Axes] expected but {type(idx)} received ...")
+        if isinstance(idx, Axes):
+            return idx
         if isinstance(idx, str):
             idx = self.links[idx]
         ax = self.axes[idx]
@@ -215,6 +218,45 @@ class UnitPlot:
         kwargs['index'] = index
         kwargs[axis + 'label'] = label
         return self.set(**kwargs)
+
+    @getmore("get the facecolor of the Axes") 
+    def get_facecolor(self, index=(0, 0)) -> Tuple[float]: ...
+
+    @getmore("return Legend instance or None if no legend")
+    def get_legend(self, index=(0, 0)) -> Optional[matplotlib.legend.Legend]: ...
+
+    @getmore("return handles and labels for legend")
+    def get_legend_handles_labels(self, index=(0, 0), legend_handler_map=None) -> Tuple[List]: ...
+    
+    @getmore("return a list of lines contained in Axes")
+    def get_lines(self, index=(0, 0)) -> Iterable[matplotlib.lines.Line2D]: ...
+
+    @getmore("return the title of the Axes")
+    def get_title(self, index=(0, 0)) -> str: ...
+
+    @getmore("get the xlabel text string")
+    def get_xlabel(self, index=(0, 0)) -> str: ...
+
+    @getmore("return the x-axis view limits")
+    def get_xlim(self, index=(0, 0)) -> Tuple[float, float]: ...
+
+    @getmore("get the xaxis' tick labels.")
+    def get_xticklabels(self, index=(0, 0)) -> Iterable[matplotlib.text.Text]: ...
+
+    @getmore("return the xaxis' tick locations in data coordinates")
+    def get_xticks(self, index=(0, 0)) -> np.ndarray: ...
+    
+    @getmore("get the ylabel text string")
+    def get_ylabel(self, index=(0, 0)) -> str: ...
+
+    @getmore("return the y-axis view limits")
+    def get_ylim(self, index=(0, 0)) -> Tuple[float, float]: ...
+
+    @getmore("get the yaxis' tick labels.")
+    def get_yticklabels(self, index=(0, 0)) -> Iterable[matplotlib.text.Text]: ...
+
+    @getmore("return the yaxis' tick locations in data coordinates")
+    def get_yticks(self, index=(0, 0)) -> np.ndarray: ...
 
     def legend(
         self, 

@@ -3,7 +3,6 @@
 
 
 from typing import Iterable, Tuple, Optional, Dict, Union
-from matplotlib.pyplot import xticks
 import numpy as np
 import pandas as pd 
 import seaborn as sns
