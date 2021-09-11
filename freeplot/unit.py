@@ -261,24 +261,28 @@ class UnitPlot:
     @style_env
     def inset_axes(
         self, 
-        xlims: Iterable[float],
-        ylims: Iterable[float],
-        bounds: Iterable[float],
-        *,
-        style: Union[str, Iterable[str]] = None,
-        index=(0, 0),
-        color='black',
-        linewidth=.5,
-        alpha=0.7,
-    ) -> "Axes, Patch, Line":
+        xlims: Iterable[float], ylims: Iterable[float], bounds: Iterable[float],
+        *, style: Union[str, Iterable[str]] = None, index=(0, 0),
+        patch_params: dict = {'edgecolor':'black', 'linewidth':.7, 'alpha':.5},
+        line_params: dict = {'color':'gray', 'linewidth':.5, 'alpha':.7, 'linestyle':'--'}
+    ) -> "Axes, Patch, Lines":
+        """
+        xlims|ylims: (l, r)|(b, t), to determine the retangle region from l to r and from b to t;
+        bounds: (x0, y0, width, height), the new inseted ax located in rectangle (x0, y0) to (x0 + width, y0 + height).
+                Note that these values are according to the original ax, so they should be in [0, 1].
+        style: You must choose the same style as keep consistent with the original ax.
+        patch_params: You could specific the patch by passing a style dict;
+        line_params: You could specific the line by passing a style dict.
+        """
         axins = self[index].inset_axes(bounds)
         axins.set_xlim(xlims[0], xlims[1])
         axins.set_ylim(ylims[0], ylims[1])
         patch, lines = self[index].indicate_inset_zoom(axins, edgecolor='black')
-        for line in lines:
-            line.set_color(color)
-            line.set_linewidth(linewidth)
-            line.set_alpha(alpha)
+        for name, value in patch_params.items():
+            getattr(patch, 'set_' + name)(value)
+        for name, value in line_params.items():
+            for line in lines:
+                getattr(line, 'set_' + name)(value)
         try:
             axins.get_legend().remove()
         except AttributeError:
