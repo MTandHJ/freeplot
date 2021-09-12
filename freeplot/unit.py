@@ -2,7 +2,7 @@
 
 
 
-from typing import Callable, List, Tuple, Optional, Dict, Union, Iterable
+from typing import List, Tuple, Optional, Dict, Union, Iterable
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -51,8 +51,8 @@ class UnitAX:
 class FreeAxes:
 
     def __init__(
-        self, fig, shapes: Tuple, 
-        titles: Optional[Tuple] = None,
+        self, fig, shapes: Iterable, 
+        titles: Optional[Iterable] = None,
         sharey: bool = True, projection: Optional[str] = None,
     ):
 
@@ -97,7 +97,7 @@ class FreeAxes:
         elif index is None:
             index = self.titles.flatten()
         else:
-            raise TypeError(f"[str, Tuple, slice, None] expected but {type(index)} received ...")
+            raise TypeError(f"[str, Iterable, slice, None] expected but {type(index)} received ...")
         for idx in index:
             ax = self[idx]
             ax.set(**kwargs)
@@ -109,19 +109,19 @@ class FreeAxes:
 
     def ticklabel_format(
         self, 
-        index: Union[str, Tuple[int], slice, None] = None,
+        index: Union[str, Iterable[int], slice, None] = None,
         style: str = 'sci', 
-        scilimits: Tuple[int] = (0, 0),
+        scilimits: Iterable[int] = (0, 0),
         axis: str = 'y', **kwargs
     ):
-        if isinstance(index, (str, Tuple)):
+        if isinstance(index, (str, Iterable)):
             index = [index]
         elif isinstance(index, slice):
             index = self.titles[index].flatten()
         elif index is None:
             index = self.titles.flatten()
         else:
-            raise TypeError(f"[str, Tuple, slice, None] expected but {type(index)} received ...")
+            raise TypeError(f"[str, Iterable, slice, None] expected but {type(index)} received ...")
         for idx in index:
             ax = self[idx]
             ax.ticklabel_format(style=style, scilimits=scilimits, axis=axis, **kwargs)
@@ -151,8 +151,8 @@ class UnitPlot:
     """
     def __init__(
         self, 
-        shape: Tuple[int, int], 
-        figsize: Tuple[float, float], 
+        shape: Iterable[int, int], 
+        figsize: Iterable[float, float], 
         titles: Optional[Iterable]=None,
         sharey: bool = True,
         projection: Optional[str] = None,
@@ -180,7 +180,7 @@ class UnitPlot:
     def styles(self):
         return plt.style.available + list(style_cfg.keys())
 
-    def set(self, index: Union[str, Tuple[int], slice, None] = None, **kwargs) -> None:
+    def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
         self.axes.set(index=index, **kwargs)
 
     def set_style(self, style: Union[str, Iterable[str]]):
@@ -204,7 +204,7 @@ class UnitPlot:
         return self.set(**kwargs)
     
     def ticklabel_format(
-        self, style: str = 'sci', scilimits: Tuple[int] = (0, 0),
+        self, style: str = 'sci', scilimits: Iterable[int] = (0, 0),
         index=None, axis: str = 'y', **kwargs
     ):
         """
@@ -220,7 +220,7 @@ class UnitPlot:
         """
         self.axes.ticklabel_format(index=index, style=style, scilimits=scilimits, axis=axis, **kwargs)
 
-    def set_lim(self, lim: Tuple[float], index=(0, 0), axis='y'):
+    def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y'):
         kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'lim'] = lim
