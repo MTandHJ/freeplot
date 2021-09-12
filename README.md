@@ -14,7 +14,6 @@ pip install freeplot
 
 1. import
 
-Mostly FreePlot module is enough.
 ```
 from freeplot.base import FreePlot
 ```
@@ -25,8 +24,11 @@ from freeplot.base import FreePlot
 fp = FreePlot(shape=(2, 2), figsize=(5, 5), titles=('a', 'b', 'c', 'd'), sharey=True)
 ```
 shape: the arrangement of axes, 2 x 2, a total 4 axes in this case;
+
 figsize: (width, height), 500 x 500 in this case;
+
 titles: the title for each ax;
+
 sharey: axes will share the y axis if true.
 
 the container can be used in a ndarray-style, e.g.:
@@ -37,7 +39,7 @@ You can also use title:
 ```
 # fp['a']
 ```
-But the slice operation is not support:
+But the slice operation is not supported:
 ```
 # fp[:, 0]
 ```
@@ -73,7 +75,7 @@ fp.set_title(y=0.98) # for all axes
 ```
 fp.savefig('test.pdf')
 ```
-FreePlot will create a file named media and save the fig there, namely './media/test.pdf' in this case.
+FreePlot will create a path named media and save the fig there, namely './media/test.pdf' in this case.
 
 ## Example
 
@@ -148,7 +150,6 @@ fp.savefig('demo.png')
 
 ### Radar
 
-EE
 
 
 
@@ -178,7 +179,7 @@ data = {
     'C': np.random.rand(len(labels))
 }
 
-pos_radar(data, labels, fp)
+pos_radar(data, labels, fp, index=(0, 0), style='bright')
 
 fp[0, 0].legend()
 
@@ -262,32 +263,16 @@ fp.savefig('inset.png')
 
 
 
-Because we adopt the 'science' as the basic style, which use latex in default, it will raise error if you don't have Latex on you computer. You shall call
-
+Because we adopt the 'science' as the basic style, which use latex in default, it will raise error if you don't have Latex on you computer. 
+In addition, it needs long time to throughly complete the plotting under 'latex' environment.
+You shall use the following to close it,
 ```
 fp.set_style('no-latex')
 ```
-
 or
-
 ```
 plt.style.use('no-latex')
 ```
-
-to circumvent this problem. However, once you call this, please don't use
-
-```
-fp.show()
-```
-
-or
-
-```
-plt.show()
-```
-
-any more. You shall use savefig directly.
-
 
 
 ## Tips
@@ -301,3 +286,23 @@ any more. You shall use savefig directly.
    ```
 
 2. You may find some interesting implementations in freeplot.zoo, such as tsne, roc_curve ...
+
+3. You can use a list of styles:
+
+    ```
+    fp.set_style(['bright', 'high-vis'])
+    ```
+4. It would be better to use
+
+    ```
+    fp.legend
+    ```
+    to set legend instance instead of
+    ```
+    fp[0, 0].legend
+    ```
+
+5. You can find all available styles by
+    ```
+    fp.styles
+    ```
