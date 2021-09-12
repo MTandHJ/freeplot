@@ -50,7 +50,7 @@ def getmore(doc):
 def _get_style(style_type):
     assert style_type is not None, "style should not be None ..."
     try:
-        style = getattr(style_cfg, style_type) 
+        style = style_cfg[style_type] 
     except KeyError:
         style = [style_type]
     return style

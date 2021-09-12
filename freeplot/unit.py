@@ -183,6 +183,9 @@ class UnitPlot:
     def set(self, index: Union[str, Tuple[int], slice, None] = None, **kwargs) -> None:
         self.axes.set(index=index, **kwargs)
 
+    def set_style(self, style: Union[str, Iterable[str]]):
+        plt.style.use(style)
+
     def set_title(self, y: float = -0.3) -> None:
         self.axes.set_title(y=y)
 

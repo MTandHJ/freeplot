@@ -176,7 +176,7 @@ cfg['rc_params'] = Config(
 
 style_cfg = Config()
 
-style_cfg['basic'] = ["science", 'no-latex']  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
+style_cfg['basic'] = ["science"]  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
 style_cfg['line'] = ['bright'] 
 style_cfg['linemarker'] = ['grid'] # use 'grid' to add markers
 style_cfg['scatter'] = ["bright"]
