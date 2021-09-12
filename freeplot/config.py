@@ -186,7 +186,7 @@ style_cfg['bar'] = ["bright", "high-vis"]
 style_cfg['violin'] = ["high-vis", "seaborn-whitegrid"]
 
 # zoo
-style_cfg['radar'] = ['seaborn-whitegrid']
+style_cfg['radar'] = ['bright']
 
     
 
