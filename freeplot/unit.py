@@ -11,7 +11,7 @@ import mpl_toolkits.axisartist as AA
 import os
 
 from .config import cfg, style_cfg
-from .utils import getmore, style_env
+from .utils import getmore, get_style, style_env
 
 
 
@@ -184,7 +184,13 @@ class UnitPlot:
         self.axes.set(index=index, **kwargs)
 
     def set_style(self, style: Union[str, Iterable[str]]):
-        plt.style.use(style)
+        styles = []
+        if isinstance(style, str):
+            styles += get_style(style)
+        else:
+            for item in style:
+                styles += get_style(item)
+        plt.style.use(styles)
 
     def set_title(self, y: float = -0.3) -> None:
         self.axes.set_title(y=y)

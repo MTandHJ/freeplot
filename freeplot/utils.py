@@ -47,7 +47,7 @@ def getmore(doc):
         return wrapper
     return decorator
 
-def _get_style(style_type):
+def get_style(style_type):
     assert style_type is not None, "style should not be None ..."
     try:
         style = style_cfg[style_type] 
@@ -61,10 +61,10 @@ def style_env(func):
         kwargs = inspect.getfullargspec(func).kwonlydefaults
         kwargs.update(**new_kwargs)
         if isinstance(kwargs['style'], str):
-            style += _get_style(kwargs['style'])
+            style += get_style(kwargs['style'])
         else:
             for item in kwargs['style']:
-                style += _get_style(item)
+                style += get_style(item)
         with plt.style.context(style, after_reset=False):
             results = func(*arg, **kwargs)
         return results
