@@ -175,6 +175,10 @@ class UnitPlot:
         self.fig = plt.figure(figsize=figsize, **kwargs)
         self.grids = self.fig.add_gridspec(*shape)
         self.axes = FreeAxes(self.fig, shape, titles, sharey, projection=projection)
+    
+    @property
+    def styles(self):
+        return plt.style.available + list(style_cfg.keys())
 
     def set(self, index: Union[str, Tuple[int], slice, None] = None, **kwargs) -> None:
         self.axes.set(index=index, **kwargs)

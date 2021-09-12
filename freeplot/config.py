@@ -176,17 +176,17 @@ cfg['rc_params'] = Config(
 
 style_cfg = Config()
 
-style_cfg.basic = ["science", 'no-latex']  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
-style_cfg.line = ['bright'] 
-style_cfg.linemarker = ['grid'] # use 'grid' to add markers
-style_cfg.scatter = ["bright"]
-style_cfg.heatmap = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
-style_cfg.image = ["seaborn-white"]
-style_cfg.bar = ["bright", "high-vis"]
-style_cfg.violin = ["high-vis", "seaborn-whitegrid"]
+style_cfg['basic'] = ["science", 'no-latex']  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
+style_cfg['line'] = ['bright'] 
+style_cfg['linemarker'] = ['grid'] # use 'grid' to add markers
+style_cfg['scatter'] = ["bright"]
+style_cfg['heatmap'] = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
+style_cfg['image'] = ["seaborn-white"]
+style_cfg['bar'] = ["bright", "high-vis"]
+style_cfg['violin'] = ["high-vis", "seaborn-whitegrid"]
 
 # zoo
-style_cfg.radar = ['seaborn-whitegrid']
+style_cfg['radar'] = ['seaborn-whitegrid']
 
     
 
