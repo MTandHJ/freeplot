@@ -19,6 +19,7 @@ setuptools.setup(
   author_email="congxueric@gmail.com",
   description="a Python data visualization library based on matplotlib",
   long_description=long_description,
+  long_description_content_type="text/markdown",
   license='MIT License',
   url="https://github.com/MTandHJ/freeplot",
   packages=setuptools.find_packages(),
