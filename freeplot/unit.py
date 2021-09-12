@@ -89,8 +89,8 @@ class FreeAxes:
                     names.update({title:(i, j)})
         return names
 
-    def set(self, index: Union[str, Tuple[int], slice, None] = None, **kwargs) -> None:
-        if isinstance(index, (str, Tuple)):
+    def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
+        if isinstance(index, (str, Iterable)):
             index = [index]
         elif isinstance(index, slice):
             index = self.titles[index].flatten()
