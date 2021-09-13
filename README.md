@@ -306,3 +306,8 @@ plt.style.use('no-latex')
     ```
     fp.styles
     ```
+6. You can scale x|y-axis by
+    ```
+    fp.set_scale(value='symlog', index=(0, 0), axis='x')
+    fp.set_scale(value='symlog', index=(0, 0), axis='y')
+    ```

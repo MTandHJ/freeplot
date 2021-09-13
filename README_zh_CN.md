@@ -323,3 +323,8 @@ plt.style.use('no-latex')
 
    可以得到可用的styles.
 
+6. 你可以调整x, y axis的比例:
+    ```
+    fp.set_scale(value='symlog', index=(0, 0), axis='x')
+    fp.set_scale(value='symlog', index=(0, 0), axis='y')
+    ```

@@ -89,7 +89,10 @@ class FreeAxes:
                     names.update({title:(i, j)})
         return names
 
-    def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
+    def set(self, index: Union[Axes, str, Iterable[int], slice, None] = None, **kwargs) -> None:
+        if isinstance(index, Axes):
+            index.set(**kwargs)
+            return 1
         if isinstance(index, (str, Iterable)):
             index = [index]
         elif isinstance(index, slice):
@@ -109,11 +112,14 @@ class FreeAxes:
 
     def ticklabel_format(
         self, 
-        index: Union[str, Iterable[int], slice, None] = None,
+        index: Union[Axes, str, Iterable[int], slice, None] = None,
         style: str = 'sci', 
         scilimits: Iterable[int] = (0, 0),
         axis: str = 'y', **kwargs
     ):
+        if isinstance(index, Axes):
+            index.set(**kwargs)
+            return 1
         if isinstance(index, (str, Iterable)):
             index = [index]
         elif isinstance(index, slice):
@@ -151,8 +157,8 @@ class UnitPlot:
     """
     def __init__(
         self, 
-        shape: Iterable[int, int], 
-        figsize: Iterable[float, float], 
+        shape: Tuple[int, int], 
+        figsize: Tuple[float, float], 
         titles: Optional[Iterable]=None,
         sharey: bool = True,
         projection: Optional[str] = None,
@@ -192,6 +198,15 @@ class UnitPlot:
                 styles += get_style(item)
         plt.style.use(styles)
 
+    def set_scale(self, value: str = 'symlog', index=(0, 0), axis: str = 'y') -> None:
+        """
+        value: 'log'|'linear'|'symlog'|'logit'
+        """
+        kwargs = dict()
+        kwargs['index'] = index
+        kwargs[axis + 'scale'] = value
+        return self.set(**kwargs)
+
     def set_title(self, y: float = -0.3) -> None:
         self.axes.set_title(y=y)
 
@@ -202,6 +217,19 @@ class UnitPlot:
         kwargs[axis + 'ticks'] = values
         kwargs[axis + 'ticklabels'] = labels
         return self.set(**kwargs)
+
+    def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y'):
+        kwargs = dict()
+        kwargs['index'] = index
+        kwargs[axis + 'lim'] = lim
+        return self.set(**kwargs)
+
+    def set_label(self, label: str, index=(0, 0), axis='y'):
+        kwargs = dict()
+        kwargs['index'] = index
+        kwargs[axis + 'label'] = label
+        return self.set(**kwargs)
+
     
     def ticklabel_format(
         self, style: str = 'sci', scilimits: Iterable[int] = (0, 0),
@@ -220,17 +248,6 @@ class UnitPlot:
         """
         self.axes.ticklabel_format(index=index, style=style, scilimits=scilimits, axis=axis, **kwargs)
 
-    def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y'):
-        kwargs = dict()
-        kwargs['index'] = index
-        kwargs[axis + 'lim'] = lim
-        return self.set(**kwargs)
-
-    def set_label(self, label: str, index=(0, 0), axis='y'):
-        kwargs = dict()
-        kwargs['index'] = index
-        kwargs[axis + 'label'] = label
-        return self.set(**kwargs)
 
     @getmore("get the facecolor of the Axes") 
     def get_facecolor(self, index=(0, 0)) -> Tuple[float]: ...
@@ -247,23 +264,35 @@ class UnitPlot:
     @getmore("return the title of the Axes")
     def get_title(self, index=(0, 0)) -> str: ...
 
+    @getmore("return the XAxis")
+    def get_xaxis(self, index=(0, 0)) -> matplotlib.axis.Axis: ...
+
     @getmore("get the xlabel text string")
     def get_xlabel(self, index=(0, 0)) -> str: ...
 
     @getmore("return the x-axis view limits")
     def get_xlim(self, index=(0, 0)) -> Tuple[float, float]: ...
 
+    @getmore("return x-scale type")
+    def get_xscale(self, index=(0, 0)) -> str: ...
+
     @getmore("get the xaxis' tick labels.")
     def get_xticklabels(self, index=(0, 0)) -> Iterable[matplotlib.text.Text]: ...
 
     @getmore("return the xaxis' tick locations in data coordinates")
     def get_xticks(self, index=(0, 0)) -> np.ndarray: ...
+
+    @getmore("return the YAxis")
+    def get_yaxis(self, index=(0, 0)) -> matplotlib.axis.Axis: ...
     
     @getmore("get the ylabel text string")
     def get_ylabel(self, index=(0, 0)) -> str: ...
 
     @getmore("return the y-axis view limits")
     def get_ylim(self, index=(0, 0)) -> Tuple[float, float]: ...
+
+    @getmore("return y-scale type")
+    def get_yscale(self, index=(0, 0)) -> str: ...
 
     @getmore("get the yaxis' tick labels.")
     def get_yticklabels(self, index=(0, 0)) -> Iterable[matplotlib.text.Text]: ...

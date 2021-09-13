@@ -43,7 +43,7 @@ def getmore(doc):
             else:
                 return getattr(axes, func.__name__)(**kwargs)
         wrapper.__name__ = func.__name__
-        wrapper.__doc__ = func.__doc__
+        wrapper.__doc__ = doc
         return wrapper
     return decorator
 
