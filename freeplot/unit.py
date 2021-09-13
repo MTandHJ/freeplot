@@ -15,11 +15,6 @@ from .utils import getmore, get_style, style_env
 
 
 
-_ROOT = cfg['root']
-
-
-
-
 class UnitAX:
 
     def __init__(
@@ -177,7 +172,6 @@ class UnitPlot:
         for group, params in cfg['rc_params'].items():
             plt.rc(group, **params)
 
-        self.root = _ROOT
         self.fig = plt.figure(figsize=figsize, **kwargs)
         self.grids = self.fig.add_gridspec(*shape)
         self.axes = FreeAxes(self.fig, shape, titles, sharey, projection=projection)
@@ -359,15 +353,10 @@ class UnitPlot:
         tight_layout: bool = True,
         **kwargs: "other kwargs of plg.savefig"
     ) -> None:
-        try:
-            os.mkdir(self.root)
-        except FileExistsError:
-            pass
-        
         if tight_layout:
             plt.tight_layout()
         plt.savefig(
-            os.path.join(self.root, filename),
+            filename,
             bbox_inches=bbox_inches,
             **kwargs
         )

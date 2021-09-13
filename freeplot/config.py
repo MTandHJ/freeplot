@@ -66,8 +66,6 @@ MARKERS = (
 
 cfg = Config()
 
-#filepath
-cfg['root'] = "./media"
 
 #rc
 

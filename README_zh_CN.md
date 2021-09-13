@@ -81,8 +81,6 @@ pip install freeplot
    fp.savefig('test.pdf')
    ```
 
-   FreePlot会在当前目录下创建media的文件夹, 并将图片保存在其中, 相当于路径为"./media/test.pdf".
-
 
 
 ## 例子

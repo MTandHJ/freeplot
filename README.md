@@ -75,7 +75,6 @@ fp.set_title(y=0.98) # for all axes
 ```
 fp.savefig('test.pdf')
 ```
-FreePlot will create a path named media and save the fig there, namely './media/test.pdf' in this case.
 
 ## Example
 
