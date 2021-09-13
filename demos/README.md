@@ -2,7 +2,7 @@
 
 
 
-A simple framework for easy ploting. 
+A simple framework for easy plotting. 
 
 See demos for a quick start.
 
