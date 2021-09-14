@@ -355,7 +355,7 @@ class UnitPlot:
     ) -> None:
         if tight_layout:
             plt.tight_layout()
-        plt.savefig(
+        self.fig.savefig(
             filename,
             bbox_inches=bbox_inches,
             **kwargs
