@@ -100,7 +100,7 @@ class FreeAxes:
             ax = self[idx]
             ax.set(**kwargs)
 
-    def set_title(self, y: float = -0.1) -> None:
+    def set_title(self, y: float = .99) -> None:
         for title in self.links.keys():
             ax = self[title]
             ax.set_title(title, y=y)
@@ -201,7 +201,7 @@ class UnitPlot:
         kwargs[axis + 'scale'] = value
         return self.set(**kwargs)
 
-    def set_title(self, y: float = -0.3) -> None:
+    def set_title(self, y: float = .99) -> None:
         self.axes.set_title(y=y)
 
     def set_ticks(self, values, index=(0, 0), fmt: str = "%2f", axis: str = 'y') -> Dict:

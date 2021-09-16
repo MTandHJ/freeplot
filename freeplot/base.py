@@ -78,13 +78,16 @@ class FreePlot(UnitPlot):
         **kwargs: "other kwargs of ax.imshow"
     ) -> None:
         ax = self[index]
+        img = img[..., None]
         try:
             assert img.shape[2] == 3
-            ax.imshow(img, **kwargs)
+            ax.imshow(img.squeeze(), **kwargs)
         except AssertionError:
-            ax.imshow(img.squeeze(), cmap="gray", **kwargs)
+            if not kwargs.get('cmap', False):
+                kwargs['cmap'] = 'gray'
+            ax.imshow(img.squeeze(), **kwargs)
         if not show_ticks:
-            ax.set(xticks=[], yticks=[])
+            ax.axis('off')
 
     @style_env
     def barplot(
