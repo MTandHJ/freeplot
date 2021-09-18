@@ -49,6 +49,8 @@ def getmore(doc):
 
 def get_style(style_type):
     assert style_type is not None, "style should not be None ..."
+    if isinstance(style_type, Dict):
+        return [style_type]
     try:
         style = style_cfg[style_type] 
     except KeyError:

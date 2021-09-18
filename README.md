@@ -289,7 +289,7 @@ plt.style.use('no-latex')
 3. You can use a list of styles:
 
     ```
-    fp.set_style(['bright', 'high-vis'])
+    fp.set_style(['bright', 'high-vis', {"axes.facecolor":".9"}])
     ```
 4. It would be better to use
 

@@ -296,7 +296,7 @@ plt.style.use('no-latex')
 3. 你可以一次性使用多个styles:
 
    ```
-   fp.set_style(['bright', 'high-vis'])
+   fp.set_style(['bright', 'high-vis', {"axes.facecolor":".9"}])
    ```
 
 4. 使用

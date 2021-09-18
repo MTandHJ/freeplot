@@ -179,6 +179,10 @@ class UnitPlot:
     @property
     def styles(self):
         return plt.style.available + list(style_cfg.keys())
+    
+    @property
+    def rcParams(self):
+        return matplotlib.rcParams
 
     def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
         self.axes.set(index=index, **kwargs)
