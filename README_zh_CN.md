@@ -326,3 +326,7 @@ plt.style.use('no-latex')
     fp.set_scale(value='symlog', index=(0, 0), axis='x')
     fp.set_scale(value='symlog', index=(0, 0), axis='y')
     ```
+7. 你可以在axes上添加文字, 如:
+    ```
+    fp.set_text(x, y, s, fontsize=10)
+    ```

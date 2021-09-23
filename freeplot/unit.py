@@ -205,17 +205,6 @@ class UnitPlot:
         kwargs[axis + 'scale'] = value
         return self.set(**kwargs)
 
-    def set_title(self, y: float = .99) -> None:
-        self.axes.set_title(y=y)
-
-    def set_ticks(self, values, index=(0, 0), fmt: str = "%2f", axis: str = 'y') -> Dict:
-        labels = [fmt%value for value in values]
-        kwargs = dict()
-        kwargs['index'] = index
-        kwargs[axis + 'ticks'] = values
-        kwargs[axis + 'ticklabels'] = labels
-        return self.set(**kwargs)
-
     def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y'):
         kwargs = dict()
         kwargs['index'] = index
@@ -226,6 +215,34 @@ class UnitPlot:
         kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'label'] = label
+        return self.set(**kwargs)
+
+    def set_text(
+        self, x: float, y: float, s: str, 
+        index=(0, 0), fontdict: Optional[Dict] = None,
+        **kwargs
+    ) -> matplotlib.text.Text:
+        """
+        Args:
+            (x, y): in data coordinates;
+            s: the text
+            fontdict: A dictionary to override the default text properties.
+        kwargs:
+            fontsize: positive interger or 'xx-small', 'x-small', 'small', 'big' ...
+            alpha: ...
+            ...
+        """
+        return self[index].text(x, y, s, fontdict, **kwargs)
+
+    def set_title(self, y: float = .99) -> None:
+        self.axes.set_title(y=y)
+
+    def set_ticks(self, values, index=(0, 0), fmt: str = "%2f", axis: str = 'y') -> Dict:
+        labels = [fmt%value for value in values]
+        kwargs = dict()
+        kwargs['index'] = index
+        kwargs[axis + 'ticks'] = values
+        kwargs[axis + 'ticklabels'] = labels
         return self.set(**kwargs)
 
     
