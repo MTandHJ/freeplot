@@ -75,7 +75,7 @@ class FreeAxes:
         if titles is None:
             for i in range(m):
                 for j in range(n):
-                    s = "(" + chr(i + 97) + ")"
+                    s = "(" + chr(i * n + j + 97) + ")"
                     names.update({s:(i, j)})
         else:
             for i in range(m):
