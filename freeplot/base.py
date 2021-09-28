@@ -6,6 +6,7 @@ from typing import Iterable, Tuple, Optional, Dict, Union
 import numpy as np
 import pandas as pd 
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 from .unit import UnitPlot
 from .utils import style_env
@@ -68,6 +69,9 @@ class FreePlot(UnitPlot):
             sns.scatterplot(x, y, ax=ax, **kwargs)
         else:
             ax.scatter(x, y, **kwargs)
+    
+    def imread(self, fname: str) -> np.ndarray:
+        return plt.imread(fname)
 
     @style_env
     def imageplot(
