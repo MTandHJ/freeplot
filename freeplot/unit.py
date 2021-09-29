@@ -178,10 +178,12 @@ class UnitPlot:
     
     @property
     def styles(self):
+        """return available styles"""
         return plt.style.available + list(style_cfg.keys())
     
     @property
     def rcParams(self):
+        """return current settings"""
         return matplotlib.rcParams
 
     def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
@@ -354,6 +356,7 @@ class UnitPlot:
         loc: str = "lower left",
         **kwargs
     ) -> None:
+        """set legend, relative to the figure"""
         self[index].legend(bbox_to_anchor=(x, y), loc=loc,
         bbox_transform=plt.gcf().transFigure, ncol=ncol, **kwargs)
 
@@ -366,6 +369,7 @@ class UnitPlot:
         wspace: Optional[float] = None, 
         hspace: Optional[float] = None
     ) -> None:
+        """make sure tight_layout=False"""
         plt.subplots_adjust(left, bottom, right, top, wspace, hspace)
 
     def savefig(

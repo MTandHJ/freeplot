@@ -27,12 +27,14 @@ class FreePlot(UnitPlot):
         **kwargs: "other kwargs of sns.heatmap"
     ) -> None:
         """
-        data: M x N dataframe.
-        cmap: GnBu, Oranges are recommanded.
-        annot: annotation.
-        fmt: the format for annotation.
-        kwargs:
-            cbar: bool
+        Args:
+            data: M x N dataframe.
+            cmap: GnBu, Oranges are recommanded.
+            annot: annotation.
+        Kwargs:
+            fmt: the format for annotation.
+            kwargs:
+                cbar: bool
         """
         ax = self[index]
         sns.heatmap(
@@ -50,6 +52,13 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'line',
         **kwargs: "other kwargs of ax.plot or sns.lineplot"
     ) -> None:
+        """
+        Args:
+            x, y: Iterable;
+            seaborn: bool, use sns.lineplot to plot if True
+        Kwargs:
+            other kwargs of ax.plt or sns.lineplot
+        """
         ax = self[index]
         if seaborn:
             sns.lineplot(x, y, ax=ax, **kwargs)
@@ -64,6 +73,13 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'scatter',
         **kwargs: "other kwargs of ax.scatter or sns.scatterplot"
     ) -> None:
+        """
+        Args:
+            x, y: Iterable;
+            seaborn: bool, use sns.scatterplot to plot if True;
+        Kwargs:
+            other kwargs of ax.scatter or sns.scatterplot
+        """
         ax = self[index]
         if seaborn:
             sns.scatterplot(x, y, ax=ax, **kwargs)
@@ -71,6 +87,7 @@ class FreePlot(UnitPlot):
             ax.scatter(x, y, **kwargs)
     
     def imread(self, fname: str) -> np.ndarray:
+        """load the image"""
         return plt.imread(fname)
 
     @style_env
@@ -81,6 +98,11 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'image',
         **kwargs: "other kwargs of ax.imshow"
     ) -> None:
+        """
+        Args:
+            show_ticks: show the ticks if True
+        Kwargs: other kwargs of ax.imshow
+        """
         ax = self[index]
         img = img[..., None]
         try:
@@ -102,6 +124,14 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'bar',
         **kwargs: "other kwargs of sns.barplot"
     ) -> None:
+        """
+        Args:
+            x, y, hue: the colname of x, y and hue;
+            auto_fmt: adjust the xticklabel if True;
+        Kwargs:
+            palette: Dict, set the color of each of hue.
+            ...
+        """
         ax = self[index]
         sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
         if auto_fmt:
