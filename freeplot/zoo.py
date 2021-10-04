@@ -16,6 +16,7 @@ def tsne(
     labels: np.ndarray, 
     fp: FreePlot, 
     index: Union[Tuple[int], str] = (0, 0), 
+    fontsize: Union[int, str] = 'big',
     **kwargs: "other kwargs of fp.scatterplot"
 ) -> None:
     """
@@ -39,7 +40,7 @@ def tsne(
         y = event['y']
         x_mean = x.median()
         y_mean = y.median()
-        plt.text(x_mean, y_mean, label)
+        plt.text(x_mean, y_mean, label, fontsize=fontsize)
         fp.scatterplot(x, y, index, label=label, s=1.5, edgecolors="none", **kwargs)
     sns.despine(left=True, bottom=True)
 

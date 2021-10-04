@@ -7,6 +7,7 @@ requires = [
     'numpy>=1.18.1',
     'pandas>=1.0.1',
     'scipy>=1.4.1',
+    'scikit-learn>=0.23.2',
     'matplotlib>=3.1.3',
     'seaborn>=0.10.0',
     'SciencePlots>=1.0.5'
@@ -14,7 +15,7 @@ requires = [
 
 setuptools.setup(
   name="freeplot",
-  version="0.0.5",
+  version="0.0.6",
   author="MTandHJ",
   author_email="congxueric@gmail.com",
   description="a Python data visualization library based on matplotlib",
