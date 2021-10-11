@@ -152,8 +152,8 @@ class UnitPlot:
     """
     def __init__(
         self, 
-        shape: Tuple[int, int], 
-        figsize: Tuple[float, float], 
+        shape: Tuple[int, int] = (1, 1), 
+        figsize: Tuple[float, float] = (2.2, 2), 
         titles: Optional[Iterable]=None,
         sharey: bool = True,
         projection: Optional[str] = None,
