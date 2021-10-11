@@ -198,7 +198,7 @@ class UnitPlot:
                 styles += get_style(item)
         plt.style.use(styles)
 
-    def set_scale(self, value: str = 'symlog', index=(0, 0), axis: str = 'y') -> None:
+    def set_scale(self, value: str = 'symlog', index=(0, 0), axis='y') -> None:
         """
         value: 'log'|'linear'|'symlog'|'logit'
         """
