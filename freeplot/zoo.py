@@ -16,12 +16,18 @@ def tsne(
     labels: np.ndarray, 
     fp: FreePlot, 
     index: Union[Tuple[int], str] = (0, 0), 
-    fontsize: Union[int, str] = 'big',
+    fontsize: Union[int, str] = 'large',
+    annotate: bool = False,
+    style: Union[str, Iterable[str]] = 'bright',
     **kwargs: "other kwargs of fp.scatterplot"
 ) -> None:
     """
-    features: n x d
-    labels: n
+    Args:
+        features: n x d
+        labels: n
+    Kwargs:
+        fontsize: large
+        annot: bool, If True, add labels on the scatters.
     """
     from sklearn.manifold import TSNE
     data_embedded = TSNE(n_components=2, learning_rate=10, n_iter=1000).fit_transform(features)
@@ -38,10 +44,11 @@ def tsne(
         event = data.loc[data['label']==label]
         x = event['x']
         y = event['y']
-        x_mean = x.median()
-        y_mean = y.median()
-        plt.text(x_mean, y_mean, label, fontsize=fontsize)
-        fp.scatterplot(x, y, index, label=label, s=1.5, edgecolors="none", **kwargs)
+        if annotate:
+            x_mean = x.median()
+            y_mean = y.median()
+            plt.text(x_mean, y_mean, label, fontsize=fontsize)
+        fp.scatterplot(x, y, index, label=label, s=1.5, edgecolors="none", style=style, **kwargs)
     sns.despine(left=True, bottom=True)
 
 
@@ -52,7 +59,7 @@ def roc_curve(
     index: Union[Tuple[int], str] = (0, 0), 
     name: Optional[str] = None,
     estimator_name: Optional[str] = None,
-    style: str = "whitegrid",
+    style: Union[str, Iterable[str]] = "whitegrid",
     dict_: Optional[Dict] = None,
 ) -> "tpr, fpr, roc_auc":
     """
