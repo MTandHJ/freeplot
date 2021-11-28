@@ -374,10 +374,17 @@ class UnitPlot:
 
     def savefig(
         self, filename: str, 
-        bbox_inches: str = 'tight', 
+        close_fig: bool = True,
         tight_layout: bool = True,
+        bbox_inches: str = 'tight', 
         **kwargs: "other kwargs of plg.savefig"
     ) -> None:
+        """
+        save the figure
+        Kwargs:
+            close_fig: close the figure to release memory if True (suggested)
+            tight_layout: wspace, hspace will be no use if True
+        """
         if tight_layout:
             plt.tight_layout()
         self.fig.savefig(
@@ -385,6 +392,12 @@ class UnitPlot:
             bbox_inches=bbox_inches,
             **kwargs
         )
+        if close_fig:
+            self.close()
+
+    def close(self) -> None:
+        '''close the figure'''
+        plt.close(self.fig)
     
     def show(self, *args, tight_layout: bool = True, **kwargs):
         if tight_layout:
