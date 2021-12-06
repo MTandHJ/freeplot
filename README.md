@@ -314,3 +314,7 @@ plt.style.use('no-latex')
     ```
     fp.set_text(x, y, s, fontsize=10)
     ```
+8. You can create Patches by FreePatches and add them by
+   ```
+   fp.add_patch(patch)
+   ```

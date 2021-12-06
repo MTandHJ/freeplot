@@ -330,3 +330,8 @@ plt.style.use('no-latex')
     ```
     fp.set_text(x, y, s, fontsize=10)
     ```
+8. 你可以通过FreePatches来创建简单的几何图形, 并通过下列方式添加:
+   ```
+   fp.add_patch(patch)
+   ```
+
