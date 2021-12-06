@@ -4,9 +4,11 @@
 
 from typing import Iterable, Tuple, Optional, Dict, Union
 import numpy as np
+from numpy.core.fromnumeric import shape
 import pandas as pd 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from matplotlib import patches
 
 from .unit import UnitPlot
 from .utils import style_env
@@ -153,8 +155,92 @@ class FreePlot(UnitPlot):
             xticklabels=x
         )
 
-   
+    def add_patch(self, patch: patches.Patch, index: Union[Tuple[int], str] = (0, 0)) -> patches.Patch:
+        ax = self[index]
+        return ax.add_patch(patch)
+
+
+def _redirect(module, exclude_keys: Optional[Iterable] = None):
+    def decorator(func):
+        def wrapper(self, *args, **kwargs):
+            share = self.share
+            args, kwargs = func(self, *args, **kwargs)
+            share.update(kwargs)
+            if exclude_keys is not None:
+                for key in exclude_keys:
+                    del share[key]
+            return getattr(module, func.__name__)(*args, **share)
+        wrapper.__name__ = func.__name__
+        wrapper.__doc__ = func.__doc__
+        return wrapper
+    return decorator
+  
         
+class FreePatches:
+
+    def __init__(
+        self, alpha: int = 1., fill: bool = False,
+        linewidth: float = None, linestyle: str = None, hatch: str = None,
+        capstyle: str = None, joinstyle: str = None
+    ) -> None:
+        self.__share = {
+            'alpha': alpha,
+            'fill': fill,
+            'linewidth': linewidth,
+            'linestyle': linestyle,
+            'hatch': hatch,
+            'capstyle': capstyle,
+            'joinstyle': joinstyle
+        }
+
+    @property
+    def share(self):
+        return self.__share.copy()
+
+    @_redirect(patches)
+    def Annulus(self, x:float, y:float, width:float, angle: float = 0., **kwargs):
+        return ((x, y), width, angle), kwargs
+
+    @_redirect(patches, ['fill'])
+    def Arc(
+        self, x:float, y:float, width:float, height:float, angle: float = 0.,
+        theta1: float = 0., theta2: float = 0., **kwargs
+    ):
+        return ((x, y), width, height, angle, theta1, theta2), kwargs
+
+    @_redirect(patches)
+    def Arrow(self, x:float, y:float, dx:float, dy:float, **kwargs):
+        return (x, y, dx, dy), kwargs
+
+    @_redirect(patches)
+    def Circle(self, x:float, y:float, radius: float, **kwargs):
+        return ((x, y), radius), kwargs
+
+    @_redirect(patches)
+    def CirclePolygon(self, x:float, y:float, resolution: float = 20, **kwargs):
+        return ((x, y), resolution), kwargs
+
+    @_redirect(patches)
+    def ConnectionPatch(self, *args, **kwargs):
+        return args, kwargs
+
+    @_redirect(patches)
+    def Ellipse(self, x:float, y:float, width:float, height:float, angle:float = 0., **kwargs):
+        return ((x, y), width, height, angle), kwargs
+
+    @_redirect(patches)
+    def Polygen(self, x:np.ndarray, y:np.ndarray, closed: bool = True, **kwargs):
+        assert x.ndim == y.ndim == 1, "check: x.ndim == y.ndim == 1"
+        xy = np.vstack((x, y)).T
+        return (xy, closed), kwargs
+
+    @_redirect(patches)
+    def Rectangle(self, x:float, y:float, width:float, height:float, angle: float = 0., **kwargs):
+        return ((x, y), width, -height, angle), kwargs
+
+
+
+
 
 
 

@@ -49,6 +49,7 @@ def getmore(doc):
     return decorator
 
 
+
 def get_style(style_type):
     assert style_type is not None, "style should not be None ..."
     if isinstance(style_type, Dict):
