@@ -236,7 +236,11 @@ class FreePatches:
 
     @_redirect(patches)
     def Rectangle(self, x:float, y:float, width:float, height:float, angle: float = 0., **kwargs):
-        return ((x, y), width, -height, angle), kwargs
+        """
+        (x, y) represents the left bottom corner for the common cartesian coordinate system
+        while the left upper corner in the case of image plotting.
+        """
+        return ((x, y), width, height, angle), kwargs
 
 
 
