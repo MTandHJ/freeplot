@@ -315,6 +315,11 @@ plt.style.use('no-latex')
     fp.set_text(x, y, s, fontsize=10)
     ```
 8. You can create Patches by FreePatches and add them by
-   ```
-   fp.add_patch(patch)
-   ```
+    ```
+    fp.add_patch(patch)
+    ```
+9. You can activate latex environment by (after version 0.1.0)
+    ```
+    fp = FreePlot(latex=True)
+    ```
+

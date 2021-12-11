@@ -334,4 +334,8 @@ plt.style.use('no-latex')
    ```
    fp.add_patch(patch)
    ```
+9. 你现在可以通过下列方式激活latex环境(0.1.0版本以后)
+    ```
+    fp = FreePlot(latex=True)
+    ```
 
