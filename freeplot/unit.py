@@ -156,6 +156,7 @@ class UnitPlot:
         figsize: Tuple[float, float] = (2.2, 2), 
         titles: Optional[Iterable]=None,
         sharey: bool = True,
+        latex: bool = False,
         projection: Optional[str] = None,
         **kwargs: "other kwargs of plt.subplots"
     ):
@@ -171,6 +172,8 @@ class UnitPlot:
         plt.style.use(style_cfg.basic)
         for group, params in cfg['rc_params'].items():
             plt.rc(group, **params)
+        if not latex:
+            self.set_style('no-latex')
 
         self.fig = plt.figure(figsize=figsize, **kwargs)
         self.grids = self.fig.add_gridspec(*shape)
