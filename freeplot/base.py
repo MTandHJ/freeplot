@@ -88,10 +88,6 @@ class FreePlot(UnitPlot):
         else:
             ax.scatter(x, y, **kwargs)
     
-    def imread(self, fname: str) -> np.ndarray:
-        """load the image"""
-        return plt.imread(fname)
-
     @style_env
     def imageplot(
         self, img: np.ndarray, 
