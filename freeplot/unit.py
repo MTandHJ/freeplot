@@ -375,6 +375,26 @@ class UnitPlot:
         """make sure tight_layout=False"""
         plt.subplots_adjust(left, bottom, right, top, wspace, hspace)
 
+    @staticmethod
+    def imread(filename: str, fmt: Optional[str] = None):
+        return plt.imread(filename, fmt)
+
+    @staticmethod
+    def to(img: np.ndarray, cur_fmt: str, nxt_fmt: str, **kwargs):
+        """
+        convert the image into another type
+        fmt: gray, hed, hsv, lab, label, rgb, rgba, rgbcie, 
+             xyz, ycbcr, ycbdr, yiq, ypbpr, yuv
+        """
+        from skimage import color
+        available = ('gray', 'hed', 'hsv', 'lab', 'label', 'rgb', 'rgba', 'rgbcie',
+                    'xyz', 'ycbcr', 'ycbdr', 'yiq', 'ypbpr', 'yuv')
+        cur_fmt, nxt_fmt = cur_fmt.lower(), nxt_fmt.lower()
+        assert cur_fmt in available, f"current format is not in {available}"
+        assert nxt_fmt in available, f"next format is not in {available}"
+        trans = '2'.join((cur_fmt, nxt_fmt))
+        return getattr(color, trans)(img, **kwargs)
+
     def savefig(
         self, filename: str, 
         close_fig: bool = True,
