@@ -380,7 +380,7 @@ class UnitPlot:
         return plt.imread(filename, fmt)
 
     @staticmethod
-    def to(img: np.ndarray, cur_fmt: str, nxt_fmt: str, **kwargs):
+    def convert(img: np.ndarray, cur_fmt: str, nxt_fmt: str, **kwargs):
         """
         convert the image into another type
         fmt: gray, hed, hsv, lab, label, rgb, rgba, rgbcie, 
