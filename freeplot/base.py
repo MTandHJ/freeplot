@@ -115,8 +115,8 @@ class FreePlot(UnitPlot):
 
     @style_env
     def barplot(
-        self, x: str, y: str, hue: str, 
-        data: pd.DataFrame, 
+        self, x: str, y: str, 
+        data: pd.DataFrame, hue: Optional[str] = None, 
         index: Union[Tuple[int], str] = (0, 0), 
         auto_fmt: bool = False, *,
         style: Union[str, Iterable[str]] = 'bar',
