@@ -128,6 +128,8 @@ class FreePlot(UnitPlot):
             auto_fmt: adjust the xticklabel if True;
         Kwargs:
             palette: Dict, set the color of each of hue.
+            ci: float or 'sd', If “sd”, skip bootstrapping and draw the standard deviation of the observations. 
+                If None, no bootstrapping will be performed, and error bars will not be drawn.
             ...
         """
         ax = self[index]

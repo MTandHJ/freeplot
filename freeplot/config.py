@@ -180,7 +180,7 @@ style_cfg['linemarker'] = ['grid'] # use 'grid' to add markers
 style_cfg['scatter'] = ["bright"]
 style_cfg['heatmap'] = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
 style_cfg['image'] = ["bright"]
-style_cfg['bar'] = ["bright", "high-vis"]
+style_cfg['bar'] = ["bright", "vibrant"]
 style_cfg['violin'] = ["high-vis", "seaborn-whitegrid"]
 
 # zoo
