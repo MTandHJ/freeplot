@@ -4,7 +4,6 @@
 
 from typing import Iterable, Tuple, Optional, Dict, Union
 import numpy as np
-from numpy.core.fromnumeric import shape
 import pandas as pd 
 import seaborn as sns
 import matplotlib.pyplot as plt
