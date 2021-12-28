@@ -6,7 +6,7 @@ from typing import Iterable, Tuple, Optional, Dict, Union
 import numpy as np
 import pandas as pd 
 import seaborn as sns
-import matplotlib.pyplot as plt
+import matplotlib
 from matplotlib import patches
 
 from .unit import UnitPlot
@@ -38,7 +38,7 @@ class FreePlot(UnitPlot):
                 cbar: bool
         """
         ax = self[index]
-        sns.heatmap(
+        return sns.heatmap(
             data, ax=ax, 
             annot=annot, fmt=fmt,
             cmap=cmap, linewidth=linewidth,
@@ -62,9 +62,9 @@ class FreePlot(UnitPlot):
         """
         ax = self[index]
         if seaborn:
-            sns.lineplot(x, y, ax=ax, **kwargs)
+            return sns.lineplot(x, y, ax=ax, **kwargs)
         else:
-            ax.plot(x, y, **kwargs)
+            return ax.plot(x, y, **kwargs)
         
     @style_env
     def scatterplot(
@@ -146,11 +146,17 @@ class FreePlot(UnitPlot):
         if x is None:
             x = range(1, len(y) + 1)
         ax = self[index]
-        ax.violinplot(dataset=y, **kwargs)
+        obj = ax.violinplot(dataset=y, **kwargs)
         ax.set(
             xticks=range(1, len(y) + 1),
             xticklabels=x
         )
+        for key in ['cmaxes', 'cmins', 'cbars']:
+            try:
+                obj[key].set_linewidth(0.1)
+            except KeyError:
+                pass
+        return obj
 
     def add_patch(self, patch: patches.Patch, index: Union[Tuple[int], str] = (0, 0)) -> patches.Patch:
         ax = self[index]
