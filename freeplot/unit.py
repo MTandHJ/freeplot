@@ -10,7 +10,7 @@ from matplotlib.axes._axes import Axes
 import mpl_toolkits.axisartist as AA
 import os
 
-from .config import cfg, style_cfg
+from .config import cfg, style_cfg, COLORS
 from .utils import getmore, get_style, style_env
 
 
@@ -183,6 +183,10 @@ class UnitPlot:
     def styles(self):
         """return available styles"""
         return plt.style.available + list(style_cfg.keys())
+
+    @property
+    def colors(self):
+        return COLORS
     
     @property
     def rcParams(self):
