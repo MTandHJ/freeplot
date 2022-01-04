@@ -15,7 +15,7 @@ requires = [
 
 setuptools.setup(
   name="freeplot",
-  version="0.0.10",
+  version="0.0.11",
   author="MTandHJ",
   author_email="congxueric@gmail.com",
   description="a Python data visualization library based on matplotlib",
