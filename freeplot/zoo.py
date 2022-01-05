@@ -170,6 +170,6 @@ def pos_radar(
     theta = np.linspace(0, 2*np.pi, len(labels), endpoint=False) if theta is None else theta
     ax = fp[index]
     for i, (key, value) in enumerate(data.items()): 
-        ax.plot(theta, value)
+        ax.plot(theta, value, marker='')
         ax.fill(theta, value, alpha=0.5, label=labels[i])
     ax.set_varlabels(labels)
