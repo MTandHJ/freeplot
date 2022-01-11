@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd 
 import seaborn as sns
 import matplotlib
+import matplotlib.pyplot as plt
 from matplotlib import patches
 
 from .unit import UnitPlot
@@ -15,6 +16,47 @@ from .utils import style_env
  
 
 class FreePlot(UnitPlot):
+
+
+    @style_env
+    def barplot(
+        self, x: str, y: str, 
+        data: pd.DataFrame, hue: Optional[str] = None, 
+        index: Union[Tuple[int], str] = (0, 0), 
+        auto_fmt: bool = False, *,
+        style: Union[str, Iterable[str]] = 'bar',
+        **kwargs: "other kwargs of sns.barplot"
+    ) -> None:
+        """
+        Args:
+            x, y, hue: the colname of x, y and hue;
+            auto_fmt: adjust the xticklabel if True;
+        Kwargs:
+            palette: Dict, set the color of each of hue.
+            ci: float or 'sd', If “sd”, skip bootstrapping and draw the standard deviation of the observations. 
+                If None, no bootstrapping will be performed, and error bars will not be drawn.
+            ...
+        """
+        ax = self[index]
+        sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
+        if auto_fmt:
+            self.fig.autofmt_xdate()
+
+
+    @style_env
+    def contourf(
+        self, X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
+        levels: Optional[Union[int, np.ndarray]] = 5, cbar: bool = True,
+        index: Union[Tuple[int], str] = (0, 0), *,
+        style: Union[str, Iterable[str]] = [],
+        origin: Optional[str] = 'lower', cmap = plt.cm.bone,
+        **kwargs: "other kwargs of ax.contourf"
+    ):
+        ax = self[index]
+        cs =  ax.contourf(X, Y, Z, levels, cmap=cmap, origin=origin, **kwargs)
+        if cbar:
+            self.fig.colorbar(cs)
+        return cs
 
     @style_env
     def heatmap(
@@ -44,6 +86,33 @@ class FreePlot(UnitPlot):
             cmap=cmap, linewidth=linewidth,
             **kwargs
         )
+
+
+    @style_env
+    def imageplot(
+        self, img: np.ndarray, 
+        index: Union[Tuple[int], str] = (0, 0), 
+        show_ticks: bool = False, *, 
+        style: Union[str, Iterable[str]] = 'image',
+        **kwargs: "other kwargs of ax.imshow"
+    ) -> None:
+        """
+        Args:
+            show_ticks: show the ticks if True
+        Kwargs: other kwargs of ax.imshow
+        """
+        ax = self[index]
+        img = img[..., None]
+        try:
+            assert img.shape[2] == 3
+            ax.imshow(img.squeeze(), **kwargs)
+        except AssertionError:
+            if not kwargs.get('cmap', False):
+                kwargs['cmap'] = 'gray'
+            ax.imshow(img.squeeze(), **kwargs)
+        if not show_ticks:
+            ax.axis('off')
+
 
     @style_env
     def lineplot(
@@ -86,55 +155,7 @@ class FreePlot(UnitPlot):
             sns.scatterplot(x, y, ax=ax, **kwargs)
         else:
             ax.scatter(x, y, **kwargs)
-    
-    @style_env
-    def imageplot(
-        self, img: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), 
-        show_ticks: bool = False, *, 
-        style: Union[str, Iterable[str]] = 'image',
-        **kwargs: "other kwargs of ax.imshow"
-    ) -> None:
-        """
-        Args:
-            show_ticks: show the ticks if True
-        Kwargs: other kwargs of ax.imshow
-        """
-        ax = self[index]
-        img = img[..., None]
-        try:
-            assert img.shape[2] == 3
-            ax.imshow(img.squeeze(), **kwargs)
-        except AssertionError:
-            if not kwargs.get('cmap', False):
-                kwargs['cmap'] = 'gray'
-            ax.imshow(img.squeeze(), **kwargs)
-        if not show_ticks:
-            ax.axis('off')
 
-    @style_env
-    def barplot(
-        self, x: str, y: str, 
-        data: pd.DataFrame, hue: Optional[str] = None, 
-        index: Union[Tuple[int], str] = (0, 0), 
-        auto_fmt: bool = False, *,
-        style: Union[str, Iterable[str]] = 'bar',
-        **kwargs: "other kwargs of sns.barplot"
-    ) -> None:
-        """
-        Args:
-            x, y, hue: the colname of x, y and hue;
-            auto_fmt: adjust the xticklabel if True;
-        Kwargs:
-            palette: Dict, set the color of each of hue.
-            ci: float or 'sd', If “sd”, skip bootstrapping and draw the standard deviation of the observations. 
-                If None, no bootstrapping will be performed, and error bars will not be drawn.
-            ...
-        """
-        ax = self[index]
-        sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
-        if auto_fmt:
-            self.fig.autofmt_xdate()
 
     @style_env
     def violinplot(
@@ -157,6 +178,7 @@ class FreePlot(UnitPlot):
             except KeyError:
                 pass
         return obj
+
 
     def add_patch(self, patch: patches.Patch, index: Union[Tuple[int], str] = (0, 0)) -> patches.Patch:
         ax = self[index]
