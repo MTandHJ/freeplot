@@ -272,6 +272,9 @@ class UnitPlot:
         """
         self.axes.ticklabel_format(index=index, style=style, scilimits=scilimits, axis=axis, **kwargs)
 
+    def get_container(self, index=(0, 0)) -> List[matplotlib.container.BarContainer]:
+        ax = self[index]
+        return ax.containers
 
     @getmore("get the facecolor of the Axes") 
     def get_facecolor(self, index=(0, 0)) -> Tuple[float]: ...
@@ -284,6 +287,10 @@ class UnitPlot:
     
     @getmore("return a list of lines contained in Axes")
     def get_lines(self, index=(0, 0)) -> Iterable[matplotlib.lines.Line2D]: ...
+
+    def get_patches(self, index=(0, 0)) -> List:
+        ax = self[index]
+        return ax.patches
 
     @getmore("return the title of the Axes")
     def get_title(self, index=(0, 0)) -> str: ...

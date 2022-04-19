@@ -24,6 +24,8 @@ class FreePlot(UnitPlot):
         data: pd.DataFrame, hue: Optional[str] = None, 
         index: Union[Tuple[int], str] = (0, 0), 
         auto_fmt: bool = False, *,
+        hatch: Optional[Iterable] = None,
+        hatch_scale: int = 3,
         style: Union[str, Iterable[str]] = 'bar',
         **kwargs: "other kwargs of sns.barplot"
     ) -> None:
@@ -35,13 +37,18 @@ class FreePlot(UnitPlot):
             palette: Dict, set the color of each of hue.
             ci: float or 'sd', If “sd”, skip bootstrapping and draw the standard deviation of the observations. 
                 If None, no bootstrapping will be performed, and error bars will not be drawn.
+            hatch: ["-", "/", "\\", "x", "+", ".", "*"].
+            hatch_scale: hatch * hatch_scale.
             ...
         """
         ax = self[index]
         sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
         if auto_fmt:
             self.fig.autofmt_xdate()
-
+        if hatch:
+            for pattern, bars in zip(hatch, self.get_container(index=index)):
+                for bar in bars:
+                    bar.set_hatch(pattern * hatch_scale)
 
     @style_env
     def contourf(

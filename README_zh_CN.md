@@ -106,8 +106,8 @@ fp.set_style('no-latex')
 x = np.linspace(0, 2, 10)
 y1 = x ** 0.5
 y2 = x ** 2
-fp.lineplot(x, y1, index=(0, 0), style='linemarker', label='sqrt(2)')
-fp.lineplot(x, y2, index=(0, 0), style='linemarker', label='pow(2)')
+fp.lineplot(x, y1, index=(0, 0), style='line', label='sqrt(2)')
+fp.lineplot(x, y2, index=(0, 0), style='line', label='pow(2)')
 fp[0, 0].legend()
 
 # scatter
@@ -265,7 +265,13 @@ fp.savefig('inset.png')
 
 
 
-因为FreePlot默认使用'science'的style, 所以如果你的电脑中并没有latex(或者latex没有正确添加至环境变量中)时程序会报错. 此外, 使用latex编译会导致画图的时间变长. 如果你停止使用latex, 可以通过如下的命令:
+现在创建fp时提供了latex开启的选项(默认关闭):
+
+```
+fp = FreePlot(latex=True)
+```
+
+使用latex编译会导致画图的时间变长. 可以通过如下的命令令其失效:
 
 ```
 fp.set_style('no-latex')
@@ -277,7 +283,7 @@ fp.set_style('no-latex')
 plt.style.use('no-latex')
 ```
 
-注: 这些命令应当在fp创建之后, 别的plot方法使用之前添加.
+
 
 
 
@@ -326,16 +332,15 @@ plt.style.use('no-latex')
     fp.set_scale(value='symlog', index=(0, 0), axis='x')
     fp.set_scale(value='symlog', index=(0, 0), axis='y')
     ```
+    
 7. 你可以在axes上添加文字, 如:
     ```
     fp.set_text(x, y, s, fontsize=10)
     ```
+    
 8. 你可以通过FreePatches来创建简单的几何图形, 并通过下列方式添加:
    ```
    fp.add_patch(patch)
    ```
-9. 你现在可以通过下列方式激活latex环境(0.1.0版本以后)
-    ```
-    fp = FreePlot(latex=True)
-    ```
-
+   
+   

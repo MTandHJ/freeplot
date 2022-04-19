@@ -98,8 +98,8 @@ fp.set_style('no-latex')
 x = np.linspace(0, 2, 10)
 y1 = x ** 0.5
 y2 = x ** 2
-fp.lineplot(x, y1, index=(0, 0), style='linemarker', label='sqrt(2)')
-fp.lineplot(x, y2, index=(0, 0), style='linemarker', label='pow(2)')
+fp.lineplot(x, y1, index=(0, 0), style='line', label='sqrt(2)')
+fp.lineplot(x, y2, index=(0, 0), style='line', label='pow(2)')
 fp[0, 0].legend()
 
 # scatter
@@ -261,10 +261,12 @@ fp.savefig('inset.png')
 ## Latex
 
 
-
-Because we adopt the 'science' as the basic style, which use latex in default, it will raise error if you don't have Latex on you computer. 
-In addition, it needs long time to throughly complete the plotting under 'latex' environment.
-You shall use the following to close it,
+We turn off the 'latex' option by default to speed up.
+You can activate it by (make sure that Latex is accurately installed on your computer)
+```
+fp = FreePlot(latex=True)
+```
+You shall use the following to close it halfway,
 ```
 fp.set_style('no-latex')
 ```
@@ -318,8 +320,3 @@ plt.style.use('no-latex')
     ```
     fp.add_patch(patch)
     ```
-9. You can activate latex environment by (after version 0.1.0)
-    ```
-    fp = FreePlot(latex=True)
-    ```
-
