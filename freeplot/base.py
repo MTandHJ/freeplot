@@ -134,6 +134,7 @@ class FreePlot(UnitPlot):
             x, y: Iterable;
             seaborn: bool, use sns.lineplot to plot if True
         Kwargs:
+            marker: '' for no markers
             other kwargs of ax.plt or sns.lineplot
         """
         ax = self[index]
