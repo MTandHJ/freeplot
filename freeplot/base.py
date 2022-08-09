@@ -165,6 +165,22 @@ class FreePlot(UnitPlot):
             ax.scatter(x, y, **kwargs)
 
 
+    def surfaceplot(
+        self, X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
+        index: Union[Tuple[int], str] = (0, 0), *,
+        style: Union[str, Iterable[str]] = [],
+        cmap = plt.cm.coolwarm, antialiased=False,
+        **kwargs: "other kwargs of ax.plot_surface"
+    ):
+        """
+        Args:
+            X, Y, Z: 2D arrary
+        Kwargs:
+        other kwargs of ax.plot_surface
+        """
+        ax = self[index]
+        ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
+
     @style_env
     def violinplot(
         self, y: Iterable, x: Optional[Iterable[str]] = None,

@@ -208,6 +208,7 @@ class UnitPlot:
     def set_scale(self, value: str = 'symlog', index=(0, 0), axis='y') -> None:
         """
         value: 'log'|'linear'|'symlog'|'logit'
+        axis: 'x'|'y'|'z'
         """
         kwargs = dict()
         kwargs['index'] = index
@@ -215,12 +216,18 @@ class UnitPlot:
         return self.set(**kwargs)
 
     def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y'):
+        """
+        axis: 'x'|'y'|'z'
+        """
         kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'lim'] = lim
         return self.set(**kwargs)
 
     def set_label(self, label: str, index=(0, 0), axis='y'):
+        """
+        axis: 'x'|'y'|'z'
+        """
         kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'label'] = label
