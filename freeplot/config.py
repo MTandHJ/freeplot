@@ -78,14 +78,14 @@ _font = {
 _lines = {
     "linewidth": 1.,
     # "marker": None,
-    "markersize": 4,
-    "markeredgewidth": 1.,
-    # "markerfacecolor": "auto",
-    # "markeredgecolor": "white",
+    "markersize": 5,
+    "markeredgewidth": .5,
+    "markerfacecolor": "auto",
+    "markeredgecolor": "white",
 }
 
 _markers = {
-    "fillstyle": "none"
+    # "fillstyle": "none"
 }
 
 
