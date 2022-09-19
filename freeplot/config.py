@@ -173,6 +173,7 @@ style_cfg['heatmap'] = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
 style_cfg['image'] = ["bright"]
 style_cfg['bar'] = []
 style_cfg['violin'] = ["high-vis", "seaborn-whitegrid"]
+style_cfg['surface'] = [{"axes.facecolor":".3"}]
 
 # zoo
 style_cfg['radar'] = []

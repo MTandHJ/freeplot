@@ -1,4 +1,5 @@
 import setuptools
+import re
 
 with open("README.md", "r") as fh:
   long_description = fh.read()
@@ -13,9 +14,13 @@ requires = [
     'SciencePlots>=1.0.5'
 ]
 
+def get_property(prop, project):
+    result = re.search(r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop), open(project + '/__init__.py').read())
+    return result.group(1)
+
 setuptools.setup(
   name="freeplot",
-  version="0.0.13",
+  version=get_property('__version__', 'freeplot'),
   author="MTandHJ",
   author_email="congxueric@gmail.com",
   description="a Python data visualization library based on matplotlib",

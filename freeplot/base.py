@@ -168,7 +168,7 @@ class FreePlot(UnitPlot):
     def surfaceplot(
         self, X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
         index: Union[Tuple[int], str] = (0, 0), *,
-        style: Union[str, Iterable[str]] = [],
+        style: Union[str, Iterable[str]] = 'surface',
         cmap = plt.cm.coolwarm, antialiased=False,
         **kwargs: "other kwargs of ax.plot_surface"
     ):
