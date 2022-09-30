@@ -198,7 +198,7 @@ class FreePlot(UnitPlot):
     @style_env
     def lineplot(
         self, x: np.ndarray, y: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), *, 
         style: Union[str, Iterable[str]] = 'line',
         **kwargs
     ) -> None:
@@ -227,7 +227,7 @@ class FreePlot(UnitPlot):
     @style_env
     def scatterplot(
         self, x: np.ndarray, y: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), 
+        index: Union[Tuple[int], str] = (0, 0), *,
         style: Union[str, Iterable[str]] = 'scatter',
         **kwargs
     ) -> None:

@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.axes._axes import Axes
+from mpl_toolkits.mplot3d.axes3d import Axes3D
 import os
 
 from .config import cfg, style_cfg, COLORS
@@ -684,7 +685,7 @@ class UnitPlot:
             plt.tight_layout()
         return plt.show(*args, **kwargs)
 
-    def __getitem__(self, idx: Union[Iterable[int], str, Axes]) -> Axes:
+    def __getitem__(self, idx: Union[Iterable[int], str, Axes]) -> Union[Axes, Axes3D]:
         """Get Axes.
 
         Parameters:
@@ -698,7 +699,7 @@ class UnitPlot:
         Returns:
         ---
 
-        Axes
+        Axes, Axes3D
         """
         return self.axes[idx]
 
