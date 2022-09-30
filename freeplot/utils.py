@@ -35,19 +35,16 @@ def import_pickle(file_: str) -> Dict:
             fh.close()
 
 
-def getmore(doc):
-    def decorator(func):
-        def wrapper(self, index=(0, 0), **kwargs):
-            axes = self[index]
-            if isinstance(axes, Iterable):
-                return [getattr(ax, func.__name__)(**kwargs) for ax in axes]
-            else:
-                return getattr(axes, func.__name__)(**kwargs)
-        wrapper.__name__ = func.__name__
-        wrapper.__doc__ = doc
-        return wrapper
-    return decorator
-
+def inherit_from_matplotlib(func):
+    def wrapper(self, index=(0, 0), **kwargs):
+        axes = self[index]
+        if isinstance(axes, Iterable):
+            return [getattr(ax, func.__name__)(**kwargs) for ax in axes]
+        else:
+            return getattr(axes, func.__name__)(**kwargs)
+    wrapper.__name__ = func.__name__
+    wrapper.__doc__ = func.__doc__
+    return wrapper
 
 
 def get_style(style_type):

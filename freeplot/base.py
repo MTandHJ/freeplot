@@ -27,19 +27,42 @@ class FreePlot(UnitPlot):
         hatch: Optional[Iterable] = None,
         hatch_scale: int = 3,
         style: Union[str, Iterable[str]] = 'bar',
-        **kwargs: "other kwargs of sns.barplot"
+        **kwargs
     ) -> None:
-        """
-        Args:
-            x, y, hue: the colname of x, y and hue;
-            auto_fmt: adjust the xticklabel if True;
-        Kwargs:
-            palette: Dict, set the color of each of hue.
-            ci: float or 'sd', If “sd”, skip bootstrapping and draw the standard deviation of the observations. 
-                If None, no bootstrapping will be performed, and error bars will not be drawn.
-            hatch: ["-", "/", "\\", "x", "+", ".", "*"].
-            hatch_scale: hatch * hatch_scale.
-            ...
+        """ Bar plotting according to pd.DataFrame. 
+        See [here](https://seaborn.pydata.org/generated/seaborn.barplot.html?highlight=barplot) for details.
+
+        Parameters
+        ---
+        x, y, hue: The colnames of x, y and hue.
+        data: Dataset includes x, y, and hue.
+        auto_fmt: `True`: Adjust the xticklabel.
+
+        hatch: ["-", "/", "\\", "x", "+", ".", "*"]
+        hatch_scale: hatch * hatch_scale.
+        kwargs: other kwargs for sns.barplot
+            - palette: Dict, set the color for each of hue.
+            - width: float, the width of a full element when not using hue nesting, 
+                or width of all the elements for one level of the major grouping variable.
+            - ci: float or 'sd', optional, `sd`: Skip bootstrapping and draw the standard deviation of the observations.  
+                `None`: No bootstrapping will be performed, and error bars will not be drawn.
+            - errorbar: str, name of errorbar method (either “ci”, “pi”, “se”, or “sd”), 
+                    or a tuple with a method name and a level parameter, 
+                    or a function that maps from a vector to a (min, max) interval.
+            - ...
+        
+        Examples:
+        ---
+
+        >>> data = pd.DataFrame(
+        ...    {
+        ...        "T": T,
+        ...        "val": A + B,
+        ...        "category": Hue
+        ...    }
+        ... )
+        >>> fp.barplot(x='T', y='val', hue='category', data=data, index=(0, 0), auto_fmt=True)
+
         """
         ax = self[index]
         sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
@@ -57,8 +80,32 @@ class FreePlot(UnitPlot):
         index: Union[Tuple[int], str] = (0, 0), *,
         style: Union[str, Iterable[str]] = [],
         origin: Optional[str] = 'lower', cmap = plt.cm.bone,
-        **kwargs: "other kwargs of ax.contourf"
+        **kwargs
     ):
+        """Plot filled contours.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contourf.html?highlight=contourf#matplotlib.axes.Axes.contourf) for details.
+
+        Parameters:
+        ---
+
+        X, Y: The coordinates of the values in Z.
+        Z: (M, N), the height values over which the contour is draw.
+        levels: Determines the number and positions of the contour lines / regions.
+        cbar: `True`: Add color bar.
+        origin: {None, 'upper', 'lower', 'image'}. 
+            Determines the orientation and exact position of Z by specifying the position of Z[0, 0].
+        cmap: The Colormap instance or registered colormap name used to map scalar data to colors.
+        kwargs: other kwargs for `contourf`
+            - linewidths: float or array-like
+            - linestyles: {None, 'solid', 'dashed', 'dashdot', 'dotted'}
+            - hatches: list[str]
+        
+        Examples:
+        ---
+
+        >>> fp.contourf(X, Y, Z, levels=5, cmap=plt.cm.bone)
+
+        """
         ax = self[index]
         cs =  ax.contourf(X, Y, Z, levels, cmap=cmap, origin=origin, **kwargs)
         if cbar:
@@ -74,17 +121,28 @@ class FreePlot(UnitPlot):
         cmap: str = 'GnBu', 
         linewidth: float = .5, *,
         style: Union[str, Iterable[str]] = 'heatmap',
-        **kwargs: "other kwargs of sns.heatmap"
+        **kwargs
     ) -> None:
-        """
-        Args:
-            data: M x N dataframe.
-            cmap: GnBu, Oranges are recommanded.
-            annot: annotation.
-        Kwargs:
-            fmt: the format for annotation.
-            kwargs:
-                cbar: bool
+        """Plot rectangular data as a color-encoded matrix.
+        See https://seaborn.pydata.org/generated/seaborn.heatmap.html?highlight=heatmap#seaborn.heatmap for details.
+
+        Parameters:
+        ---
+
+        data: (M, N), Dataset.
+        cmap: colormap, GnBu, Oranges are recommanded.
+        annot: Annotation.
+        fmt: the format of annotation.
+        **kwargs: other kwargs for `sns.heatmap`
+            - cbar: bool
+                `True`: Add color bar.
+
+        Examples:
+        ---
+
+        >>> df = pd.DataFrame(data, index=col_labels, columns=row_labels)
+        >>> fp.heatmap(df, annot=True, fmt=".4f", cbar=False, linewidth=0.5)
+
         """
         ax = self[index]
         return sns.heatmap(
@@ -101,12 +159,28 @@ class FreePlot(UnitPlot):
         index: Union[Tuple[int], str] = (0, 0), 
         show_ticks: bool = False, *, 
         style: Union[str, Iterable[str]] = 'image',
-        **kwargs: "other kwargs of ax.imshow"
+        **kwargs
     ) -> None:
-        """
-        Args:
-            show_ticks: show the ticks if True
-        Kwargs: other kwargs of ax.imshow
+        """Display data as an image, i.e., on a 2D regular raster.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html?highlight=imshow#matplotlib.pyplot.imshow) for details.
+
+        Parameters:
+        ---
+
+        img: Image.
+        show_ticks: bool
+            - `True`: Show the ticks.
+        **kwargs: other kwargs for `ax.imshow`
+            - cmap: str or colormap
+            - norm: Normalization method.
+            - vmin, vmax: float
+            - ...
+
+        Examples:
+        ---
+
+        >>> fp.imageplot(img, show_ticks=False)
+
         """
         ax = self[index]
         img = img[..., None]
@@ -125,69 +199,133 @@ class FreePlot(UnitPlot):
     def lineplot(
         self, x: np.ndarray, y: np.ndarray, 
         index: Union[Tuple[int], str] = (0, 0), 
-        seaborn: bool = False, *,
         style: Union[str, Iterable[str]] = 'line',
-        **kwargs: "other kwargs of ax.plot or sns.lineplot"
+        **kwargs
     ) -> None:
-        """
-        Args:
-            x, y: Iterable;
-            seaborn: bool, use sns.lineplot to plot if True
-        Kwargs:
-            marker: '' for no markers
-            other kwargs of ax.plt or sns.lineplot
+        """Draw a line plot.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html?highlight=plot#matplotlib.axes.Axes.plot) for details.
+
+        Parameters:
+        ---
+        x, y: array-like 
+            Coordinates.
+        **kwargs: other kwargs for ax.plot()
+            - marker: `''`: No markers.
+            - ...
+        
+        Examples:
+        ---
+
+        >>> fp.lineplot(x, y, index=(0, 0), style='line')
+        >>> # clear markers
+        >>> fp.lineplot(x, y, index=(0, 0), marker='')
+
         """
         ax = self[index]
-        if seaborn:
-            return sns.lineplot(x, y, ax=ax, **kwargs)
-        else:
-            return ax.plot(x, y, **kwargs)
+        return ax.plot(x, y, **kwargs)
         
     @style_env
     def scatterplot(
         self, x: np.ndarray, y: np.ndarray, 
         index: Union[Tuple[int], str] = (0, 0), 
-        seaborn: bool = False, *,
         style: Union[str, Iterable[str]] = 'scatter',
-        **kwargs: "other kwargs of ax.scatter or sns.scatterplot"
+        **kwargs
     ) -> None:
-        """
-        Args:
-            x, y: Iterable;
-            seaborn: bool, use sns.scatterplot to plot if True;
-        Kwargs:
-            other kwargs of ax.scatter or sns.scatterplot
+        """A scatter plot of y vs. x with varying marker size and/or color.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html?highlight=scatter#matplotlib.axes.Axes.scatter) for details.
+
+        Parameters:
+        ---
+
+        x, y: array-like
+            Coordinates.
+        **kwargs: other kwargs for `ax.scatter`
+            - s: float or array-like, the marker size
+            - c: array-like or list of colors or color, the marker colors
+            - marker: marker style
+            - cmap: color map
+            - vmin, vmax:
+            - alpha:
+            - linewidth:
+            - edgecolors: {'face', 'none', None} or color or sequence of color
+            - ...
+
+        Examples:
+        ---
+
+        >>> fp.scatterplot(x, y, edgecolors='none')
+
         """
         ax = self[index]
-        if seaborn:
-            sns.scatterplot(x, y, ax=ax, **kwargs)
-        else:
-            ax.scatter(x, y, **kwargs)
-
+        return ax.scatter(x, y, **kwargs)
 
     def surfaceplot(
         self, X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
         index: Union[Tuple[int], str] = (0, 0), *,
         style: Union[str, Iterable[str]] = 'surface',
         cmap = plt.cm.coolwarm, antialiased=False,
-        **kwargs: "other kwargs of ax.plot_surface"
+        **kwargs
     ):
-        """
-        Args:
-            X, Y, Z: 2D arrary
-        Kwargs:
-        other kwargs of ax.plot_surface
+        """Create a surface plot.
+        See [here](https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.mplot3d.axes3d.Axes3D.html?highlight=plot_surface#mpl_toolkits.mplot3d.axes3d.Axes3D.plot_surface) for details.
+
+        Parameters:
+        ---
+
+        X, Y, Z: 2D arrary.
+        cmap: Colormap.
+        antialiased: 
+        **kwargs: other kwargs of `ax.plot_surface`
+            - color: color-like 
+                Color of the surface patches.
+            - facecolors: array-like of colors
+                Colors of each individual patch.
+            - ...
+
+        Examples:
+        ---
+
+        >>> fp = FreePlot(projection='3d', dpi=300)
+        >>> fp.surfaceplot(X, Y, Z, cmap=plt.cm.coolwarm, antialiased=False, linewidth=0)
+
         """
         ax = self[index]
-        ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
+        return ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
 
     @style_env
     def violinplot(
         self, y: Iterable, x: Optional[Iterable[str]] = None,
         index: Union[Tuple[int], str] = (0, 0), *,
         style: Union[str, Iterable[str]] = 'violin',
-        **kwargs: "other kwargs of ax.violinplot"
+        **kwargs
     ) -> None:
+        """Make a violin plot.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.violinplot.html?highlight=violinplot#matplotlib.axes.Axes.violinplot) for details.
+
+        Parameters:
+        ---
+        y: Dataset, each of y is a group of data.
+        x: Group index.
+        **kwargs: other kwargs for `ax.violinplot`
+            - positions: array-like
+                The positions of the violins. The ticks and limits are automatically set to match the positions.
+            - vert: bool 
+                `True`: creates a vertical violin plot. Otherwise, creates a horizontal violin plot.
+            - widths: 
+            - showmeans: bool, default: False
+            - showextrema: bool, default: True
+            - showmedians: bool, default: False
+
+        Examples:
+        ---
+
+        >>> # note that each element is a group of data ...
+        >>> dataset = [np.random.normal(0, std, 100) for std in range(5, 10)]
+        >>> fp.violinplot(x=None, y=dataset, index=(0, 0))
+        >>> fp.violinplot(x=[f"std-{std}" for std in range(5, 10)], y=dataset, index=(0, 0))
+
+        """
+
         if x is None:
             x = range(1, len(y) + 1)
         ax = self[index]
@@ -205,6 +343,7 @@ class FreePlot(UnitPlot):
 
 
     def add_patch(self, patch: patches.Patch, index: Union[Tuple[int], str] = (0, 0)) -> patches.Patch:
+        """Add patch to the Axes."""
         ax = self[index]
         return ax.add_patch(patch)
 
