@@ -54,6 +54,10 @@ class FreePlot(UnitPlot):
         Examples:
         ---
 
+        >>> A = [1., 2., 3.]
+        >>> B = [2., 3., 4.]
+        >>> T = ['One', 'Two', 'Three'] * 2
+        >>> Hue = ['A'] * len(A) + ['B'] * len(B)
         >>> data = pd.DataFrame(
         ...    {
         ...        "T": T,
@@ -61,6 +65,7 @@ class FreePlot(UnitPlot):
         ...        "category": Hue
         ...    }
         ... )
+        >>> fp = FreePlot(dpi=300)
         >>> fp.barplot(x='T', y='val', hue='category', data=data, index=(0, 0), auto_fmt=True)
 
         """
@@ -103,6 +108,12 @@ class FreePlot(UnitPlot):
         Examples:
         ---
 
+        >>> X = np.arange(-5, 5, 0.25)
+        >>> Y = np.arange(-5, 5, 0.25)
+        >>> X, Y = np.meshgrid(X, Y)
+        >>> R = np.sqrt(X**2 + Y**2)
+        >>> Z = np.sin(R)
+        >>> fp = FreePlot(dpi=300)
         >>> fp.contourf(X, Y, Z, levels=5, cmap=plt.cm.bone)
 
         """
@@ -140,7 +151,13 @@ class FreePlot(UnitPlot):
         Examples:
         ---
 
+
+        >>> titles = ("S", "h", "a", "n")
+        >>> row_labels = ('c', 'u', 't', 'e')
+        >>> col_labels = ('l', 'r', 'i', 'g')
+        >>> data = np.random.rand(4, 4)
         >>> df = pd.DataFrame(data, index=col_labels, columns=row_labels)
+        >>> fp = FreePlot()
         >>> fp.heatmap(df, annot=True, fmt=".4f", cbar=False, linewidth=0.5)
 
         """
@@ -216,9 +233,12 @@ class FreePlot(UnitPlot):
         Examples:
         ---
 
+        >>> x = np.linspace(-10, 10, 20)
+        >>> y = np.sin(x) + np.random.randn(20)
+        >>> fp = FreePlot((1, 2), (4.4, 2), dpi=300, sharey=True)
         >>> fp.lineplot(x, y, index=(0, 0), style='line')
-        >>> # clear markers
-        >>> fp.lineplot(x, y, index=(0, 0), marker='')
+        >>> # plotting a line without markers
+        >>> fp.lineplot(x, y, index=(0, 1), marker='')
 
         """
         ax = self[index]
@@ -253,6 +273,17 @@ class FreePlot(UnitPlot):
         Examples:
         ---
 
+
+        >>> from scipy.stats import multivariate_normal
+        >>> nums = 100
+        >>> means = (
+        ...    (0, 0),
+        ...    (5, 5),
+        ...    (-5, -5)
+        >>> )
+        >>> cov = 2
+        >>> data = multivariate_normal.rvs(mean, cov, size=nums)
+        >>> x, y = data[:, 0], data[:, 1]
         >>> fp.scatterplot(x, y, edgecolors='none')
 
         """
@@ -285,6 +316,12 @@ class FreePlot(UnitPlot):
         Examples:
         ---
 
+
+        >>> X = np.arange(-5, 5, 0.25)
+        >>> Y = np.arange(-5, 5, 0.25)
+        >>> X, Y = np.meshgrid(X, Y)
+        >>> R = np.sqrt(X**2 + Y**2)
+        >>> Z = np.sin(R)
         >>> fp = FreePlot(projection='3d', dpi=300)
         >>> fp.surfaceplot(X, Y, Z, cmap=plt.cm.coolwarm, antialiased=False, linewidth=0)
 
