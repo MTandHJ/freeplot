@@ -22,7 +22,7 @@ pip install freeplot
 
    shape: 表明容器中axes的配置, 在此例中, 为 2 x 2共4个axes;
 
-   figsize: (width, height), 用于指定图片的宽高, 此例为500 x 500;
+   figsize: (height, width), 用于指定每个 Axes 的高宽, 此例的 figsize 实际上 400 x 440;
 
    titles: 为每个ax指定标题;
 
@@ -99,7 +99,7 @@ from freeplot.base import FreePlot
 
 
 titles = ('Line', 'Scatter', 'Bar', 'Heatmap')
-fp = FreePlot(shape=(2, 2), figsize=(5, 5), titles=titles, sharey=False)
+fp = FreePlot(shape=(2, 2), titles=titles, sharey=False)
 fp.set_style('no-latex')
 
 # Line

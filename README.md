@@ -21,11 +21,11 @@ from freeplot.base import FreePlot
 2. create a new container
 
 ```
-fp = FreePlot(shape=(2, 2), figsize=(5, 5), titles=('a', 'b', 'c', 'd'), sharey=True)
+fp = FreePlot(shape=(2, 2), titles=('a', 'b', 'c', 'd'), sharey=True)
 ```
 shape: the arrangement of axes, 2 x 2, a total 4 axes in this case;
 
-figsize: (width, height), 500 x 500 in this case;
+figsize: (height, width), the real figure size here is 400 x 440;
 
 titles: the title for each ax;
 
@@ -91,8 +91,7 @@ from freeplot.base import FreePlot
 
 
 titles = ('Line', 'Scatter', 'Bar', 'Heatmap')
-fp = FreePlot(shape=(2, 2), figsize=(5, 5), titles=titles, sharey=False)
-fp.set_style('no-latex')
+fp = FreePlot(shape=(2, 2), titles=titles, sharey=False)
 
 # Line
 x = np.linspace(0, 2, 10)
@@ -233,7 +232,7 @@ fp.savefig('violin.png')
 from freeplot.base import FreePlot
 
 
-fp = FreePlot((1, 1), (5, 4))
+fp = FreePlot((1, 1), (4, 5))
 
 fp.lineplot([1, 2, 3], [4, 5, 6], label='a')
 fp.lineplot([1, 2, 3], [3, 5, 7], label='b')
