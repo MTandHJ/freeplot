@@ -8,7 +8,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.axes._axes import Axes
 from mpl_toolkits.mplot3d.axes3d import Axes3D
-import os
 
 from .config import cfg, style_cfg, COLORS
 from .utils import inherit_from_matplotlib, get_style, style_env
@@ -199,7 +198,7 @@ class UnitPlot:
     def __init__(
         self, 
         shape: Tuple[int, int] = (1, 1), 
-        figsize: Tuple[float, float] = (2.2, 2), 
+        figsize: Tuple[float, float] = (2, 2.5), 
         titles: Optional[Iterable] = None,
         sharey: bool = True,
         latex: bool = False,
@@ -211,14 +210,18 @@ class UnitPlot:
         ---
 
         shape: (row, col)
-        figsize: (width (col), height (row))
+        figsize: (height, width) for per Axes
+            So the real figsize is (height * row, width * col).
         titles: Titles for each Axes.
         sharey: `True`: Axes in each row will share the same y axis.
         latex: `False`: set_style('no-latex').
         projection: Sometimes it will be useful, like in case of '3d'.
         **kwargs: other kwargs for `plt.figure`.
         
-        NOTE: Please make sure your computer has installed Latex already before calling 'latex=True' !
+        Notes:
+        ---
+
+        Please make sure your computer has installed Latex already before calling 'latex=True' !
         """
         # the default settings
         plt.style.use(style_cfg.basic)
@@ -227,6 +230,7 @@ class UnitPlot:
         if not latex:
             self.set_style('no-latex')
 
+        figsize = (figsize[1] * shape[1], figsize[0] * shape[0])
         self.fig = plt.figure(figsize=figsize, **kwargs)
         self.axes = FreeAxes(self.fig, shape, titles, sharey, projection=projection)
     
@@ -358,7 +362,7 @@ class UnitPlot:
         self.axes.set_title(y=y)
 
     def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%2f", axis: str = 'y') -> Dict:
-        """Set ticks.
+        """Set the values of ticks.
         
         Parameters:
         ---
@@ -591,6 +595,11 @@ class UnitPlot:
             - edgecolor: 'inherit' or color
             - ...
 
+        Notes:
+        ---
+
+        When you calling fp.legend(), please close the tight_layout in show() or savefig() !
+
         Examples:
         ---
 
@@ -599,7 +608,6 @@ class UnitPlot:
         >>> # The following operation will not conflict with tight_layout.
         >>> fp[0, 0].legend() # Add legend in the Axes[0, 0].
         
-        NOTE: when you calling fp.legend(), please close the tight_layout in show() or savefig() !
         """
         self[index].legend(bbox_to_anchor=(x, y), loc=loc,
         bbox_transform=plt.gcf().transFigure, ncol=ncol, **kwargs)

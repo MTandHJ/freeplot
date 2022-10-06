@@ -31,7 +31,7 @@ data = pd.DataFrame(
 )
 
 # shape: 1, 1; figsize: 2.2, 2
-fp = FreePlot((1, 1), (2.2, 2), titles=("Bar Demo",), dpi=200)
+fp = FreePlot((1, 1), titles=("Bar Demo",), dpi=200)
 fp.barplot(x='T', y='val', hue='category', data=data, index=(0, 0), auto_fmt=True)
 
 fp.set(xlabel='X')

@@ -18,7 +18,7 @@ row_labels = ('c', 'u', 't', 'e')
 col_labels = ('l', 'r', 'i', 'g')
 
 # shape: 1, 4; figsize: 9, 2
-fp = FreePlot((1, 4), (9, 2), titles=titles, dpi=100, sharey=True)
+fp = FreePlot((1, 4), titles=titles, dpi=100, sharey=True)
 
 for title in titles:
     data = np.random.rand(4, 4)

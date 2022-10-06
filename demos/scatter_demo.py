@@ -12,7 +12,7 @@ titles = ("S", "h", "a", "n")
 labels = ("sin", "cos", "x")
 
 # shape: 1, 4; figsize: 9.5, 2
-fp = FreePlot((1, 4), (9.5, 2), titles=titles, dpi=100, sharey=True)
+fp = FreePlot((1, 4), titles=titles, dpi=100, sharey=True)
 
 nums = 100
 means = (

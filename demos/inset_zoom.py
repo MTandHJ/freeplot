@@ -4,7 +4,7 @@
 from freeplot.base import FreePlot
 
 
-fp = FreePlot((1, 1), (5, 4))
+fp = FreePlot((1, 1))
 
 fp.lineplot([1, 2, 3], [4, 5, 6], label='a')
 fp.lineplot([1, 2, 3], [3, 5, 7], label='b')

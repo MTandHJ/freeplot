@@ -327,7 +327,9 @@ class FreePlot(UnitPlot):
 
         """
         ax = self[index]
-        return ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
+        results = ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
+        ax.tick_params('z', pad=0.01)
+        return results
 
     @style_env
     def violinplot(

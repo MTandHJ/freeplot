@@ -15,7 +15,7 @@ labels = (
 theta = pre_radar(len(labels), frame="polygon")
 
 # shape: 1, 1; figsize: 4, 4;
-fp = FreePlot((1, 1), (4, 4), dpi=100, titles=["RADAR"], projection="radar")
+fp = FreePlot((1, 1), dpi=100, titles=["RADAR"], projection="radar")
 
 
 data = {
