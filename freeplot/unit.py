@@ -655,7 +655,7 @@ class UnitPlot:
     def savefig(
         self, filename: str, 
         close_fig: bool = True,
-        tight_layout: bool = True,
+        tight_layout: bool = False,
         bbox_inches: str = 'tight', 
         **kwargs
     ) -> None:
@@ -687,7 +687,7 @@ class UnitPlot:
         """Close the figure."""
         plt.close(self.fig)
     
-    def show(self, *args, tight_layout: bool = True, **kwargs):
+    def show(self, *args, tight_layout: bool = False, **kwargs):
         """Show the figure."""
         if tight_layout:
             plt.tight_layout()
