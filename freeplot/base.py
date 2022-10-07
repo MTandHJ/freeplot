@@ -328,6 +328,8 @@ class FreePlot(UnitPlot):
         """
         ax = self[index]
         results = ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
+        ax.tick_params('x', pad=0.01)
+        ax.tick_params('y', pad=0.01)
         ax.tick_params('z', pad=0.01)
         return results
 
