@@ -1,7 +1,9 @@
 
 
 
-FreePlot is a Python data visualization library based on matplotlib. It provides some simple implements according to my preference. Matplotlib is powerful yet not easy to draw what you want due to its complicated arguments. I feel FreePlot is more friendly, especially for papers.
+FreePlot is a Python data visualization library based on Matplotlib. It provides some simple implementations according to my preference. 
+Matplotlib is powerful yet not easy to draw what you want due to its complicated arguments. 
+I feel FreePlot is more friendly, especially for papers.
 
 ## Installation
 
@@ -334,7 +336,7 @@ plt.style.use('no-latex')
     fp.set_scale(value='symlog', index=(0, 0), axis='x')
     fp.set_scale(value='symlog', index=(0, 0), axis='y')
     ```
-7. You can add text on axes by
+7. You can add text on Axes by
     ```
     fp.set_text(x, y, s, fontsize=10)
     ```
