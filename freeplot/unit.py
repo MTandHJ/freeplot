@@ -198,10 +198,11 @@ class UnitPlot:
     def __init__(
         self, 
         shape: Tuple[int, int] = (1, 1), 
-        figsize: Tuple[float, float] = (1, 1.3), 
+        figsize: Tuple[float, float] = (2, 2.5), 
         titles: Optional[Iterable] = None,
         sharey: bool = True,
         latex: bool = False,
+        dpi: int = 200,
         projection: Optional[str] = None,
         **kwargs: "other kwargs of plt.subplots"
     ):
@@ -231,7 +232,7 @@ class UnitPlot:
             self.set_style('no-latex')
 
         figsize = (figsize[1] * shape[1], figsize[0] * shape[0])
-        self.fig = plt.figure(figsize=figsize, **kwargs)
+        self.fig = plt.figure(figsize=figsize, dpi=dpi, **kwargs)
         self.axes = FreeAxes(self.fig, shape, titles, sharey, projection=projection)
     
     @property

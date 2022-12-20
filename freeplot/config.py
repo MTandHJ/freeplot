@@ -63,10 +63,8 @@ cfg = Config()
 
 _axes = {
     "prop_cycle": cycler(marker=MARKERS, color=COLORS),
-    "titlesize": 7.5,
-    "titlepad": 3.,
-    "labelsize": 7.5,
-    "labelpad": 1,
+    "titlesize": 11,
+    "labelsize": 11,
     "facecolor": 'white',
     "grid": False
 }
@@ -74,14 +72,14 @@ _axes = {
 _font = {
         "family": ["serif"],
         "weight": "normal",
-        "size": 5
+        "size": 7
     }
 
 _lines = {
-    "linewidth": .5,
+    "linewidth": 1.,
     # "marker": None,
-    "markersize": 3,
-    "markeredgewidth": .25,
+    "markersize": 5,
+    "markeredgewidth": .5,
     "markerfacecolor": "auto",
     "markeredgecolor": "white",
 }
@@ -92,19 +90,19 @@ _markers = {
 
 
 _legend = {
-    'borderaxespad': 0.2,
+    'borderaxespad': 0.3,
     'borderpad': 0.2,
-    'columnspacing': 2.0,
-    'edgecolor': '0.7',
+    'columnspacing': 0.1,
+    'edgecolor': '0.8',
     'facecolor': 'inherit',
     'fancybox': True,
-    'fontsize': 5,
+    'fontsize': 10,
     'framealpha': 0.5,
-    'frameon': True,
+    'frameon': False,
     'handleheight': 0.7,
     'handlelength': 2.0,
     'handletextpad': 0.8,
-    'labelspacing': 0.4,
+    'labelspacing': 0.5,
     'loc': 'best',
     'markerscale': 1.0,
     'numpoints': 1,
@@ -119,19 +117,19 @@ _xtick = {
     'color': 'black',
     'direction': 'out',
     'labelbottom': True,
-    'labelsize': 7,
+    'labelsize': 11,
     'labeltop': False,
     'major.bottom': True,
-    'major.pad': 1.5,
-    'major.size': 2.,
+    'major.pad': 3.5,
+    'major.size': 3.5,
     'major.top': True,
     'major.width': 0.5,
     'minor.bottom': True,
-    'minor.pad': 1.4,
-    'minor.size': 0.9,
+    'minor.pad': 3.4,
+    'minor.size': 2.0,
     'minor.top': True,
     'minor.visible': False,
-    'minor.width': 0.6,
+    'minor.width': 0.4,
     'top': False,
 }
 
@@ -141,19 +139,19 @@ _ytick = {
     'direction': 'out',
     'labelleft': True,
     'labelright': False,
-    'labelsize': 7,
+    'labelsize': 11,
     'left': True,
     'major.left': True,
-    'major.pad': 1.5,
+    'major.pad': 3.5,
     'major.right': True,
-    'major.size': 2,
+    'major.size': 3.5,
     'major.width': 0.5,
     'minor.left': True,
-    'minor.pad': 1.4,
+    'minor.pad': 3.4,
     'minor.right': True,
-    'minor.size': .9,
+    'minor.size': 2.0,
     'minor.visible': False,
-    'minor.width': 0.6,
+    'minor.width': 0.4,
     'right': False
 }
 
@@ -162,9 +160,9 @@ cfg['rc_params'] = Config(
     font=_font,
     lines=_lines,
     markers=_markers,
+    legend=_legend,
     xtick=_xtick,
-    ytick=_ytick,
-    legend=_legend
+    ytick=_ytick
 )
 
 style_cfg = Config()
