@@ -198,7 +198,7 @@ class UnitPlot:
     def __init__(
         self, 
         shape: Tuple[int, int] = (1, 1), 
-        figsize: Tuple[float, float] = (2, 2.5), 
+        figsize: Tuple[float, float] = (1, 1.3), 
         titles: Optional[Iterable] = None,
         sharey: bool = True,
         latex: bool = False,
