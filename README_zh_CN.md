@@ -149,10 +149,30 @@ fp.savefig('demo.png')
 ```
 
 
-
-
-
 ![demo](README_zh_CN.assets/demo.png)
+
+
+### Stack
+
+```
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from freeplot.base import FreePlot
+
+x = np.arange(0, 10, 2)
+ay = [1, 1.25, 2, 2.75, 3]
+by = [1, 1, 1, 1, 1]
+cy = [2, 1, 2, 1, 2]
+y = np.vstack([ay, by, cy])
+fp = FreePlot()
+fp.stackplot(x, y, index=(0, 0), style='stack')
+fp.show()
+```
+
+![demo](README_zh_CN.assets/stackplot.png)
+
+
 
 
 ### Radar

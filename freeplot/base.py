@@ -243,6 +243,42 @@ class FreePlot(UnitPlot):
         """
         ax = self[index]
         return ax.plot(x, y, **kwargs)
+
+
+    @style_env
+    def stackplot(
+        self, x: np.ndarray, y: np.ndarray, 
+        index: Union[Tuple[int], str] = (0, 0), *, 
+        style: Union[str, Iterable[str]] = 'stack',
+        **kwargs
+    ) -> None:
+        """Draw a stacked area plot.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.stackplot.html#matplotlib.axes.Axes.stackplot) for details.
+
+        Parameters:
+        ---
+        x: (N,) array-like
+        y: (M, N) array-like
+        **kwargs: other kwargs for ax.stackplot()
+            - labels: list of str
+            - colors: list of color
+            - All other keyword arguments are passed to Axes.fill_between
+        
+        Examples:
+        ---
+
+        >>> x = np.arange(0, 10, 2)
+        >>> ay = [1, 1.25, 2, 2.75, 3]
+        >>> by = [1, 1, 1, 1, 1]
+        >>> cy = [2, 1, 2, 1, 2]
+        >>> y = np.vstack([ay, by, cy])
+        >>> fp = FreePlot()
+        >>> fp.stackplot(x, y, index=(0, 0), style='stack')
+
+        """
+        ax = self[index]
+        return ax.stackplot(x, y, **kwargs)
+
         
     @style_env
     def scatterplot(
