@@ -23,9 +23,12 @@ class FreePlot(UnitPlot):
         self, x: str, y: str, 
         data: pd.DataFrame, hue: Optional[str] = None, 
         index: Union[Tuple[int], str] = (0, 0), 
+        orient: str = 'v',
         auto_fmt: bool = False, *,
         hatch: Optional[Iterable] = None,
         hatch_scale: int = 3,
+        errorbar: str = 'sd',
+        capsize: float = 0.1,
         style: Union[str, Iterable[str]] = 'bar',
         **kwargs
     ) -> None:
@@ -36,12 +39,17 @@ class FreePlot(UnitPlot):
         ---
         x, y, hue: The colnames of x, y and hue.
         data: Dataset includes x, y, and hue.
+        orient: 'v' or 'h'
+            Plot the bar vertically (`v`) or horizontally (`h`).
         auto_fmt: `True`: Adjust the xticklabel.
 
-        hatch: ["-", "/", "\\", "x", "+", ".", "*"]
+        hatch: ["", "/", "//”, "//\\\\", "x", "+", ".", "*"]
         hatch_scale: hatch * hatch_scale.
         kwargs: other kwargs for sns.barplot
-            - palette: Dict, set the color for each of hue.
+            - palette: Dict|List, 
+                set the color for each of hue.
+            - edgecolor: str
+                the edgecolor of the bar
             - width: float, the width of a full element when not using hue nesting, 
                 or width of all the elements for one level of the major grouping variable.
             - ci: float or 'sd', optional, `sd`: Skip bootstrapping and draw the standard deviation of the observations.  
@@ -70,7 +78,11 @@ class FreePlot(UnitPlot):
 
         """
         ax = self[index]
-        sns.barplot(x=x, y=y, hue=hue, data=data, ax=ax, **kwargs)
+        sns.barplot(
+            x=x, y=y, hue=hue, data=data, ax=ax, orient=orient,
+            errorbar = errorbar, capsize=capsize,
+            **kwargs
+        )
         if auto_fmt:
             self.fig.autofmt_xdate()
         if hatch:
