@@ -75,6 +75,8 @@ class FreePlot(UnitPlot):
         ... )
         >>> fp = FreePlot(dpi=300)
         >>> fp.barplot(x='T', y='val', hue='category', data=data, index=(0, 0), auto_fmt=True)
+        # using hatch
+        >>> fp.barplot(x='T', y='val', hue='category', data=data, palette=['white'], edgecolor='black', hatch=['', '/', '//'])
 
         """
         ax = self[index]
@@ -89,6 +91,7 @@ class FreePlot(UnitPlot):
             for pattern, bars in zip(hatch, self.get_container(index=index)):
                 for bar in bars:
                     bar.set_hatch(pattern * hatch_scale)
+        return self.get_legend_handles_labels(index)
 
     @style_env
     def contourf(
