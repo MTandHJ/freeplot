@@ -1,7 +1,5 @@
 
 
-
-
 from typing import List, Tuple, Optional, Dict, Union, Iterable
 import numpy as np
 import matplotlib
