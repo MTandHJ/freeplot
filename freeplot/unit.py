@@ -403,6 +403,36 @@ class UnitPlot:
         kwargs[axis + 'ticklabels'] = labels
         return self.set(**kwargs)
 
+    def fill_between(
+        self,
+        x: Iterable,
+        lower: Iterable, upper: Iterable,
+        alpha: float = 0.5, linewidth: float = 0.,
+        index = (0, 0),
+        **kwargs
+    ):
+        """
+        Fill between lower and upper.
+
+        Parameters:
+        -----------
+
+        x: array
+            The x coordinates of the nodes defining the curves.
+        lower: array or scalar
+            The y coordinates of the nodes defining the first curve.
+        upper: array or scalar
+            The y coordinates of the nodes defining the second curve.
+        
+        Returns:
+        --------
+
+        PolyCollection
+        """
+        return self[index].fill_between(
+            x, lower, upper, alpha=alpha, linewidth=linewidth,
+            **kwargs
+        )
     
     def ticklabel_format(
         self, style: str = 'sci', scilimits: Iterable[int] = (0, 0),
