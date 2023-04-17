@@ -345,6 +345,20 @@ class UnitPlot:
         """
         return self[index].text(x, y, s, fontdict, **kwargs)
 
+    def set_arrow(
+        self, 
+        x: float, y: float,
+        dx: float, dy: float,
+        width: float, head_width: float,
+        index = (0, 0), color: str = 'r', alpha: float = 0.5,
+        **kwargs
+    ):
+        return self[index].arrow(
+            x, y, dx, dy,
+            width=width, head_width=head_width,
+            color=color, alpha=alpha, **kwargs
+        )
+
     def set_title(self, y: float = .99) -> None:
         """Set titles for Axes.
         
