@@ -36,8 +36,8 @@ class Config(dict):
 
 COLORS = (
     "#2D2C40",
-    "#B3002A",
     "#0050C2",
+    "#B3002A",
     "#006058",
     "#3A4E8C",
     "#D99F6C",
