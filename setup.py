@@ -9,8 +9,8 @@ requires = [
     'pandas>=1.0.1',
     'scipy>=1.4.1',
     'scikit-learn>=0.23.2',
-    'matplotlib>=3.1.3',
-    'seaborn>=0.10.0',
+    'matplotlib==3.1.3',
+    'seaborn==0.10.0',
     'SciencePlots==1.0.9'
 ]
 
