@@ -33,8 +33,8 @@ class FreePlot(UnitPlot):
         """ Bar plotting according to pd.DataFrame. 
         See [here](https://seaborn.pydata.org/generated/seaborn.barplot.html?highlight=barplot) for details.
 
-        Parameters
-        ---
+        Parameters:
+        -----------
         x, y, hue: The colnames of x, y and hue.
         data: Dataset includes x, y, and hue.
         orient: 'v' or 'h'
@@ -58,8 +58,7 @@ class FreePlot(UnitPlot):
             - ...
         
         Examples:
-        ---
-
+        ---------
         >>> A = [1., 2., 3.]
         >>> B = [2., 3., 4.]
         >>> T = ['One', 'Two', 'Three'] * 2
@@ -104,8 +103,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contourf.html?highlight=contourf#matplotlib.axes.Axes.contourf) for details.
 
         Parameters:
-        ---
-
+        -----------
         X, Y: The coordinates of the values in Z.
         Z: (M, N), the height values over which the contour is draw.
         levels: Determines the number and positions of the contour lines / regions.
@@ -119,8 +117,7 @@ class FreePlot(UnitPlot):
             - hatches: list[str]
         
         Examples:
-        ---
-
+        ---------
         >>> X = np.arange(-5, 5, 0.25)
         >>> Y = np.arange(-5, 5, 0.25)
         >>> X, Y = np.meshgrid(X, Y)
@@ -137,6 +134,53 @@ class FreePlot(UnitPlot):
         return cs
 
     @style_env
+    def histplot(
+        self, x: np.ndarray, 
+        num_bins: int, density: bool = False, range: Optional[Tuple] = None,
+        cumulative: bool = False, histtype: str = 'bar',
+        index: Union[Tuple[int], str] = (0, 0), *,
+        style: Union[str, Iterable[str]] = 'hist',
+        **kwargs
+    ):
+        r"""
+        Compute and plot a histogram.
+        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist) for more details.
+
+        Parameters:
+        -----------
+        x: (n,) array
+        num_bins: int
+            The number bins.
+        density: bool, default to False
+            `True`: the counts are normalized to `1`
+        cumulative: bool, default to False
+            `True`: a histogram is computed where each bin gives the counts in that bin plus all bins for smaller values
+        range: tuple, optional
+            `None`: range will be (x.min(), x.max())
+
+        Returns:
+        --------
+        n: array
+            The number of bins.
+        bins: array
+            The edges of the bins with a length of `n + 1`.
+        patches: BarContainer
+
+        Examples:
+        ---------
+        >>> x = np.random.rand(1024)
+        >>> fp.histplot(x, num_bins=100, density=True)
+        """
+        ax = self[index]
+        ax.hist(
+            x, bins=num_bins, 
+            density=density, range=range,
+            cumulative=cumulative, histtype=histtype,
+            **kwargs
+        )
+
+
+    @style_env
     def heatmap(
         self, data: pd.DataFrame, 
         index: Union[Tuple[int], str] = (0, 0), 
@@ -151,8 +195,7 @@ class FreePlot(UnitPlot):
         See https://seaborn.pydata.org/generated/seaborn.heatmap.html?highlight=heatmap#seaborn.heatmap for details.
 
         Parameters:
-        ---
-
+        -----------
         data: (M, N), Dataset.
         cmap: colormap, GnBu, Oranges are recommanded.
         annot: Annotation.
@@ -162,9 +205,7 @@ class FreePlot(UnitPlot):
                 `True`: Add color bar.
 
         Examples:
-        ---
-
-
+        ---------
         >>> titles = ("S", "h", "a", "n")
         >>> row_labels = ('c', 'u', 't', 'e')
         >>> col_labels = ('l', 'r', 'i', 'g')
@@ -195,8 +236,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html?highlight=imshow#matplotlib.pyplot.imshow) for details.
 
         Parameters:
-        ---
-
+        -----------
         img: Image.
         show_ticks: bool
             - `True`: Show the ticks.
@@ -207,8 +247,7 @@ class FreePlot(UnitPlot):
             - ...
 
         Examples:
-        ---
-
+        ---------
         >>> fp.imageplot(img, show_ticks=False)
 
         """
@@ -236,7 +275,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html?highlight=plot#matplotlib.axes.Axes.plot) for details.
 
         Parameters:
-        ---
+        -----------
         x, y: array-like 
             Coordinates.
         **kwargs: other kwargs for ax.plot()
@@ -244,8 +283,7 @@ class FreePlot(UnitPlot):
             - ...
         
         Examples:
-        ---
-
+        ---------
         >>> x = np.linspace(-10, 10, 20)
         >>> y = np.sin(x) + np.random.randn(20)
         >>> fp = FreePlot((1, 2), (4.4, 2), dpi=300, sharey=True)
@@ -269,7 +307,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.stackplot.html#matplotlib.axes.Axes.stackplot) for details.
 
         Parameters:
-        ---
+        -----------
         x: (N,) array-like
         y: (M, N) array-like
         **kwargs: other kwargs for ax.stackplot()
@@ -278,8 +316,7 @@ class FreePlot(UnitPlot):
             - All other keyword arguments are passed to Axes.fill_between
         
         Examples:
-        ---
-
+        ---------
         >>> x = np.arange(0, 10, 2)
         >>> ay = [1, 1.25, 2, 2.75, 3]
         >>> by = [1, 1, 1, 1, 1]
@@ -304,8 +341,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html?highlight=scatter#matplotlib.axes.Axes.scatter) for details.
 
         Parameters:
-        ---
-
+        -----------
         x, y: array-like
             Coordinates.
         **kwargs: other kwargs for `ax.scatter`
@@ -320,9 +356,7 @@ class FreePlot(UnitPlot):
             - ...
 
         Examples:
-        ---
-
-
+        ---------
         >>> from scipy.stats import multivariate_normal
         >>> nums = 100
         >>> means = (
@@ -350,8 +384,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.mplot3d.axes3d.Axes3D.html?highlight=plot_surface#mpl_toolkits.mplot3d.axes3d.Axes3D.plot_surface) for details.
 
         Parameters:
-        ---
-
+        -----------
         X, Y, Z: 2D arrary.
         cmap: Colormap.
         antialiased: 
@@ -363,9 +396,7 @@ class FreePlot(UnitPlot):
             - ...
 
         Examples:
-        ---
-
-
+        ---------
         >>> X = np.arange(-5, 5, 0.25)
         >>> Y = np.arange(-5, 5, 0.25)
         >>> X, Y = np.meshgrid(X, Y)
@@ -393,7 +424,7 @@ class FreePlot(UnitPlot):
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.violinplot.html?highlight=violinplot#matplotlib.axes.Axes.violinplot) for details.
 
         Parameters:
-        ---
+        -----------
         y: Dataset, each of y is a group of data.
         x: Group index.
         **kwargs: other kwargs for `ax.violinplot`
@@ -407,8 +438,7 @@ class FreePlot(UnitPlot):
             - showmedians: bool, default: False
 
         Examples:
-        ---
-
+        ---------
         >>> # note that each element is a group of data ...
         >>> dataset = [np.random.normal(0, std, 100) for std in range(5, 10)]
         >>> fp.violinplot(x=None, y=dataset, index=(0, 0))
