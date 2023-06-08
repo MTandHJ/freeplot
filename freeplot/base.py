@@ -137,7 +137,7 @@ class FreePlot(UnitPlot):
     def histplot(
         self, x: np.ndarray, 
         num_bins: int, density: bool = False, range: Optional[Tuple] = None,
-        cumulative: bool = False, histtype: str = 'bar',
+        cumulative: bool = False, histtype: str = 'bar', color: str = "#0050C2",
         index: Union[Tuple[int], str] = (0, 0), *,
         style: Union[str, Iterable[str]] = 'hist',
         **kwargs
@@ -174,7 +174,7 @@ class FreePlot(UnitPlot):
         ax = self[index]
         ax.hist(
             x, bins=num_bins, 
-            density=density, range=range,
+            density=density, range=range, color=color,
             cumulative=cumulative, histtype=histtype,
             **kwargs
         )
