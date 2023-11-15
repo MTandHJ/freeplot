@@ -1,6 +1,6 @@
 
 
-from typing import Dict, Iterable, List, NoReturn
+from typing import Dict, Iterable, Any, NoReturn
 import json
 import inspect
 import pickle
@@ -12,7 +12,7 @@ def load(filename: str) -> Dict:
         data = json.load(j)
     return data
 
-def export_pickle(data: Dict, file_: str) -> NoReturn:
+def export_pickle(data: Any, file_: str) -> NoReturn:
     fh = None
     try:
         fh = open(file_, "wb")
@@ -24,7 +24,7 @@ def export_pickle(data: Dict, file_: str) -> NoReturn:
         if fh is not None:
             fh.close()
 
-def import_pickle(file_: str) -> Dict:
+def import_pickle(file_: str) -> Any:
     fh = None
     try:
         fh = open(file_, "rb")
