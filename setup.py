@@ -5,11 +5,11 @@ with open("README.md", "r") as fh:
   long_description = fh.read()
 
 requires = [
-    'numpy==1.20.3',
-    'pandas==1.3.4',
-    'matplotlib==3.4.3',
-    'seaborn>=0.10.0',
-    'SciencePlots==1.0.9'
+    # 'numpy>=1.20.3',
+    # 'pandas>=1.3.4',
+    # 'matplotlib>=3.4.3',
+    # 'seaborn>=0.10.0',
+    'SciencePlots>=1.0.9'
 ]
 
 def get_property(prop, project):
