@@ -374,7 +374,7 @@ class UnitPlot:
         """
         self.axes.set_title(y=y)
 
-    def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%2f", axis: str = 'y') -> Dict:
+    def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%s", axis: str = 'y') -> Dict:
         """Set the values of ticks.
         
         Parameters:
@@ -613,6 +613,9 @@ class UnitPlot:
         x: float, y: float, ncol: int, 
         index: Union[int, str] = (0, 0), 
         loc: str = "lower left",
+        frameon: Optional[bool] = None,
+        columnspacing: Optional[float] = None,
+        title: Optional[str] = None,
         **kwargs
     ) -> None:
         """Set the legend relative to the figure.
@@ -652,8 +655,12 @@ class UnitPlot:
         >>> fp[0, 0].legend() # Add legend in the Axes[0, 0].
         
         """
-        self[index].legend(bbox_to_anchor=(x, y), loc=loc,
-        bbox_transform=plt.gcf().transFigure, ncol=ncol, **kwargs)
+        return self[index].legend(
+            bbox_to_anchor=(x, y), loc=loc,
+            bbox_transform=plt.gcf().transFigure, ncol=ncol,
+            frameon=frameon, columnspacing=columnspacing, title=title,
+            **kwargs
+        )
 
     def subplots_adjust(
         self,
