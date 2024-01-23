@@ -9,7 +9,7 @@ requires = [
     # 'pandas>=1.3.4',
     # 'matplotlib>=3.4.3',
     # 'seaborn>=0.10.0',
-    'SciencePlots>=1.0.9'
+    'SciencePlots==1.0.9'
 ]
 
 def get_property(prop, project):
