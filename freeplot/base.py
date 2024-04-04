@@ -4,7 +4,6 @@ from typing import Iterable, Tuple, Optional, Dict, Union
 import numpy as np
 import pandas as pd 
 import seaborn as sns
-import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import patches
 
@@ -12,7 +11,6 @@ from .unit import UnitPlot
 from .utils import style_env
 
  
-
 class FreePlot(UnitPlot):
 
 

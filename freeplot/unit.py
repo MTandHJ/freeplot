@@ -11,7 +11,6 @@ from .config import cfg, style_cfg, COLORS
 from .utils import inherit_from_matplotlib, get_style, style_env
 
 
-
 class UnitAX:
     """Single Axes.
     """
@@ -760,4 +759,3 @@ class UnitPlot:
         Axes, Axes3D
         """
         return self.axes[idx]
-

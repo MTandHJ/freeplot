@@ -7,6 +7,7 @@ import pickle
 import matplotlib.pyplot as plt
 from .config import style_cfg
 
+
 def load(filename: str) -> Dict:
     with open(filename, encoding="utf-8") as j:
         data = json.load(j)
@@ -74,4 +75,3 @@ def style_env(func):
     wrapper.__name__ = func.__name__
     wrapper.__doc__ = func.__doc__
     return wrapper
-

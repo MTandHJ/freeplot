@@ -169,11 +169,11 @@ style_cfg['basic'] = ["science"]  # color style: bright, vibrant, muted, high-co
 style_cfg['line'] = [] 
 style_cfg['stack'] = [] 
 style_cfg['scatter'] = []
-style_cfg['heatmap'] = ["seaborn-darkgrid", {"axes.facecolor":".9"}]
+style_cfg['heatmap'] = []
 style_cfg['image'] = ["bright"]
 style_cfg['bar'] = [{'lines.markersize': 0.0, 'lines.markeredgewidth': 0., "lines.linewidth": 0.7}]
 style_cfg['hist'] = []
-style_cfg['violin'] = ["high-vis", "seaborn-whitegrid"]
+style_cfg['violin'] = []
 style_cfg['surface'] = [{"axes.facecolor":".3"}]
 
 # zoo
