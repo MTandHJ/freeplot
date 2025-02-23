@@ -195,11 +195,11 @@ class UnitPlot:
     def __init__(
         self, 
         shape: Tuple[int, int] = (1, 1), 
-        figsize: Tuple[float, float] = (2, 2.5), 
+        figsize: Tuple[float, float] = (1.5, 2.), 
         titles: Optional[Iterable] = None,
         sharey: bool = True,
         latex: bool = False,
-        dpi: int = 200,
+        dpi: int = 500,
         projection: Optional[str] = None,
         **kwargs: "other kwargs of plt.subplots"
     ):

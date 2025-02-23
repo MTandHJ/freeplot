@@ -44,6 +44,7 @@ COLORS = (
     "#BF3F34",
 )
 
+
 MARKERS = (
     'o',
     '^',
