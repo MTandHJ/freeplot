@@ -163,12 +163,13 @@ def pos_radar(
     theta: Optional[np.ndarray] = None, 
     index: Union[Tuple[int], str] = (0, 0),
     *,
-    style: Union[str, Iterable[str]] = 'radar'
+    style: Union[str, Iterable[str]] = 'radar',
+    alpha: float = 0.5
 ) -> None:
     fp.fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
     theta = np.linspace(0, 2*np.pi, len(labels), endpoint=False) if theta is None else theta
     ax = fp[index]
     for i, (key, value) in enumerate(data.items()): 
         ax.plot(theta, value, marker='')
-        ax.fill(theta, value, alpha=0.5, label=labels[i])
+        ax.fill(theta, value, alpha=alpha, label=key)
     ax.set_varlabels(labels)
