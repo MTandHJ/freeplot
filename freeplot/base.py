@@ -86,6 +86,12 @@ class FreePlot(UnitPlot):
             for pattern, bars in zip(hatch, self.get_container(index=index)):
                 for bar in bars:
                     bar.set_hatch(pattern * hatch_scale)
+        if hatch and hue: # hatched legend
+            handles, labels = ax.get_legend_handles_labels()
+            for h, pattern in zip(handles, hatch):
+                for bar in h:
+                    bar.set_hatch(pattern * hatch_scale)
+            ax.legend(handles=handles, labels=labels)
         return self.get_legend_handles_labels(index)
 
     @style_env
