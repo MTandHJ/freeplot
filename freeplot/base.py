@@ -6,6 +6,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from matplotlib import patches
+from matplotlib.container import Container
 
 from .unit import UnitPlot
 from .utils import style_env
@@ -89,8 +90,11 @@ class FreePlot(UnitPlot):
         if hatch and hue: # hatched legend
             handles, labels = ax.get_legend_handles_labels()
             for h, pattern in zip(handles, hatch):
-                for bar in h:
-                    bar.set_hatch(pattern * hatch_scale)
+                if isinstance(h, Container):
+                    for bar in h:
+                        bar.set_hatch(pattern * hatch_scale)
+                else:
+                    h.set_hatch(pattern * hatch_scale)
             ax.legend(handles=handles, labels=labels)
         return self.get_legend_handles_labels(index)
 
