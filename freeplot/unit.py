@@ -1,19 +1,19 @@
 
 
-from typing import List, Tuple, Optional, Dict, Union, Iterable
+from typing import List, Tuple, Optional, Dict, Union, Iterable, Literal
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.axes._axes import Axes
 from mpl_toolkits.mplot3d.axes3d import Axes3D
+from cycler import cycler
 
-from .config import cfg, style_cfg, COLORS
+from .config import cfg, style_cfg, COLORS, MARKERS
 from .utils import inherit_from_matplotlib, get_style, style_env
 
 
 class UnitAX:
-    """Single Axes.
-    """
+    """Single Axes."""
 
     def __init__(
         self, axes: 'FreeAxes', 
@@ -23,7 +23,7 @@ class UnitAX:
     ):
         """
         Parameters:
-        ---
+        -----------
 
         axes: FreeAxes.
         position: The grid position in the figure.
@@ -46,7 +46,7 @@ class UnitAX:
         """Return Axes.
 
         Notes:
-        ---
+        ------
 
         The Axes will be then created after this method is called.
         This operation is necessary for users to specify 'style' during plotting.
@@ -76,21 +76,23 @@ class FreeAxes:
         titles: Optional[Iterable] = None,
         sharey: bool = True, projection: Optional[str] = None,
     ):
-        """ FreeAxes will create grids in the figure for every Axe.
-        The first axe in each row is the the anchor that may share y axis for its followers.
+        r"""
+        FreeAxes will create grids within the figure for every Axe.
+        The first Axe in each row could be the the anchor for sharing y axis.
 
         Parameters:
-        ---
-
+        -----------
         fig: Figure.
-        shape: (row, col)
-        titles: The titles for each Axes.
-        sharey: `True`: The anchor will share y axis with current Axe.
+        shape: (int, int)
+            (#rows, #cols)
+        titles: Optional[Iterable[str]]
+            The titles for each Axes.
+        sharey: bool
+            Whether sharing the y axis.
         projection: str
             Sometimes it will be useful, like in case of '3d'.
-
         """
-        assert len(shape) == 2, "Only grid-like distribution Axes are supported, so 'shape' should be Tuple[int, int]"
+        assert len(shape) == 2, "Only grid-like Axes (#rows, #cols) are supported"
 
         self.fig = fig
         self.axes = []
@@ -143,22 +145,64 @@ class FreeAxes:
             ax = self[idx]
             ax.set(**kwargs)
 
-    def set_title(self, y: float = .99) -> None:
-        """Set titles.
+    def set_title(self, y: float = .99, **kwargs) -> None:
+        """
+        Set titles for all axes.
 
+        Examples:
+        ---------
         >>> fp.set_title(y=0.9)
         """
         for title in self.links.keys():
             ax = self[title]
-            ax.set_title(title, y=y)
+            ax.set_title(title, y=y, **kwargs)
 
     def ticklabel_format(
         self, 
         index: Union[Axes, str, Iterable[int], slice, None] = None,
-        style: str = 'sci', 
+        style: Literal['sci', 'scientific', 'plain'] = 'sci', 
         scilimits: Iterable[int] = (0, 0),
         axis: str = 'y', **kwargs
     ):
+        r"""
+        Configure the `.ScalarFormatter` used by default for linear Axes.
+
+        If a parameter is not set, the corresponding property of the formatter
+        is left unchanged.
+
+        Parameters:
+        -----------
+        axis : {'x', 'y', 'both'}, default: 'both'
+            The axis to configure.  Only major ticks are affected.
+        style : {'sci', 'scientific', 'plain'}
+            Whether to use scientific notation.
+            The formatter default is to use scientific notation.
+            'sci' is equivalent to 'scientific'.
+        scilimits : pair of ints (m, n)
+            Scientific notation is used only for numbers outside the range
+            10\ :sup:`m` to 10\ :sup:`n` (and only if the formatter is
+            configured to use scientific notation at all).  Use (0, 0) to
+            include all numbers.  Use (m, m) where m != 0 to fix the order of
+            magnitude to 10\ :sup:`m`.
+            The formatter default is :rc:`axes.formatter.limits`.
+        useOffset : bool or float
+            If True, the offset is calculated as needed.
+            If False, no offset is used.
+            If a numeric value, it sets the offset.
+            The formatter default is :rc:`axes.formatter.useoffset`.
+        useLocale : bool
+            Whether to format the number using the current locale or using the
+            C (English) locale.  This affects e.g. the decimal separator.  The
+            formatter default is :rc:`axes.formatter.use_locale`.
+        useMathText : bool
+            Render the offset and scientific notation in mathtext.
+            The formatter default is :rc:`axes.formatter.use_mathtext`.
+
+        Raises:
+        -------
+        AttributeError
+            If the current formatter is not a `.ScalarFormatter`.
+        """
         if isinstance(index, Axes):
             index.set(**kwargs)
             return 1
@@ -173,7 +217,6 @@ class FreeAxes:
         for idx in index:
             ax = self[idx]
             ax.ticklabel_format(style=style, scilimits=scilimits, axis=axis, **kwargs)
-        
 
     def __iter__(self):
         return (ax.ax for ax in self.axes)
@@ -190,7 +233,26 @@ class FreeAxes:
 
 
 class UnitPlot:
-    """Plot with Axes of grid-like distribution."""
+    r"""Plotting grid-like Axes.
+
+    Parameters:
+    -----------
+    shape: (#rows, #cols)
+    figsize: (height, width) for each ax
+        So the real figsize is (height * row, width * col).
+    titles: Optional[Iterable[str]]
+        Titles for Axes.
+    sharey: bool 
+        Whether sharing the y axis.
+    latex: bool
+        `False`: set_style('no-latex').
+    projection: Sometimes it will be useful, like in case of '3d'.
+    **kwargs: other kwargs for `plt.figure`.
+    
+    Notes:
+    ------
+    Please make sure your computer has installed Latex already before calling 'latex=True' !
+    """
 
     def __init__(
         self, 
@@ -201,47 +263,54 @@ class UnitPlot:
         latex: bool = False,
         dpi: int = 500,
         projection: Optional[str] = None,
-        **kwargs: "other kwargs of plt.subplots"
+        **kwargs
     ):
-        """
-        Parameters:
-        ---
-
-        shape: (row, col)
-        figsize: (height, width) for per Axes
-            So the real figsize is (height * row, width * col).
-        titles: Titles for each Axes.
-        sharey: `True`: Axes in each row will share the same y axis.
-        latex: `False`: set_style('no-latex').
-        projection: Sometimes it will be useful, like in case of '3d'.
-        **kwargs: other kwargs for `plt.figure`.
-        
-        Notes:
-        ---
-
-        Please make sure your computer has installed Latex already before calling 'latex=True' !
-        """
         # the default settings
         plt.style.use(style_cfg.basic)
-        for group, params in cfg['rc_params'].items():
-            plt.rc(group, **params)
         if not latex:
             self.set_style('no-latex')
+        for group, params in cfg['rc_params'].items():
+            plt.rc(group, **params)
 
         figsize = (figsize[1] * shape[1], figsize[0] * shape[0])
         self.fig = plt.figure(figsize=figsize, dpi=dpi, **kwargs)
         self.axes = FreeAxes(self.fig, shape, titles, sharey, projection=projection)
+
+    @property
+    def colors(self):
+        prop_cycle = plt.rcParams['axes.prop_cycle']
+        return prop_cycle.by_key()['color']
+
+    @colors.setter
+    def colors(self, palette: Literal['cool', 'bright', 'factor'] = 'cool'):
+        PALETTES = {
+            'cool': COLORS,
+            'bright': [
+                "#16058b",
+                "#6200AA",
+                "#9E169D",
+                "#CC4A74",
+                "#EB7852",
+                "#FCB431"
+            ],
+            'factor': [
+                "#021024",
+                "#052659",
+                "#4D77A6",
+                "#5483B3",
+                "#7DA0CA",
+                "#C1E8FF"
+            ]
+        }
+        if isinstance(palette, str):
+            palette = PALETTES[palette]
+        plt.rcParams['axes.prop_cycle'] = cycler(marker=MARKERS, color=palette)
     
     @property
     def styles(self):
         """Return available styles."""
         return plt.style.available + list(style_cfg.keys())
 
-    @property
-    def colors(self):
-        """Return available colors."""
-        return COLORS
-    
     @property
     def rcParams(self):
         """Return current settings."""
@@ -250,6 +319,22 @@ class UnitPlot:
     def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
         """Set properties for the Axes of 'index'."""
         self.axes.set(index=index, **kwargs)
+
+    def set_font(
+        self,
+        family: Literal['serif', 'sans-serif'] = 'sans-serif',
+        size: int = 7
+    ):
+        r"""
+        Parameters:
+        -----------
+        family: 'serif' or 'sans-serif'
+        size: int
+            font size
+        """
+        plt.rc(
+            'font', family=family, size=size
+        )
 
     def set_style(self, style: Union[str, Iterable[str]]):
         """Set a style. You can calling self.styles to check what is available."""
@@ -261,61 +346,52 @@ class UnitPlot:
                 styles += get_style(item)
         plt.style.use(styles)
 
-    def set_scale(self, value: str = 'symlog', index=(0, 0), axis='y') -> None:
+    def set_scale(self, value: str = 'symlog', index=(0, 0), axis='y', **kwargs) -> None:
         """Convert the axis to other formats for readability.
 
         Parameters:
         ---
-
         value: 'log'|'linear'|'symlog'|'logit'
         axis: 'x'|'y'|'z'
 
         Examples:
         ---
-
         >>> fp.set_scale(value='symlog', index=(0, 0))
         """
-        kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'scale'] = value
         return self.set(**kwargs)
 
-    def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y'):
+    def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y', **kwargs):
         """Set the range for the axis.
 
         Parameters:
         ---
-
         lim: (low, high)
         axis: 'x'|'y'|'z'
 
         Examples:
         ---
-
         >>> fp.set_lim((0, 10), index=(0, 0), axis='y')
         >>> fp.set_lim((1, 5), index=(0, 0), axis='x')
         """
-        kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'lim'] = lim
         return self.set(**kwargs)
 
-    def set_label(self, label: str, index=(0, 0), axis='y'):
+    def set_label(self, label: str, index=(0, 0), axis='y', **kwargs):
         """ Set a label for the axis.
 
         Parameters:
         ---
-
         label: str
         axis: 'x'|'y'|'z'
 
         Examples:
         ---
-
         >>> fp.set_label('X2X', axis='x')
         >>> fp.set_label('Y2Y', axis='y')
         """
-        kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'label'] = label
         return self.set(**kwargs)
@@ -328,8 +404,7 @@ class UnitPlot:
         """Add a text in the Axes.
 
         Parameters:
-        ---
-
+        -----------
         (x, y): Data coordinates.
         s: The text.
         fontdict: A dictionary to override the default text properties.
@@ -339,7 +414,7 @@ class UnitPlot:
             - ...
 
         Examples:
-
+        ---------
         >>> fp.set_text(0.5, 0.5, s='GoGoGo', fontsize='big)
         """
         return self[index].text(x, y, s, fontdict, **kwargs)
@@ -362,18 +437,16 @@ class UnitPlot:
         """Set titles for Axes.
         
         Parameters:
-        ---
-
+        -----------
         y: The height from the bottom.
 
         Examples:
-        ---
-
+        ---------
         >>> fp.set_title(y=1.1)
         """
         self.axes.set_title(y=y)
 
-    def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%s", axis: str = 'y') -> Dict:
+    def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%s", axis: str = 'y', **kwargs) -> Dict:
         """Set the values of ticks.
         
         Parameters:
@@ -385,18 +458,15 @@ class UnitPlot:
         axis: 'x'|'y'|'z'
 
         Examples:
-        ---
-
+        ---------
         >>> fp.set_ticks([0.1, 0.2, 0.3, 0.4, 0.5], fmt=".3f")
         >>> fp.set_ticks([])
         
         Notes:
-        ---
-
+        ------
         set_ticks([], axis='y') == self.get_yaxis().set_visible(False)
         """
         labels = [fmt%value for value in values]
-        kwargs = dict()
         kwargs['index'] = index
         kwargs[axis + 'ticks'] = values
         kwargs[axis + 'ticklabels'] = labels
@@ -415,7 +485,6 @@ class UnitPlot:
 
         Parameters:
         -----------
-
         x: array
             The x coordinates of the nodes defining the curves.
         lower: array or scalar
@@ -425,7 +494,6 @@ class UnitPlot:
         
         Returns:
         --------
-
         PolyCollection
         """
         return self[index].fill_between(
@@ -442,27 +510,21 @@ class UnitPlot:
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.ticklabel_format.html?highlight=ticklabel_format#matplotlib.axes.Axes.ticklabel_format) for details.
 
         Parameters:
-        ---
-        
+        -----------
         style: 'sci'|'scientific'|'plain'
             - `plain`: 7000000.
             - `sci`: :math: `7 \times 10^6`
-
         scilimits: (m, n)
             Only numbers between 10^m and 10^n will be transformed to scientific notation.
-
             - `(0, 0)`: All numbers will be transformed.
-
         index:
             - `None`: Apply it for all Axes.
             - `slice`: ndarray slice supported.
-
         axis: 'x'|'y'|'both'
         **kwargs: other kwargs for `ticklabel_format`
 
         Examples:
-        ---
-
+        ---------
         >>> fp.ticklabel_format(style='sci', index=(0, 0))
         >>> fp.ticklabel_format(style='sci', index=None)
         """
@@ -558,8 +620,7 @@ class UnitPlot:
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html?highlight=inset_axes#matplotlib.axes.Axes.inset_axes) for details.
 
         Parameters:
-        ---
-
+        -----------
         xlims|ylims: (l, r)|(b, t) 
             Determines the retangle region from l to r and from b to t.
         Bounds: (x0, y0, width, height) 
@@ -570,8 +631,7 @@ class UnitPlot:
         line_params: You could specific the line by passing a style dict.
 
         Examples:
-        ---
-
+        ---------
         >>> fp = FreePlot((1, 1), (5, 4))
         >>> fp.lineplot([1, 2, 3], [4, 5, 6], label='a')
         >>> fp.lineplot([1, 2, 3], [3, 5, 7], label='b')
@@ -586,10 +646,8 @@ class UnitPlot:
         >>> fp.lineplot([1, 2, 3], [3, 5, 7], index=axins)
 
         Returns: 
-        ---
-
+        --------
         Axes, Patch, Lines
-
         """
         axins = self[index].inset_axes(bounds)
         axins.set_xlim(xlims[0], xlims[1])
@@ -621,8 +679,7 @@ class UnitPlot:
         See [here](https://matplotlib.org/stable/api/legend_api.html?highlight=legend#module-matplotlib.legend) for details.
         
         Parameters:
-        ---
-
+        -----------
         (x, y): Coordinates relative to the figure.
         ncol: Split legends into 'ncol' columns.
         loc: 'upper left', 'upper right', 'lower left', 'lower right'
@@ -641,18 +698,15 @@ class UnitPlot:
             - ...
 
         Notes:
-        ---
-
+        ------
         When you calling fp.legend(), please close the tight_layout in show() or savefig() !
 
         Examples:
-        ---
-
+        ---------
         >>> fp.legend(0.3, 0.9, ncol=3) # Add legend to the top of the figure.
         >>> fp.savefig(tight_layout=False) # !!!
         >>> # The following operation will not conflict with tight_layout.
         >>> fp[0, 0].legend() # Add legend in the Axes[0, 0].
-        
         """
         return self[index].legend(
             bbox_to_anchor=(x, y), loc=loc,
@@ -685,8 +739,7 @@ class UnitPlot:
         """ Convert the image into another type.
             
         Parameters:
-        ---
-
+        -----------
         img: Image
         cur|nxt_fmt: gray, hed, hsv, lab, label, rgb, rgba, rgbcie, 
             xyz, ycbcr, ycbdr, yiq, ypbpr, yuv
@@ -711,15 +764,13 @@ class UnitPlot:
         """ Save the figure and close it.
 
         Parameters:
-        ---
-
+        -----------
         close_fig: Close the figure to release memory if True (suggested).
         tight_layout: `True`: wspace, hspace will be no use.
         **kwargs: other kwargs for `plt.savefig`
         
         Notes:
-        ---
-
+        ------
         `tight_layout` will conflict with other settings sometimes.
         """
         if tight_layout:
@@ -742,20 +793,18 @@ class UnitPlot:
             plt.tight_layout()
         return plt.show(*args, **kwargs)
 
-    def __getitem__(self, idx: Union[Iterable[int], str, Axes]) -> Union[Axes, Axes3D]:
+    def __getitem__(self, index: Union[Iterable[int], str, Axes]) -> Union[Axes, Axes3D]:
         """Get Axes.
 
         Parameters:
-        ---
-
-        idx: titles or Tuple of index
+        -----------
+        index: titles or Tuple of index
             - `str`: return the Axes whose title is `str`
             - `(int, int)`: return the Axes located in `(int, int)`
             - `Axes`: return `Axes`
-        
-        Returns:
-        ---
 
+        Returns:
+        --------
         Axes, Axes3D
         """
-        return self.axes[idx]
+        return self.axes[index]

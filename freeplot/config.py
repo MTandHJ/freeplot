@@ -33,7 +33,6 @@ class Config(dict):
         self.__setattr__(key, value)
 
 
-
 COLORS = (
     "#2D2C40",
     "#0050C2",
@@ -41,7 +40,6 @@ COLORS = (
     "#006058",
     "#3A4E8C",
     "#D99F6C",
-    "#BF3F34",
 )
 
 
@@ -52,7 +50,6 @@ MARKERS = (
     'D',
     'p',
     '*',
-    '+',
 )
 
 cfg = Config()
@@ -69,10 +66,19 @@ _axes = {
 }
 
 _font = {
-        "family": ["serif"],
+        # "family": ["serif"],
+        'family': 'sans-serif',       # 默认文本字体
         "weight": "normal",
+        'sans-serif': ['Arial', 'DejaVu Sans'],  # 备选字体
         "size": 7
     }
+
+_mathtext = {
+    'fontset': 'custom',      # 数学符号字体自定义
+    'it': 'Symbol:italic',    # 斜体符号
+    'rm': 'Symbol',           # 常规符号
+    'tt': 'monospace',        # 打字机字体
+}
 
 _lines = {
     "linewidth": 1.,
@@ -157,6 +163,7 @@ _ytick = {
 cfg['rc_params'] = Config(
     axes=_axes,
     font=_font,
+    mathtext=_mathtext,
     lines=_lines,
     markers=_markers,
     legend=_legend,
