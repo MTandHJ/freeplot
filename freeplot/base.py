@@ -29,7 +29,7 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'bar',
         **kwargs
     ) -> None:
-        """ Bar plotting according to pd.DataFrame. 
+        r""" Bar plotting according to pd.DataFrame. 
         See [here](https://seaborn.pydata.org/generated/seaborn.barplot.html?highlight=barplot) for details.
 
         Parameters:
@@ -107,7 +107,7 @@ class FreePlot(UnitPlot):
         origin: Optional[str] = 'lower', cmap = plt.cm.bone,
         **kwargs
     ):
-        """Plot filled contours.
+        r"""Plot filled contours.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contourf.html?highlight=contourf#matplotlib.axes.Axes.contourf) for details.
 
         Parameters:
@@ -133,7 +133,6 @@ class FreePlot(UnitPlot):
         >>> Z = np.sin(R)
         >>> fp = FreePlot(dpi=300)
         >>> fp.contourf(X, Y, Z, levels=5, cmap=plt.cm.bone)
-
         """
         ax = self[index]
         cs =  ax.contourf(X, Y, Z, levels, cmap=cmap, origin=origin, **kwargs)
@@ -187,7 +186,6 @@ class FreePlot(UnitPlot):
             **kwargs
         )
 
-
     @style_env
     def heatmap(
         self, data: pd.DataFrame, 
@@ -199,7 +197,8 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'heatmap',
         **kwargs
     ) -> None:
-        """Plot rectangular data as a color-encoded matrix.
+        r"""
+        Plot rectangular data as a color-encoded matrix.
         See https://seaborn.pydata.org/generated/seaborn.heatmap.html?highlight=heatmap#seaborn.heatmap for details.
 
         Parameters:
@@ -221,7 +220,6 @@ class FreePlot(UnitPlot):
         >>> df = pd.DataFrame(data, index=col_labels, columns=row_labels)
         >>> fp = FreePlot()
         >>> fp.heatmap(df, annot=True, fmt=".4f", cbar=False, linewidth=0.5)
-
         """
         ax = self[index]
         return sns.heatmap(
@@ -240,7 +238,8 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'image',
         **kwargs
     ) -> None:
-        """Display data as an image, i.e., on a 2D regular raster.
+        r"""
+        Display data as an image, i.e., on a 2D regular raster.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html?highlight=imshow#matplotlib.pyplot.imshow) for details.
 
         Parameters:
@@ -257,7 +256,6 @@ class FreePlot(UnitPlot):
         Examples:
         ---------
         >>> fp.imageplot(img, show_ticks=False)
-
         """
         ax = self[index]
         img = img[..., None]
@@ -279,7 +277,7 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'line',
         **kwargs
     ) -> None:
-        """Draw a line plot.
+        r"""Draw a line plot.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html?highlight=plot#matplotlib.axes.Axes.plot) for details.
 
         Parameters:
@@ -298,7 +296,6 @@ class FreePlot(UnitPlot):
         >>> fp.lineplot(x, y, index=(0, 0), style='line')
         >>> # plotting a line without markers
         >>> fp.lineplot(x, y, index=(0, 1), marker='')
-
         """
         ax = self[index]
         return ax.plot(x, y, **kwargs)
@@ -311,7 +308,7 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'stack',
         **kwargs
     ) -> None:
-        """Draw a stacked area plot.
+        r"""Draw a stacked area plot.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.stackplot.html#matplotlib.axes.Axes.stackplot) for details.
 
         Parameters:
@@ -322,7 +319,6 @@ class FreePlot(UnitPlot):
             - labels: list of str
             - colors: list of color
             - All other keyword arguments are passed to Axes.fill_between
-        
         Examples:
         ---------
         >>> x = np.arange(0, 10, 2)
@@ -332,7 +328,6 @@ class FreePlot(UnitPlot):
         >>> y = np.vstack([ay, by, cy])
         >>> fp = FreePlot()
         >>> fp.stackplot(x, y, index=(0, 0), style='stack')
-
         """
         ax = self[index]
         return ax.stackplot(x, y, **kwargs)
@@ -345,7 +340,7 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'scatter',
         **kwargs
     ) -> None:
-        """A scatter plot of y vs. x with varying marker size and/or color.
+        r"""A scatter plot of y vs. x with varying marker size and/or color.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html?highlight=scatter#matplotlib.axes.Axes.scatter) for details.
 
         Parameters:
@@ -376,7 +371,6 @@ class FreePlot(UnitPlot):
         >>> data = multivariate_normal.rvs(mean, cov, size=nums)
         >>> x, y = data[:, 0], data[:, 1]
         >>> fp.scatterplot(x, y, edgecolors='none')
-
         """
         ax = self[index]
         return ax.scatter(x, y, **kwargs)
@@ -388,7 +382,7 @@ class FreePlot(UnitPlot):
         cmap = plt.cm.coolwarm, antialiased=False,
         **kwargs
     ):
-        """Create a surface plot.
+        r"""Create a surface plot.
         See [here](https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.mplot3d.axes3d.Axes3D.html?highlight=plot_surface#mpl_toolkits.mplot3d.axes3d.Axes3D.plot_surface) for details.
 
         Parameters:
@@ -412,7 +406,6 @@ class FreePlot(UnitPlot):
         >>> Z = np.sin(R)
         >>> fp = FreePlot(projection='3d', dpi=300)
         >>> fp.surfaceplot(X, Y, Z, cmap=plt.cm.coolwarm, antialiased=False, linewidth=0)
-
         """
         ax = self[index]
         results = ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
@@ -428,7 +421,7 @@ class FreePlot(UnitPlot):
         style: Union[str, Iterable[str]] = 'violin',
         **kwargs
     ) -> None:
-        """Make a violin plot.
+        r"""Make a violin plot.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.violinplot.html?highlight=violinplot#matplotlib.axes.Axes.violinplot) for details.
 
         Parameters:
@@ -451,7 +444,6 @@ class FreePlot(UnitPlot):
         >>> dataset = [np.random.normal(0, std, 100) for std in range(5, 10)]
         >>> fp.violinplot(x=None, y=dataset, index=(0, 0))
         >>> fp.violinplot(x=[f"std-{std}" for std in range(5, 10)], y=dataset, index=(0, 0))
-
         """
 
         if x is None:
@@ -557,11 +549,3 @@ class FreePatches:
         while the left upper corner in the case of image plotting.
         """
         return ((x, y), width, height, angle), kwargs
-
-
-
-
-
-
-
-

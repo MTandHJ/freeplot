@@ -363,15 +363,16 @@ class UnitPlot:
         return self.set(**kwargs)
 
     def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y', **kwargs):
-        """Set the range for the axis.
+        r"""
+        Set the range for the axis.
 
         Parameters:
-        ---
+        -----------
         lim: (low, high)
         axis: 'x'|'y'|'z'
 
         Examples:
-        ---
+        ---------
         >>> fp.set_lim((0, 10), index=(0, 0), axis='y')
         >>> fp.set_lim((1, 5), index=(0, 0), axis='x')
         """
@@ -380,15 +381,16 @@ class UnitPlot:
         return self.set(**kwargs)
 
     def set_label(self, label: str, index=(0, 0), axis='y', **kwargs):
-        """ Set a label for the axis.
+        r"""
+        Set a label for the axis.
 
         Parameters:
-        ---
+        -----------
         label: str
         axis: 'x'|'y'|'z'
 
         Examples:
-        ---
+        ---------
         >>> fp.set_label('X2X', axis='x')
         >>> fp.set_label('Y2Y', axis='y')
         """
@@ -401,7 +403,8 @@ class UnitPlot:
         index=(0, 0), fontdict: Optional[Dict] = None,
         **kwargs
     ) -> matplotlib.text.Text:
-        """Add a text in the Axes.
+        r"""
+        Add a text to the ax.
 
         Parameters:
         -----------
@@ -434,7 +437,8 @@ class UnitPlot:
         )
 
     def set_title(self, y: float = .99) -> None:
-        """Set titles for Axes.
+        r"""
+        Set titles for Axes.
         
         Parameters:
         -----------
@@ -447,7 +451,7 @@ class UnitPlot:
         self.axes.set_title(y=y)
 
     def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%s", axis: str = 'y', **kwargs) -> Dict:
-        """Set the values of ticks.
+        r"""Set the values of ticks.
         
         Parameters:
         ---
@@ -480,7 +484,7 @@ class UnitPlot:
         index = (0, 0),
         **kwargs
     ):
-        """
+        r"""
         Fill between lower and upper.
 
         Parameters:
@@ -506,7 +510,7 @@ class UnitPlot:
         index: Union[Axes, str, Iterable[int], slice, None] = (0, 0), 
         axis: str = 'y', **kwargs
     ):
-        """Configure the ScalarFormatter used by default for linear Axes.
+        r"""Configure the ScalarFormatter used by default for linear Axes.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.ticklabel_format.html?highlight=ticklabel_format#matplotlib.axes.Axes.ticklabel_format) for details.
 
         Parameters:
@@ -616,7 +620,8 @@ class UnitPlot:
         patch_params: dict = {'edgecolor':'black', 'linewidth':.7, 'alpha':.5},
         line_params: dict = {'color':'gray', 'linewidth':.5, 'alpha':.7, 'linestyle':'--'}
     ) -> Tuple[Axes, matplotlib.patches.Patch, Iterable]:
-        """Add a child inset Axes to this existing Axes.
+        r"""
+        Add a child inset Axes to this existing Axes.
         See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html?highlight=inset_axes#matplotlib.axes.Axes.inset_axes) for details.
 
         Parameters:
@@ -675,7 +680,7 @@ class UnitPlot:
         title: Optional[str] = None,
         **kwargs
     ) -> None:
-        """Set the legend relative to the figure.
+        r"""Set the legend relative to the figure.
         See [here](https://matplotlib.org/stable/api/legend_api.html?highlight=legend#module-matplotlib.legend) for details.
         
         Parameters:
@@ -724,7 +729,8 @@ class UnitPlot:
         wspace: Optional[float] = None, 
         hspace: Optional[float] = None
     ) -> None:
-        """Adjust the subplot layout parameters.
+        r"""
+        Adjust the subplot layout parameters.
         See https://matplotlib.org/stable/api/figure_api.html?highlight=subplots_adjust#matplotlib.figure.Figure.subplots_adjust for details.
         """
         plt.subplots_adjust(left, bottom, right, top, wspace, hspace)
@@ -736,7 +742,8 @@ class UnitPlot:
 
     @staticmethod
     def convert(img: np.ndarray, cur_fmt: str, nxt_fmt: str, **kwargs):
-        """ Convert the image into another type.
+        r"""
+        Convert the image into another type.
             
         Parameters:
         -----------
@@ -761,7 +768,8 @@ class UnitPlot:
         bbox_inches: str = 'tight', 
         **kwargs
     ) -> None:
-        """ Save the figure and close it.
+        r"""
+        Save the figure and close it.
 
         Parameters:
         -----------
@@ -794,7 +802,7 @@ class UnitPlot:
         return plt.show(*args, **kwargs)
 
     def __getitem__(self, index: Union[Iterable[int], str, Axes]) -> Union[Axes, Axes3D]:
-        """Get Axes.
+        r"""Get Axes.
 
         Parameters:
         -----------
