@@ -6,13 +6,15 @@ import matplotlib
 
 matplotlib.use("Agg")
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
 from freeplot import FreePlot
 from freeplot.zoo import pos_radar, pre_radar
 
-OUTPUT_DIR = Path(__file__).parent / "_static" / "img" / "tutorials"
+IMG_DIR = Path(__file__).parent / "_static" / "img"
+OUTPUT_DIR = IMG_DIR / "tutorials"
 
 
 def save(fp: FreePlot, name: str) -> None:
@@ -23,9 +25,9 @@ def save(fp: FreePlot, name: str) -> None:
 def line() -> None:
     x = np.linspace(0, 2, 80)
     fp = FreePlot()
-    fp.lineplot(x, x**0.5, label="sqrt")
+    fp.lineplot(x, x**0.5, label="sqrt", marker="")
     fp.lineplot(x, x**2, label="square", marker="")
-    fp[0, 0].legend()
+    fp[0, 0].legend(frameon=False)
     save(fp, "line.png")
 
 
@@ -79,7 +81,7 @@ def stack() -> None:
     y = np.vstack([np.ones(6), np.arange(1, 7), np.linspace(2, 4, 6)])
     fp = FreePlot()
     fp.stackplot(x, y, labels=["base", "growth", "trend"])
-    fp[0, 0].legend()
+    fp[0, 0].legend(loc="upper left", bbox_to_anchor=(1.02, 1), frameon=False)
     save(fp, "stack.png")
 
 
@@ -105,7 +107,7 @@ def inset() -> None:
     x = np.linspace(0, 4, 160)
     y = np.sin(x)
     fp = FreePlot()
-    fp.lineplot(x, y, label="sin")
+    fp.lineplot(x, y, label="sin", marker="")
     axins, _patch, _lines = fp.inset_axes(
         xlims=(1.2, 1.8),
         ylims=(0.9, 1.05),
@@ -113,6 +115,8 @@ def inset() -> None:
         style="line",
     )
     fp.lineplot(x, y, index=axins, marker="")
+    axins.set_xticks([1.3, 1.7])
+    axins.tick_params(labelsize=6, labelbottom=False)
     save(fp, "inset.png")
 
 
@@ -121,8 +125,12 @@ def surface() -> None:
     y = np.arange(-4, 4, 0.25)
     X, Y = np.meshgrid(x, y)
     Z = np.sin(np.sqrt(X**2 + Y**2))
-    fp = FreePlot(projection="3d")
+    fp = FreePlot(figsize=(2.1, 2.1), projection="3d")
     fp.surfaceplot(X, Y, Z, linewidth=0)
+    fp[0, 0].view_init(elev=28, azim=-55)
+    fp[0, 0].set_xticks([-3, 0, 3])
+    fp[0, 0].set_yticks([-3, 0, 3])
+    fp[0, 0].set_zticks([-1, 0, 1])
     save(fp, "surface.png")
 
 
@@ -135,8 +143,34 @@ def radar() -> None:
     }
     fp = FreePlot(projection="radar")
     pos_radar(data, labels, fp, theta=theta)
-    fp[0, 0].legend()
+    fp[0, 0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=2, frameon=False)
     save(fp, "radar.png")
+
+
+def overview() -> None:
+    plots = [
+        ("Line", "line.png"),
+        ("Scatter", "scatter.png"),
+        ("Bar", "bar.png"),
+        ("Histogram", "histogram.png"),
+        ("Heatmap", "heatmap.png"),
+        ("Image", "image.png"),
+        ("Stack", "stack.png"),
+        ("Violin", "violin.png"),
+        ("Contour", "contour.png"),
+        ("Inset", "inset.png"),
+        ("Surface", "surface.png"),
+        ("Radar", "radar.png"),
+    ]
+    fig, axes = plt.subplots(3, 4, figsize=(8.4, 6.0), dpi=220)
+    for ax, (title, filename) in zip(axes.ravel(), plots):
+        ax.imshow(plt.imread(OUTPUT_DIR / filename))
+        ax.set_title(title, fontsize=8)
+        ax.set_axis_off()
+    fig.subplots_adjust(left=0.02, right=0.98, bottom=0.02, top=0.93, wspace=0.08, hspace=0.24)
+    IMG_DIR.mkdir(parents=True, exist_ok=True)
+    fig.savefig(IMG_DIR / "overview.png", bbox_inches="tight")
+    plt.close(fig)
 
 
 def main() -> None:
@@ -155,6 +189,7 @@ def main() -> None:
         radar,
     ):
         plot()
+    overview()
 
 
 if __name__ == "__main__":

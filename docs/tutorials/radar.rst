@@ -18,7 +18,7 @@
 
    fp = FreePlot(projection="radar")
    pos_radar(data, labels, fp, theta=theta)
-   fp[0, 0].legend()
+   fp[0, 0].legend(loc="upper center", bbox_to_anchor=(0.5, -0.12), ncol=2, frameon=False)
    fp.savefig("radar.png")
 
 .. image:: ../_static/img/tutorials/radar.png

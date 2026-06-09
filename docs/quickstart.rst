@@ -17,7 +17,7 @@
    y = x**2
 
    fp = FreePlot(shape=(1, 1), figsize=(2.4, 3.2), dpi=160)
-   fp.lineplot(x, y, label="x^2")
+   fp.lineplot(x, y, label="x^2", marker="")
    fp.set(xlabel="x", ylabel="y")
    fp[0, 0].legend()
    fp.savefig("quickstart.png")

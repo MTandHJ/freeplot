@@ -12,7 +12,7 @@
    y = np.sin(x)
 
    fp = FreePlot()
-   fp.lineplot(x, y, label="sin")
+   fp.lineplot(x, y, label="sin", marker="")
    axins, patch, lines = fp.inset_axes(
        xlims=(1.2, 1.8),
        ylims=(0.9, 1.05),
@@ -20,6 +20,8 @@
        style="line",
    )
    fp.lineplot(x, y, index=axins, marker="")
+   axins.set_xticks([1.3, 1.7])
+   axins.tick_params(labelsize=6, labelbottom=False)
    fp.savefig("inset.png")
 
 .. image:: ../_static/img/tutorials/inset.png

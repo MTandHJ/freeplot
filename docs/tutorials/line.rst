@@ -10,9 +10,9 @@
 
    x = np.linspace(0, 2, 80)
    fp = FreePlot()
-   fp.lineplot(x, x**0.5, label="sqrt")
+   fp.lineplot(x, x**0.5, label="sqrt", marker="")
    fp.lineplot(x, x**2, label="square", marker="")
-   fp[0, 0].legend()
+   fp[0, 0].legend(frameon=False)
    fp.savefig("line.png")
 
 .. image:: ../_static/img/tutorials/line.png

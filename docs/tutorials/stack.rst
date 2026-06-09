@@ -13,7 +13,7 @@
 
    fp = FreePlot()
    fp.stackplot(x, y, labels=["base", "growth", "trend"])
-   fp[0, 0].legend()
+   fp[0, 0].legend(loc="upper left", bbox_to_anchor=(1.02, 1), frameon=False)
    fp.savefig("stack.png")
 
 .. image:: ../_static/img/tutorials/stack.png
