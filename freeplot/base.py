@@ -1,93 +1,102 @@
+from typing import Iterable, Optional, Tuple, Union
 
-
-from typing import Iterable, Tuple, Optional, Dict, Union
-import numpy as np
-import pandas as pd 
-import seaborn as sns
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 from matplotlib import patches
 from matplotlib.container import Container
 
 from .unit import UnitPlot
 from .utils import style_env
 
- 
-class FreePlot(UnitPlot):
 
+class FreePlot(UnitPlot):
+    r"""High-level plotting container.
+
+    `FreePlot` extends `UnitPlot` with common chart helpers while preserving
+    direct access to Matplotlib axes.
+    """
 
     @style_env
     def barplot(
-        self, x: str, y: str, 
-        data: pd.DataFrame, hue: Optional[str] = None, 
-        index: Union[Tuple[int], str] = (0, 0), 
-        orient: str = 'v',
-        auto_fmt: bool = False, *,
+        self,
+        x: str,
+        y: str,
+        data: pd.DataFrame,
+        hue: Optional[str] = None,
+        index: Union[Tuple[int], str] = (0, 0),
+        orient: str = "v",
+        auto_fmt: bool = False,
+        *,
         hatch: Optional[Iterable] = None,
         hatch_scale: int = 3,
-        errorbar: str = 'sd',
+        errorbar: str = "sd",
         capsize: float = 0.1,
-        style: Union[str, Iterable[str]] = 'bar',
-        **kwargs
+        style: Union[str, Iterable[str]] = "bar",
+        **kwargs,
     ) -> None:
-        r""" Bar plotting according to pd.DataFrame. 
-        See [here](https://seaborn.pydata.org/generated/seaborn.barplot.html?highlight=barplot) for details.
+        r"""Bar plotting according to pd.DataFrame.
 
-        Parameters:
-        -----------
-        x, y, hue: The colnames of x, y and hue.
-        data: Dataset includes x, y, and hue.
-        orient: 'v' or 'h'
-            Plot the bar vertically (`v`) or horizontally (`h`).
-        auto_fmt: `True`: Adjust the xticklabel.
+        Parameters
+        ----------
+        x : str
+            Column name for the x-axis variable.
+        y : str
+            Column name for the y-axis variable.
+        data : pd.DataFrame
+            Data source containing `x`, `y`, and optional `hue` columns.
+        hue : str, optional
+            Column name used to split bars into groups.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        orient : {"v", "h"}, default="v"
+            Bar orientation.
+        auto_fmt : bool, default=False
+            Whether to auto-format x tick labels.
+        hatch : iterable, optional
+            Hatch patterns applied to bar containers.
+        hatch_scale : int, default=3
+            Repetition count for each hatch pattern.
+        errorbar : str, default="sd"
+            Seaborn error bar method.
+        capsize : float, default=0.1
+            Width of error bar caps.
+        style : str or iterable of str, default="bar"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `seaborn.barplot`.
 
-        hatch: ["", "/", "//”, "//\\\\", "x", "+", ".", "*"]
-        hatch_scale: hatch * hatch_scale.
-        kwargs: other kwargs for sns.barplot
-            - palette: Dict|List, 
-                set the color for each of hue.
-            - edgecolor: str
-                the edgecolor of the bar
-            - width: float, the width of a full element when not using hue nesting, 
-                or width of all the elements for one level of the major grouping variable.
-            - ci: float or 'sd', optional, `sd`: Skip bootstrapping and draw the standard deviation of the observations.  
-                `None`: No bootstrapping will be performed, and error bars will not be drawn.
-            - errorbar: str, name of errorbar method (either “ci”, “pi”, “se”, or “sd”), 
-                    or a tuple with a method name and a level parameter, 
-                    or a function that maps from a vector to a (min, max) interval.
-            - ...
-        
-        Examples:
-        ---------
-        >>> A = [1., 2., 3.]
-        >>> B = [2., 3., 4.]
-        >>> T = ['One', 'Two', 'Three'] * 2
-        >>> Hue = ['A'] * len(A) + ['B'] * len(B)
-        >>> data = pd.DataFrame(
-        ...    {
-        ...        "T": T,
-        ...        "val": A + B,
-        ...        "category": Hue
-        ...    }
-        ... )
-        >>> fp = FreePlot(dpi=300)
-        >>> fp.barplot(x='T', y='val', hue='category', data=data, index=(0, 0), auto_fmt=True)
-        # using hatch
-        >>> fp.barplot(x='T', y='val', hue='category', data=data, palette=['white'], edgecolor='black', hatch=['', '/', '//'])
+        Returns
+        -------
+        tuple
+            Legend handles and labels from the target axes.
 
+        Examples
+        --------
+        >>> data = pd.DataFrame({"name": ["A", "B"], "value": [1.0, 2.0]})
+        >>> fp = FreePlot()
+        >>> fp.barplot(x="name", y="value", data=data)
         """
         ax = self[index]
         sns.barplot(
-            x=x, y=y, hue=hue, data=data, ax=ax, orient=orient,
-            errorbar = errorbar, capsize=capsize,
-            **kwargs
+            x=x,
+            y=y,
+            hue=hue,
+            data=data,
+            ax=ax,
+            orient=orient,
+            errorbar=errorbar,
+            capsize=capsize,
+            **kwargs,
         )
         if auto_fmt:
             self.fig.autofmt_xdate()
         if hatch:
-            for pattern, bars in zip(hatch, self.get_container(index=index)):
+            for pattern, bars in zip(hatch, self.get_containers(index=index)):
                 for bar in bars:
                     bar.set_hatch(pattern * hatch_scale)
-        if hatch and hue: # hatched legend
+        if hatch and hue:  # hatched legend
             handles, labels = ax.get_legend_handles_labels()
             for h, pattern in zip(handles, hatch):
                 if isinstance(h, Container):
@@ -100,161 +109,198 @@ class FreePlot(UnitPlot):
 
     @style_env
     def contourf(
-        self, X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
-        levels: Optional[Union[int, np.ndarray]] = 5, cbar: bool = True,
-        index: Union[Tuple[int], str] = (0, 0), *,
+        self,
+        X: np.ndarray,
+        Y: np.ndarray,
+        Z: np.ndarray,
+        levels: Optional[Union[int, np.ndarray]] = 5,
+        cbar: bool = True,
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
         style: Union[str, Iterable[str]] = [],
-        origin: Optional[str] = 'lower', cmap = plt.cm.bone,
-        **kwargs
+        origin: Optional[str] = "lower",
+        cmap=plt.cm.bone,
+        **kwargs,
     ):
         r"""Plot filled contours.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contourf.html?highlight=contourf#matplotlib.axes.Axes.contourf) for details.
 
-        Parameters:
-        -----------
-        X, Y: The coordinates of the values in Z.
-        Z: (M, N), the height values over which the contour is draw.
-        levels: Determines the number and positions of the contour lines / regions.
-        cbar: `True`: Add color bar.
-        origin: {None, 'upper', 'lower', 'image'}. 
-            Determines the orientation and exact position of Z by specifying the position of Z[0, 0].
-        cmap: The Colormap instance or registered colormap name used to map scalar data to colors.
-        kwargs: other kwargs for `contourf`
-            - linewidths: float or array-like
-            - linestyles: {None, 'solid', 'dashed', 'dashdot', 'dotted'}
-            - hatches: list[str]
-        
-        Examples:
-        ---------
+        Parameters
+        ----------
+        X : np.ndarray
+            X coordinates.
+        Y : np.ndarray
+            Y coordinates.
+        Z : np.ndarray
+            Height values over which contours are drawn.
+        levels : int or np.ndarray, optional
+            Number or positions of contour levels.
+        cbar : bool, default=True
+            Whether to add a color bar.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default=[]
+            Style names resolved by `style_env`.
+        origin : str, optional
+            Orientation and position of `Z[0, 0]`.
+        cmap : colormap, optional
+            Colormap used to map scalar values to colors.
+        **kwargs
+            Additional keyword arguments passed to `Axes.contourf`.
+
+        Returns
+        -------
+        matplotlib.contour.QuadContourSet
+            Created contour set.
+
+        Examples
+        --------
         >>> X = np.arange(-5, 5, 0.25)
         >>> Y = np.arange(-5, 5, 0.25)
         >>> X, Y = np.meshgrid(X, Y)
-        >>> R = np.sqrt(X**2 + Y**2)
-        >>> Z = np.sin(R)
-        >>> fp = FreePlot(dpi=300)
-        >>> fp.contourf(X, Y, Z, levels=5, cmap=plt.cm.bone)
+        >>> Z = np.sin(np.sqrt(X**2 + Y**2))
+        >>> fp = FreePlot()
+        >>> fp.contourf(X, Y, Z, levels=5)
         """
         ax = self[index]
-        cs =  ax.contourf(X, Y, Z, levels, cmap=cmap, origin=origin, **kwargs)
+        cs = ax.contourf(X, Y, Z, levels, cmap=cmap, origin=origin, **kwargs)
         if cbar:
             self.fig.colorbar(cs)
         return cs
 
     @style_env
     def histplot(
-        self, x: np.ndarray, 
-        num_bins: int, density: bool = False, range: Optional[Tuple] = None,
-        cumulative: bool = False, histtype: str = 'bar', color: str = "#0050C2",
-        index: Union[Tuple[int], str] = (0, 0), *,
-        style: Union[str, Iterable[str]] = 'hist',
-        **kwargs
+        self,
+        x: np.ndarray,
+        num_bins: int,
+        density: bool = False,
+        range: Optional[Tuple] = None,
+        cumulative: bool = False,
+        histtype: str = "bar",
+        color: str = "#0050C2",
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
+        style: Union[str, Iterable[str]] = "hist",
+        **kwargs,
     ):
-        r"""
-        Compute and plot a histogram.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html#matplotlib.axes.Axes.hist) for more details.
+        r"""Compute and plot a histogram.
 
-        Parameters:
-        -----------
-        x: (n,) array
-        num_bins: int
-            The number bins.
-        density: bool, default to False
-            `True`: the counts are normalized to `1`
-        cumulative: bool, default to False
-            `True`: a histogram is computed where each bin gives the counts in that bin plus all bins for smaller values
-        range: tuple, optional
-            `None`: range will be (x.min(), x.max())
+        Parameters
+        ----------
+        x : np.ndarray
+            Input values.
+        num_bins : int
+            Number of bins.
+        density : bool, default=False
+            Whether to normalize counts to form a density.
+        range : tuple, optional
+            Lower and upper range of bins.
+        cumulative : bool, default=False
+            Whether each bin includes counts from previous bins.
+        histtype : str, default="bar"
+            Histogram type passed to `Axes.hist`.
+        color : str, default="#0050C2"
+            Histogram color.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default="hist"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `Axes.hist`.
 
-        Returns:
+        Examples
         --------
-        n: array
-            The number of bins.
-        bins: array
-            The edges of the bins with a length of `n + 1`.
-        patches: BarContainer
-
-        Examples:
-        ---------
         >>> x = np.random.rand(1024)
         >>> fp.histplot(x, num_bins=100, density=True)
         """
         ax = self[index]
         ax.hist(
-            x, bins=num_bins, 
-            density=density, range=range, color=color,
-            cumulative=cumulative, histtype=histtype,
-            **kwargs
+            x,
+            bins=num_bins,
+            density=density,
+            range=range,
+            color=color,
+            cumulative=cumulative,
+            histtype=histtype,
+            **kwargs,
         )
 
     @style_env
     def heatmap(
-        self, data: pd.DataFrame, 
-        index: Union[Tuple[int], str] = (0, 0), 
-        annot: bool = True, 
+        self,
+        data: pd.DataFrame,
+        index: Union[Tuple[int], str] = (0, 0),
+        annot: bool = True,
         fmt: str = ".4f",
-        cmap: str = 'GnBu', 
-        linewidth: float = .5, *,
-        style: Union[str, Iterable[str]] = 'heatmap',
-        **kwargs
+        cmap: str = "GnBu",
+        linewidth: float = 0.5,
+        *,
+        style: Union[str, Iterable[str]] = "heatmap",
+        **kwargs,
     ) -> None:
-        r"""
-        Plot rectangular data as a color-encoded matrix.
-        See https://seaborn.pydata.org/generated/seaborn.heatmap.html?highlight=heatmap#seaborn.heatmap for details.
+        r"""Plot rectangular data as a color-encoded matrix.
 
-        Parameters:
-        -----------
-        data: (M, N), Dataset.
-        cmap: colormap, GnBu, Oranges are recommanded.
-        annot: Annotation.
-        fmt: the format of annotation.
-        **kwargs: other kwargs for `sns.heatmap`
-            - cbar: bool
-                `True`: Add color bar.
+        Parameters
+        ----------
+        data : pd.DataFrame
+            Matrix-like data to plot.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        annot : bool, default=True
+            Whether to write data values in cells.
+        fmt : str, default=".4f"
+            Annotation format string.
+        cmap : str, default="GnBu"
+            Colormap name.
+        linewidth : float, default=0.5
+            Width of lines that divide cells.
+        style : str or iterable of str, default="heatmap"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `seaborn.heatmap`.
 
-        Examples:
-        ---------
-        >>> titles = ("S", "h", "a", "n")
-        >>> row_labels = ('c', 'u', 't', 'e')
-        >>> col_labels = ('l', 'r', 'i', 'g')
-        >>> data = np.random.rand(4, 4)
-        >>> df = pd.DataFrame(data, index=col_labels, columns=row_labels)
+        Returns
+        -------
+        matplotlib.axes.Axes
+            Target axes.
+
+        Examples
+        --------
+        >>> df = pd.DataFrame(np.random.rand(4, 4))
         >>> fp = FreePlot()
-        >>> fp.heatmap(df, annot=True, fmt=".4f", cbar=False, linewidth=0.5)
+        >>> fp.heatmap(df, annot=True, cbar=False)
         """
         ax = self[index]
         return sns.heatmap(
-            data, ax=ax, 
-            annot=annot, fmt=fmt,
-            cmap=cmap, linewidth=linewidth,
-            **kwargs
+            data, ax=ax, annot=annot, fmt=fmt, cmap=cmap, linewidth=linewidth, **kwargs
         )
-
 
     @style_env
     def imageplot(
-        self, img: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), 
-        show_ticks: bool = False, *, 
-        style: Union[str, Iterable[str]] = 'image',
-        **kwargs
+        self,
+        img: np.ndarray,
+        index: Union[Tuple[int], str] = (0, 0),
+        show_ticks: bool = False,
+        *,
+        style: Union[str, Iterable[str]] = "image",
+        **kwargs,
     ) -> None:
-        r"""
-        Display data as an image, i.e., on a 2D regular raster.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html?highlight=imshow#matplotlib.pyplot.imshow) for details.
+        r"""Display data as an image.
 
-        Parameters:
-        -----------
-        img: Image.
-        show_ticks: bool
-            - `True`: Show the ticks.
-        **kwargs: other kwargs for `ax.imshow`
-            - cmap: str or colormap
-            - norm: Normalization method.
-            - vmin, vmax: float
-            - ...
+        Parameters
+        ----------
+        img : np.ndarray
+            Image data.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        show_ticks : bool, default=False
+            Whether to keep axis ticks visible.
+        style : str or iterable of str, default="image"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `Axes.imshow`.
 
-        Examples:
-        ---------
+        Examples
+        --------
         >>> fp.imageplot(img, show_ticks=False)
         """
         ax = self[index]
@@ -263,207 +309,251 @@ class FreePlot(UnitPlot):
             assert img.shape[2] == 3
             ax.imshow(img.squeeze(), **kwargs)
         except AssertionError:
-            if not kwargs.get('cmap', False):
-                kwargs['cmap'] = 'gray'
+            if not kwargs.get("cmap", False):
+                kwargs["cmap"] = "gray"
             ax.imshow(img.squeeze(), **kwargs)
         if not show_ticks:
-            ax.axis('off')
-
+            ax.axis("off")
 
     @style_env
     def lineplot(
-        self, x: np.ndarray, y: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), *, 
-        style: Union[str, Iterable[str]] = 'line',
-        **kwargs
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
+        style: Union[str, Iterable[str]] = "line",
+        **kwargs,
     ) -> None:
         r"""Draw a line plot.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html?highlight=plot#matplotlib.axes.Axes.plot) for details.
 
-        Parameters:
-        -----------
-        x, y: array-like 
-            Coordinates.
-        **kwargs: other kwargs for ax.plot()
-            - marker: `''`: No markers.
-            - ...
-        
-        Examples:
-        ---------
+        Parameters
+        ----------
+        x : np.ndarray
+            X coordinates.
+        y : np.ndarray
+            Y coordinates.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default="line"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `Axes.plot`.
+
+        Returns
+        -------
+        list[matplotlib.lines.Line2D]
+            Created line artists.
+
+        Examples
+        --------
         >>> x = np.linspace(-10, 10, 20)
-        >>> y = np.sin(x) + np.random.randn(20)
-        >>> fp = FreePlot((1, 2), (4.4, 2), dpi=300, sharey=True)
-        >>> fp.lineplot(x, y, index=(0, 0), style='line')
-        >>> # plotting a line without markers
-        >>> fp.lineplot(x, y, index=(0, 1), marker='')
+        >>> fp = FreePlot()
+        >>> fp.lineplot(x, np.sin(x), marker="")
         """
         ax = self[index]
         return ax.plot(x, y, **kwargs)
 
-
     @style_env
     def stackplot(
-        self, x: np.ndarray, y: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), *, 
-        style: Union[str, Iterable[str]] = 'stack',
-        **kwargs
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
+        style: Union[str, Iterable[str]] = "stack",
+        **kwargs,
     ) -> None:
         r"""Draw a stacked area plot.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.stackplot.html#matplotlib.axes.Axes.stackplot) for details.
 
-        Parameters:
-        -----------
-        x: (N,) array-like
-        y: (M, N) array-like
-        **kwargs: other kwargs for ax.stackplot()
-            - labels: list of str
-            - colors: list of color
-            - All other keyword arguments are passed to Axes.fill_between
-        Examples:
-        ---------
+        Parameters
+        ----------
+        x : np.ndarray
+            X coordinates with shape `(N,)`.
+        y : np.ndarray
+            Stacked values with shape `(M, N)`.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default="stack"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `Axes.stackplot`.
+
+        Returns
+        -------
+        list[matplotlib.collections.PolyCollection]
+            Created stacked area artists.
+
+        Examples
+        --------
         >>> x = np.arange(0, 10, 2)
-        >>> ay = [1, 1.25, 2, 2.75, 3]
-        >>> by = [1, 1, 1, 1, 1]
-        >>> cy = [2, 1, 2, 1, 2]
-        >>> y = np.vstack([ay, by, cy])
+        >>> y = np.vstack([np.ones(5), np.arange(1, 6)])
         >>> fp = FreePlot()
-        >>> fp.stackplot(x, y, index=(0, 0), style='stack')
+        >>> fp.stackplot(x, y)
         """
         ax = self[index]
         return ax.stackplot(x, y, **kwargs)
 
-        
     @style_env
     def scatterplot(
-        self, x: np.ndarray, y: np.ndarray, 
-        index: Union[Tuple[int], str] = (0, 0), *,
-        style: Union[str, Iterable[str]] = 'scatter',
-        **kwargs
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
+        style: Union[str, Iterable[str]] = "scatter",
+        **kwargs,
     ) -> None:
         r"""A scatter plot of y vs. x with varying marker size and/or color.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.scatter.html?highlight=scatter#matplotlib.axes.Axes.scatter) for details.
 
-        Parameters:
-        -----------
-        x, y: array-like
-            Coordinates.
-        **kwargs: other kwargs for `ax.scatter`
-            - s: float or array-like, the marker size
-            - c: array-like or list of colors or color, the marker colors
-            - marker: marker style
-            - cmap: color map
-            - vmin, vmax:
-            - alpha:
-            - linewidth:
-            - edgecolors: {'face', 'none', None} or color or sequence of color
-            - ...
+        Parameters
+        ----------
+        x : np.ndarray
+            X coordinates.
+        y : np.ndarray
+            Y coordinates.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default="scatter"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `Axes.scatter`.
 
-        Examples:
-        ---------
-        >>> from scipy.stats import multivariate_normal
-        >>> nums = 100
-        >>> means = (
-        ...    (0, 0),
-        ...    (5, 5),
-        ...    (-5, -5)
-        >>> )
-        >>> cov = 2
-        >>> data = multivariate_normal.rvs(mean, cov, size=nums)
-        >>> x, y = data[:, 0], data[:, 1]
-        >>> fp.scatterplot(x, y, edgecolors='none')
+        Returns
+        -------
+        matplotlib.collections.PathCollection
+            Created scatter artist.
+
+        Examples
+        --------
+        >>> x = np.random.randn(100)
+        >>> y = np.random.randn(100)
+        >>> fp = FreePlot()
+        >>> fp.scatterplot(x, y, edgecolors="none")
         """
         ax = self[index]
         return ax.scatter(x, y, **kwargs)
 
     def surfaceplot(
-        self, X: np.ndarray, Y: np.ndarray, Z: np.ndarray,
-        index: Union[Tuple[int], str] = (0, 0), *,
-        style: Union[str, Iterable[str]] = 'surface',
-        cmap = plt.cm.coolwarm, antialiased=False,
-        **kwargs
+        self,
+        X: np.ndarray,
+        Y: np.ndarray,
+        Z: np.ndarray,
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
+        style: Union[str, Iterable[str]] = "surface",
+        cmap=plt.cm.coolwarm,
+        antialiased=False,
+        **kwargs,
     ):
         r"""Create a surface plot.
-        See [here](https://matplotlib.org/stable/api/_as_gen/mpl_toolkits.mplot3d.axes3d.Axes3D.html?highlight=plot_surface#mpl_toolkits.mplot3d.axes3d.Axes3D.plot_surface) for details.
 
-        Parameters:
-        -----------
-        X, Y, Z: 2D arrary.
-        cmap: Colormap.
-        antialiased: 
-        **kwargs: other kwargs of `ax.plot_surface`
-            - color: color-like 
-                Color of the surface patches.
-            - facecolors: array-like of colors
-                Colors of each individual patch.
-            - ...
+        Parameters
+        ----------
+        X : np.ndarray
+            X coordinates.
+        Y : np.ndarray
+            Y coordinates.
+        Z : np.ndarray
+            Surface values.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default="surface"
+            Style names reserved for consistency with other plot methods.
+        cmap : colormap, optional
+            Colormap used to map scalar values to colors.
+        antialiased : bool, default=False
+            Whether to draw antialiased surface edges.
+        **kwargs
+            Additional keyword arguments passed to `Axes3D.plot_surface`.
 
-        Examples:
-        ---------
+        Returns
+        -------
+        mpl_toolkits.mplot3d.art3d.Poly3DCollection
+            Created surface artist.
+
+        Examples
+        --------
         >>> X = np.arange(-5, 5, 0.25)
         >>> Y = np.arange(-5, 5, 0.25)
         >>> X, Y = np.meshgrid(X, Y)
-        >>> R = np.sqrt(X**2 + Y**2)
-        >>> Z = np.sin(R)
-        >>> fp = FreePlot(projection='3d', dpi=300)
-        >>> fp.surfaceplot(X, Y, Z, cmap=plt.cm.coolwarm, antialiased=False, linewidth=0)
+        >>> Z = np.sin(np.sqrt(X**2 + Y**2))
+        >>> fp = FreePlot(projection="3d")
+        >>> fp.surfaceplot(X, Y, Z, linewidth=0)
         """
         ax = self[index]
         results = ax.plot_surface(X, Y, Z, cmap=cmap, antialiased=antialiased, **kwargs)
-        ax.tick_params('x', pad=0.01)
-        ax.tick_params('y', pad=0.01)
-        ax.tick_params('z', pad=0.01)
+        ax.tick_params("x", pad=0.01)
+        ax.tick_params("y", pad=0.01)
+        ax.tick_params("z", pad=0.01)
         return results
 
     @style_env
     def violinplot(
-        self, y: Iterable, x: Optional[Iterable[str]] = None,
-        index: Union[Tuple[int], str] = (0, 0), *,
-        style: Union[str, Iterable[str]] = 'violin',
-        **kwargs
+        self,
+        y: Iterable,
+        x: Optional[Iterable[str]] = None,
+        index: Union[Tuple[int], str] = (0, 0),
+        *,
+        style: Union[str, Iterable[str]] = "violin",
+        **kwargs,
     ) -> None:
         r"""Make a violin plot.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.violinplot.html?highlight=violinplot#matplotlib.axes.Axes.violinplot) for details.
 
-        Parameters:
-        -----------
-        y: Dataset, each of y is a group of data.
-        x: Group index.
-        **kwargs: other kwargs for `ax.violinplot`
-            - positions: array-like
-                The positions of the violins. The ticks and limits are automatically set to match the positions.
-            - vert: bool 
-                `True`: creates a vertical violin plot. Otherwise, creates a horizontal violin plot.
-            - widths: 
-            - showmeans: bool, default: False
-            - showextrema: bool, default: True
-            - showmedians: bool, default: False
+        Parameters
+        ----------
+        y : iterable
+            Dataset groups.
+        x : iterable of str, optional
+            Labels for dataset groups.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        style : str or iterable of str, default="violin"
+            Style names resolved by `style_env`.
+        **kwargs
+            Additional keyword arguments passed to `Axes.violinplot`.
 
-        Examples:
-        ---------
-        >>> # note that each element is a group of data ...
-        >>> dataset = [np.random.normal(0, std, 100) for std in range(5, 10)]
-        >>> fp.violinplot(x=None, y=dataset, index=(0, 0))
-        >>> fp.violinplot(x=[f"std-{std}" for std in range(5, 10)], y=dataset, index=(0, 0))
+        Returns
+        -------
+        dict
+            Violin plot artist dictionary returned by Matplotlib.
+
+        Examples
+        --------
+        >>> dataset = [np.random.normal(0, std, 100) for std in range(1, 4)]
+        >>> fp = FreePlot()
+        >>> fp.violinplot(y=dataset, x=["one", "two", "three"])
         """
 
         if x is None:
             x = range(1, len(y) + 1)
         ax = self[index]
         obj = ax.violinplot(dataset=y, **kwargs)
-        ax.set(
-            xticks=range(1, len(y) + 1),
-            xticklabels=x
-        )
-        for key in ['cmaxes', 'cmins', 'cbars']:
+        ax.set(xticks=range(1, len(y) + 1), xticklabels=x)
+        for key in ["cmaxes", "cmins", "cbars"]:
             try:
                 obj[key].set_linewidth(0.1)
             except KeyError:
                 pass
         return obj
 
+    def add_patch(
+        self, patch: patches.Patch, index: Union[Tuple[int], str] = (0, 0)
+    ) -> patches.Patch:
+        r"""Add a patch to an axes.
 
-    def add_patch(self, patch: patches.Patch, index: Union[Tuple[int], str] = (0, 0)) -> patches.Patch:
-        """Add patch to the Axes."""
+        Parameters
+        ----------
+        patch : matplotlib.patches.Patch
+            Patch artist to add.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+
+        Returns
+        -------
+        matplotlib.patches.Patch
+            Added patch artist.
+        """
         ax = self[index]
         return ax.add_patch(patch)
 
@@ -478,27 +568,53 @@ def _redirect(module, exclude_keys: Optional[Iterable] = None):
                 for key in exclude_keys:
                     del share[key]
             return getattr(module, func.__name__)(*args, **share)
+
         wrapper.__name__ = func.__name__
         wrapper.__doc__ = func.__doc__
         return wrapper
+
     return decorator
-  
-        
+
+
 class FreePatches:
+    r"""Factory for Matplotlib patch objects with shared defaults.
+
+    Parameters
+    ----------
+    alpha : float, default=1.0
+        Patch opacity.
+    fill : bool, default=False
+        Whether patches are filled.
+    linewidth : float, optional
+        Patch line width.
+    linestyle : str, optional
+        Patch line style.
+    hatch : str, optional
+        Patch hatch pattern.
+    capstyle : str, optional
+        Patch cap style.
+    joinstyle : str, optional
+        Patch join style.
+    """
 
     def __init__(
-        self, alpha: int = 1., fill: bool = False,
-        linewidth: float = None, linestyle: str = None, hatch: str = None,
-        capstyle: str = None, joinstyle: str = None
+        self,
+        alpha: int = 1.0,
+        fill: bool = False,
+        linewidth: float = None,
+        linestyle: str = None,
+        hatch: str = None,
+        capstyle: str = None,
+        joinstyle: str = None,
     ) -> None:
         self.__share = {
-            'alpha': alpha,
-            'fill': fill,
-            'linewidth': linewidth,
-            'linestyle': linestyle,
-            'hatch': hatch,
-            'capstyle': capstyle,
-            'joinstyle': joinstyle
+            "alpha": alpha,
+            "fill": fill,
+            "linewidth": linewidth,
+            "linestyle": linestyle,
+            "hatch": hatch,
+            "capstyle": capstyle,
+            "joinstyle": joinstyle,
         }
 
     @property
@@ -506,26 +622,33 @@ class FreePatches:
         return self.__share.copy()
 
     @_redirect(patches)
-    def Annulus(self, x:float, y:float, width:float, angle: float = 0., **kwargs):
+    def Annulus(self, x: float, y: float, width: float, angle: float = 0.0, **kwargs):
         return ((x, y), width, angle), kwargs
 
-    @_redirect(patches, ['fill'])
+    @_redirect(patches, ["fill"])
     def Arc(
-        self, x:float, y:float, width:float, height:float, angle: float = 0.,
-        theta1: float = 0., theta2: float = 0., **kwargs
+        self,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+        angle: float = 0.0,
+        theta1: float = 0.0,
+        theta2: float = 0.0,
+        **kwargs,
     ):
         return ((x, y), width, height, angle, theta1, theta2), kwargs
 
     @_redirect(patches)
-    def Arrow(self, x:float, y:float, dx:float, dy:float, **kwargs):
+    def Arrow(self, x: float, y: float, dx: float, dy: float, **kwargs):
         return (x, y, dx, dy), kwargs
 
     @_redirect(patches)
-    def Circle(self, x:float, y:float, radius: float, **kwargs):
+    def Circle(self, x: float, y: float, radius: float, **kwargs):
         return ((x, y), radius), kwargs
 
     @_redirect(patches)
-    def CirclePolygon(self, x:float, y:float, resolution: float = 20, **kwargs):
+    def CirclePolygon(self, x: float, y: float, resolution: float = 20, **kwargs):
         return ((x, y), resolution), kwargs
 
     @_redirect(patches)
@@ -533,17 +656,20 @@ class FreePatches:
         return args, kwargs
 
     @_redirect(patches)
-    def Ellipse(self, x:float, y:float, width:float, height:float, angle:float = 0., **kwargs):
+    def Ellipse(self, x: float, y: float, width: float, height: float, angle: float = 0.0, **kwargs):
         return ((x, y), width, height, angle), kwargs
 
     @_redirect(patches)
-    def Polygen(self, x:np.ndarray, y:np.ndarray, closed: bool = True, **kwargs):
+    def Polygon(self, x: np.ndarray, y: np.ndarray, closed: bool = True, **kwargs):
         assert x.ndim == y.ndim == 1, "check: x.ndim == y.ndim == 1"
         xy = np.vstack((x, y)).T
-        return (xy, closed), kwargs
+        kwargs["closed"] = closed
+        return (xy,), kwargs
 
     @_redirect(patches)
-    def Rectangle(self, x:float, y:float, width:float, height:float, angle: float = 0., **kwargs):
+    def Rectangle(
+        self, x: float, y: float, width: float, height: float, angle: float = 0.0, **kwargs
+    ):
         """
         (x, y) represents the left bottom corner for the common cartesian coordinate system
         while the left upper corner in the case of image plotting.

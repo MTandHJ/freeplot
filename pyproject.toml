@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "freeplot"
+version = "0.5.1"
+description = "A Python data visualization library based on Matplotlib."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+    { name = "MTandHJ", email = "congxueric@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Visualization",
+]
+dependencies = [
+    "matplotlib>=3.5",
+    "numpy>=1.21",
+    "pandas>=1.3",
+    "SciencePlots>=2.0",
+    "seaborn>=0.12",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.4.0",
+]
+docs = [
+    "sphinx>=7.2",
+    "pydata-sphinx-theme>=0.15",
+    "sphinx-copybutton>=0.5",
+    "sphinxcontrib-mermaid>=0.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/MTandHJ/freeplot"
+Documentation = "https://github.com/MTandHJ/freeplot"
+
+[tool.hatch.build]
+include = [
+    "freeplot/**/*.py",
+]
+exclude = [
+    "freeplot/demos/**",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["freeplot"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 101
+target-version = "py39"
+exclude = [
+    "demos",
+    "freeplot/demos",
+    "gallery.ipynb",
+    "setup.py",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+
+[tool.ruff.format]
+quote-style = "double"

@@ -1,39 +1,41 @@
+from typing import Dict, Iterable, List, Literal, Optional, Tuple, Union
 
-
-from typing import List, Tuple, Optional, Dict, Union, Iterable, Literal
-import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+from cycler import cycler
 from matplotlib.axes._axes import Axes
 from mpl_toolkits.mplot3d.axes3d import Axes3D
-from cycler import cycler
 
-from .config import cfg, style_cfg, COLORS, MARKERS
-from .utils import inherit_from_matplotlib, get_style, style_env
+from .config import COLORS, MARKERS, cfg, style_cfg
+from .utils import get_style, inherit_from_matplotlib, style_env
 
 
 class UnitAX:
-    """Single Axes."""
+    r"""Lazy axes holder.
+
+    Parameters
+    ----------
+    axes : FreeAxes
+        Parent axes collection.
+    position : matplotlib.gridspec.GridSpec
+        Grid position in the figure.
+    anchor : UnitAX, optional
+        Anchor axes used for shared y-axis creation.
+    sharey : bool, default=True
+        Whether to share y-axis with `anchor`.
+    **kwargs
+        Additional keyword arguments passed to `Figure.add_subplot`.
+    """
 
     def __init__(
-        self, axes: 'FreeAxes', 
-        position: matplotlib.gridspec.GridSpec, 
-        anchor: Optional['UnitAX'] = None,
-        sharey: bool = True, **kwargs
+        self,
+        axes: "FreeAxes",
+        position: matplotlib.gridspec.GridSpec,
+        anchor: Optional["UnitAX"] = None,
+        sharey: bool = True,
+        **kwargs,
     ):
-        """
-        Parameters:
-        -----------
-
-        axes: FreeAxes.
-        position: The grid position in the figure.
-        anchor: 
-            - `UnitAX`: This Axes will follow the anchor.
-            - `None`: This Axes will not follow any anchor.
-
-        sharey: `True`: The anchor will share y axis with current Axe.
-        **kwargs: other kwargs for `fig.add_subplot`
-        """
         self.axes = axes
         self.position = position
         self.anchor = anchor
@@ -43,23 +45,21 @@ class UnitAX:
 
     @property
     def ax(self):
-        """Return Axes.
+        r"""Create and return the wrapped Matplotlib axes.
 
-        Notes:
-        ------
+        Notes
+        -----
+        Axes are created lazily so style settings can be applied before the
+        first plotting call.
 
-        The Axes will be then created after this method is called.
-        This operation is necessary for users to specify 'style' during plotting.
-
-        Returns:
-        ---
-        Axes
+        Returns
+        -------
+        matplotlib.axes.Axes
+            Created or cached axes.
         """
         if self.__ax is None:
             if not self.sharey or self.anchor is None:
-                self.__ax = self.axes.fig.add_subplot(
-                    self.position, **self.kwargs
-                )
+                self.__ax = self.axes.fig.add_subplot(self.position, **self.kwargs)
             else:
                 self.__ax = self.axes.fig.add_subplot(
                     self.position, sharey=self.anchor.ax, **self.kwargs
@@ -69,29 +69,30 @@ class UnitAX:
 
 
 class FreeAxes:
-    """Collection of Axes."""
+    r"""Grid collection of lazily created axes.
+
+    Parameters
+    ----------
+    fig : matplotlib.figure.Figure
+        Figure that owns the axes.
+    shape : tuple[int, int]
+        Grid shape as `(rows, cols)`.
+    titles : iterable, optional
+        Titles used to access axes by name.
+    sharey : bool, default=True
+        Whether non-anchor axes in each row share y-axis with the row anchor.
+    projection : str, optional
+        Matplotlib projection name.
+    """
 
     def __init__(
-        self, fig: matplotlib.figure.Figure, shape: Tuple[int, int], 
+        self,
+        fig: matplotlib.figure.Figure,
+        shape: Tuple[int, int],
         titles: Optional[Iterable] = None,
-        sharey: bool = True, projection: Optional[str] = None,
+        sharey: bool = True,
+        projection: Optional[str] = None,
     ):
-        r"""
-        FreeAxes will create grids within the figure for every Axe.
-        The first Axe in each row could be the the anchor for sharing y axis.
-
-        Parameters:
-        -----------
-        fig: Figure.
-        shape: (int, int)
-            (#rows, #cols)
-        titles: Optional[Iterable[str]]
-            The titles for each Axes.
-        sharey: bool
-            Whether sharing the y axis.
-        projection: str
-            Sometimes it will be useful, like in case of '3d'.
-        """
         assert len(shape) == 2, "Only grid-like Axes (#rows, #cols) are supported"
 
         self.fig = fig
@@ -113,23 +114,42 @@ class FreeAxes:
         self.titles = np.array(list(self.links.keys()))
 
     def _get_links(self, titles: Optional[Iterable]) -> Dict:
-        """Link titles to corresponding Axes."""
+        r"""Map titles to axes indices.
+
+        Parameters
+        ----------
+        titles : iterable, optional
+            Titles arranged according to `self.axes.shape`.
+
+        Returns
+        -------
+        dict
+            Mapping from title to axes index.
+        """
         m, n = self.axes.shape
         names = dict()
         if titles is None:
             for i in range(m):
                 for j in range(n):
                     s = "(" + chr(i * n + j + 97) + ")"
-                    names.update({s:(i, j)})
+                    names.update({s: (i, j)})
         else:
             for i in range(m):
                 for j in range(n):
                     title = titles[i, j]
-                    names.update({title:(i, j)})
+                    names.update({title: (i, j)})
         return names
 
     def set(self, index: Union[Axes, str, Iterable[int], slice, None] = None, **kwargs) -> None:
-        """Set properties."""
+        r"""Set properties on selected axes.
+
+        Parameters
+        ----------
+        index : matplotlib.axes.Axes, str, iterable, slice, or None, optional
+            Target axes selector.
+        **kwargs
+            Properties passed to `Axes.set`.
+        """
         if isinstance(index, Axes):
             index.set(**kwargs)
             return 1
@@ -145,12 +165,18 @@ class FreeAxes:
             ax = self[idx]
             ax.set(**kwargs)
 
-    def set_title(self, y: float = .99, **kwargs) -> None:
-        """
-        Set titles for all axes.
+    def set_title(self, y: float = 0.99, **kwargs) -> None:
+        r"""Set titles for all managed axes.
 
-        Examples:
-        ---------
+        Parameters
+        ----------
+        y : float, default=0.99
+            Vertical title position.
+        **kwargs
+            Additional keyword arguments passed to `Axes.set_title`.
+
+        Examples
+        --------
         >>> fp.set_title(y=0.9)
         """
         for title in self.links.keys():
@@ -158,20 +184,19 @@ class FreeAxes:
             ax.set_title(title, y=y, **kwargs)
 
     def ticklabel_format(
-        self, 
+        self,
         index: Union[Axes, str, Iterable[int], slice, None] = None,
-        style: Literal['sci', 'scientific', 'plain'] = 'sci', 
+        style: Literal["sci", "scientific", "plain"] = "sci",
         scilimits: Iterable[int] = (0, 0),
-        axis: str = 'y', **kwargs
+        axis: str = "y",
+        **kwargs,
     ):
-        r"""
-        Configure the `.ScalarFormatter` used by default for linear Axes.
+        r"""Configure tick label formatting on selected axes.
 
-        If a parameter is not set, the corresponding property of the formatter
-        is left unchanged.
-
-        Parameters:
-        -----------
+        Parameters
+        ----------
+        index : matplotlib.axes.Axes, str, iterable, slice, or None, optional
+            Target axes selector.
         axis : {'x', 'y', 'both'}, default: 'both'
             The axis to configure.  Only major ticks are affected.
         style : {'sci', 'scientific', 'plain'}
@@ -184,22 +209,22 @@ class FreeAxes:
             configured to use scientific notation at all).  Use (0, 0) to
             include all numbers.  Use (m, m) where m != 0 to fix the order of
             magnitude to 10\ :sup:`m`.
-            The formatter default is :rc:`axes.formatter.limits`.
+            The formatter default is ``axes.formatter.limits``.
         useOffset : bool or float
             If True, the offset is calculated as needed.
             If False, no offset is used.
             If a numeric value, it sets the offset.
-            The formatter default is :rc:`axes.formatter.useoffset`.
+            The formatter default is ``axes.formatter.useoffset``.
         useLocale : bool
             Whether to format the number using the current locale or using the
             C (English) locale.  This affects e.g. the decimal separator.  The
-            formatter default is :rc:`axes.formatter.use_locale`.
+            formatter default is ``axes.formatter.use_locale``.
         useMathText : bool
             Render the offset and scientific notation in mathtext.
-            The formatter default is :rc:`axes.formatter.use_mathtext`.
+            The formatter default is ``axes.formatter.use_mathtext``.
 
-        Raises:
-        -------
+        Raises
+        ------
         AttributeError
             If the current formatter is not a `.ScalarFormatter`.
         """
@@ -233,43 +258,48 @@ class FreeAxes:
 
 
 class UnitPlot:
-    r"""Plotting grid-like Axes.
+    r"""Grid-like plotting container.
 
-    Parameters:
-    -----------
-    shape: (#rows, #cols)
-    figsize: (height, width) for each ax
-        So the real figsize is (height * row, width * col).
-    titles: Optional[Iterable[str]]
-        Titles for Axes.
-    sharey: bool 
-        Whether sharing the y axis.
-    latex: bool
-        `False`: set_style('no-latex').
-    projection: Sometimes it will be useful, like in case of '3d'.
-    **kwargs: other kwargs for `plt.figure`.
-    
-    Notes:
-    ------
-    Please make sure your computer has installed Latex already before calling 'latex=True' !
+    Parameters
+    ----------
+    shape : tuple[int, int], default=(1, 1)
+        Axes grid shape as `(rows, cols)`.
+    figsize : tuple[float, float], default=(1.5, 2.0)
+        Per-axes figure size as `(height, width)`.
+    titles : iterable, optional
+        Titles used to access axes by name.
+    sharey : bool, default=True
+        Whether axes in the same row share y-axis.
+    latex : bool, default=False
+        Whether to keep LaTeX-related style settings enabled.
+    dpi : int, default=500
+        Figure DPI.
+    projection : str, optional
+        Matplotlib projection name.
+    **kwargs
+        Additional keyword arguments passed to `matplotlib.pyplot.figure`.
+
+    Notes
+    -----
+    LaTeX must be installed in the local environment when `latex=True`.
     """
 
     def __init__(
-        self, 
-        shape: Tuple[int, int] = (1, 1), 
-        figsize: Tuple[float, float] = (1.5, 2.), 
+        self,
+        shape: Tuple[int, int] = (1, 1),
+        figsize: Tuple[float, float] = (1.5, 2.0),
         titles: Optional[Iterable] = None,
         sharey: bool = True,
         latex: bool = False,
         dpi: int = 500,
         projection: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ):
         # the default settings
         plt.style.use(style_cfg.basic)
         if not latex:
-            self.set_style('no-latex')
-        for group, params in cfg['rc_params'].items():
+            self.set_style("no-latex")
+        for group, params in cfg["rc_params"].items():
             plt.rc(group, **params)
 
         figsize = (figsize[1] * shape[1], figsize[0] * shape[0])
@@ -278,66 +308,62 @@ class UnitPlot:
 
     @property
     def colors(self):
-        prop_cycle = plt.rcParams['axes.prop_cycle']
-        return prop_cycle.by_key()['color']
+        prop_cycle = plt.rcParams["axes.prop_cycle"]
+        return prop_cycle.by_key()["color"]
 
     @colors.setter
-    def colors(self, palette: Literal['cool', 'bright', 'factor'] = 'cool'):
+    def colors(self, palette: Literal["cool", "bright", "factor"] = "cool"):
         PALETTES = {
-            'cool': COLORS,
-            'bright': [
-                "#16058b",
-                "#6200AA",
-                "#9E169D",
-                "#CC4A74",
-                "#EB7852",
-                "#FCB431"
-            ],
-            'factor': [
-                "#021024",
-                "#052659",
-                "#4D77A6",
-                "#5483B3",
-                "#7DA0CA",
-                "#C1E8FF"
-            ]
+            "cool": COLORS,
+            "bright": ["#16058b", "#6200AA", "#9E169D", "#CC4A74", "#EB7852", "#FCB431"],
+            "factor": ["#021024", "#052659", "#4D77A6", "#5483B3", "#7DA0CA", "#C1E8FF"],
         }
         if isinstance(palette, str):
             palette = PALETTES[palette]
-        plt.rcParams['axes.prop_cycle'] = cycler(marker=MARKERS, color=palette)
-    
+        plt.rcParams["axes.prop_cycle"] = cycler(marker=MARKERS, color=palette)
+
     @property
     def styles(self):
-        """Return available styles."""
+        r"""Return available Matplotlib and FreePlot style names."""
         return plt.style.available + list(style_cfg.keys())
 
     @property
     def rcParams(self):
-        """Return current settings."""
+        r"""Return current Matplotlib runtime settings."""
         return matplotlib.rcParams
 
     def set(self, index: Union[str, Iterable[int], slice, None] = None, **kwargs) -> None:
-        """Set properties for the Axes of 'index'."""
+        r"""Set properties for selected axes.
+
+        Parameters
+        ----------
+        index : str, iterable, slice, or None, optional
+            Target axes selector.
+        **kwargs
+            Properties passed to `Axes.set`.
+        """
         self.axes.set(index=index, **kwargs)
 
-    def set_font(
-        self,
-        family: Literal['serif', 'sans-serif'] = 'sans-serif',
-        size: int = 7
-    ):
-        r"""
-        Parameters:
-        -----------
-        family: 'serif' or 'sans-serif'
-        size: int
-            font size
+    def set_font(self, family: Literal["serif", "sans-serif"] = "sans-serif", size: int = 7):
+        r"""Set the default Matplotlib font.
+
+        Parameters
+        ----------
+        family : {"serif", "sans-serif"}, default="sans-serif"
+            Font family.
+        size : int, default=7
+            Font size.
         """
-        plt.rc(
-            'font', family=family, size=size
-        )
+        plt.rc("font", family=family, size=size)
 
     def set_style(self, style: Union[str, Iterable[str]]):
-        """Set a style. You can calling self.styles to check what is available."""
+        r"""Apply one or more styles.
+
+        Parameters
+        ----------
+        style : str or iterable of str
+            Style name or names. Use `styles` to inspect available names.
+        """
         styles = []
         if isinstance(style, str):
             styles += get_style(style)
@@ -346,196 +372,280 @@ class UnitPlot:
                 styles += get_style(item)
         plt.style.use(styles)
 
-    def set_scale(self, value: str = 'symlog', index=(0, 0), axis='y', **kwargs) -> None:
-        """Convert the axis to other formats for readability.
+    def set_scale(self, value: str = "symlog", index=(0, 0), axis="y", **kwargs) -> None:
+        r"""Set axis scale.
 
-        Parameters:
-        ---
-        value: 'log'|'linear'|'symlog'|'logit'
-        axis: 'x'|'y'|'z'
+        Parameters
+        ----------
+        value : {"log", "linear", "symlog", "logit"}, default="symlog"
+            Scale name.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        axis : {"x", "y", "z"}, default="y"
+            Axis name.
+        **kwargs
+            Additional properties passed to `set`.
 
-        Examples:
-        ---
-        >>> fp.set_scale(value='symlog', index=(0, 0))
+        Examples
+        --------
+        >>> fp.set_scale(value="symlog", index=(0, 0))
         """
-        kwargs['index'] = index
-        kwargs[axis + 'scale'] = value
+        kwargs["index"] = index
+        kwargs[axis + "scale"] = value
         return self.set(**kwargs)
 
-    def set_lim(self, lim: Iterable[float], index=(0, 0), axis='y', **kwargs):
-        r"""
-        Set the range for the axis.
+    def set_lim(self, lim: Iterable[float], index=(0, 0), axis="y", **kwargs):
+        r"""Set axis limits.
 
-        Parameters:
-        -----------
-        lim: (low, high)
-        axis: 'x'|'y'|'z'
+        Parameters
+        ----------
+        lim : iterable of float
+            Lower and upper axis limits.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        axis : {"x", "y", "z"}, default="y"
+            Axis name.
+        **kwargs
+            Additional properties passed to `set`.
 
-        Examples:
-        ---------
-        >>> fp.set_lim((0, 10), index=(0, 0), axis='y')
-        >>> fp.set_lim((1, 5), index=(0, 0), axis='x')
+        Examples
+        --------
+        >>> fp.set_lim((0, 10), index=(0, 0), axis="y")
+        >>> fp.set_lim((1, 5), index=(0, 0), axis="x")
         """
-        kwargs['index'] = index
-        kwargs[axis + 'lim'] = lim
+        kwargs["index"] = index
+        kwargs[axis + "lim"] = lim
         return self.set(**kwargs)
 
-    def set_label(self, label: str, index=(0, 0), axis='y', **kwargs):
-        r"""
-        Set a label for the axis.
+    def set_label(self, label: str, index=(0, 0), axis="y", **kwargs):
+        r"""Set an axis label.
 
-        Parameters:
-        -----------
-        label: str
-        axis: 'x'|'y'|'z'
+        Parameters
+        ----------
+        label : str
+            Axis label text.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        axis : {"x", "y", "z"}, default="y"
+            Axis name.
+        **kwargs
+            Additional properties passed to `set`.
 
-        Examples:
-        ---------
-        >>> fp.set_label('X2X', axis='x')
-        >>> fp.set_label('Y2Y', axis='y')
+        Examples
+        --------
+        >>> fp.set_label("X", axis="x")
+        >>> fp.set_label("Y", axis="y")
         """
-        kwargs['index'] = index
-        kwargs[axis + 'label'] = label
+        kwargs["index"] = index
+        kwargs[axis + "label"] = label
         return self.set(**kwargs)
 
     def set_text(
-        self, x: float, y: float, s: str, 
-        index=(0, 0), fontdict: Optional[Dict] = None,
-        **kwargs
+        self, x: float, y: float, s: str, index=(0, 0), fontdict: Optional[Dict] = None, **kwargs
     ) -> matplotlib.text.Text:
-        r"""
-        Add a text to the ax.
+        r"""Add text to an axes.
 
-        Parameters:
-        -----------
-        (x, y): Data coordinates.
-        s: The text.
-        fontdict: A dictionary to override the default text properties.
-        **kwargs: other kwargs for `text`
-            - fontsize: positive interger or 'xx-small', 'x-small', 'small', 'big'
-            - alpha: ...
-            - ...
+        Parameters
+        ----------
+        x : float
+            X coordinate in data space.
+        y : float
+            Y coordinate in data space.
+        s : str
+            Text content.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        fontdict : dict, optional
+            Text property overrides.
+        **kwargs
+            Additional keyword arguments passed to `Axes.text`.
 
-        Examples:
-        ---------
-        >>> fp.set_text(0.5, 0.5, s='GoGoGo', fontsize='big)
+        Returns
+        -------
+        matplotlib.text.Text
+            Created text artist.
+
+        Examples
+        --------
+        >>> fp.set_text(0.5, 0.5, s="GoGoGo", fontsize="large")
         """
         return self[index].text(x, y, s, fontdict, **kwargs)
 
     def set_arrow(
-        self, 
-        x: float, y: float,
-        dx: float, dy: float,
-        width: float, head_width: float,
-        index = (0, 0), color: str = 'r', alpha: float = 0.5,
-        **kwargs
+        self,
+        x: float,
+        y: float,
+        dx: float,
+        dy: float,
+        width: float,
+        head_width: float,
+        index=(0, 0),
+        color: str = "r",
+        alpha: float = 0.5,
+        **kwargs,
     ):
+        r"""Add an arrow to an axes.
+
+        Parameters
+        ----------
+        x : float
+            Arrow start x coordinate.
+        y : float
+            Arrow start y coordinate.
+        dx : float
+            Arrow x offset.
+        dy : float
+            Arrow y offset.
+        width : float
+            Arrow shaft width.
+        head_width : float
+            Arrow head width.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        color : str, default="r"
+            Arrow color.
+        alpha : float, default=0.5
+            Arrow opacity.
+        **kwargs
+            Additional keyword arguments passed to `Axes.arrow`.
+
+        Returns
+        -------
+        matplotlib.patches.FancyArrow
+            Created arrow artist.
+        """
         return self[index].arrow(
-            x, y, dx, dy,
-            width=width, head_width=head_width,
-            color=color, alpha=alpha, **kwargs
+            x, y, dx, dy, width=width, head_width=head_width, color=color, alpha=alpha, **kwargs
         )
 
-    def set_title(self, y: float = .99) -> None:
-        r"""
-        Set titles for Axes.
-        
-        Parameters:
-        -----------
-        y: The height from the bottom.
+    def set_title(self, y: float = 0.99) -> None:
+        r"""Set configured titles on all axes.
 
-        Examples:
-        ---------
+        Parameters
+        ----------
+        y : float, default=0.99
+            Vertical title position.
+
+        Examples
+        --------
         >>> fp.set_title(y=1.1)
         """
         self.axes.set_title(y=y)
 
-    def set_ticks(self, values: Iterable, index=(0, 0), fmt: str = "%s", axis: str = 'y', **kwargs) -> Dict:
+    def set_ticks(
+        self, values: Iterable, index=(0, 0), fmt: str = "%s", axis: str = "y", **kwargs
+    ) -> Dict:
         r"""Set the values of ticks.
-        
-        Parameters:
-        ---
 
-        values: The values of the ticks.
-        fmt: Display format of values, for example, 
-            0.1234 with the format of "%2f" will be converted to 0.12
-        axis: 'x'|'y'|'z'
+        Parameters
+        ----------
+        values : iterable
+            Tick values.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        fmt : str, default="%s"
+            Format string used to create tick labels.
+        axis : {"x", "y", "z"}, default="y"
+            Axis name.
+        **kwargs
+            Additional properties passed to `set`.
 
-        Examples:
-        ---------
+        Notes
+        -----
+        Passing an empty `values` sequence hides the selected axis labels.
+
+        Examples
+        --------
         >>> fp.set_ticks([0.1, 0.2, 0.3, 0.4, 0.5], fmt=".3f")
         >>> fp.set_ticks([])
-        
-        Notes:
-        ------
-        set_ticks([], axis='y') == self.get_yaxis().set_visible(False)
         """
-        labels = [fmt%value for value in values]
-        kwargs['index'] = index
-        kwargs[axis + 'ticks'] = values
-        kwargs[axis + 'ticklabels'] = labels
+        labels = [fmt % value for value in values]
+        kwargs["index"] = index
+        kwargs[axis + "ticks"] = values
+        kwargs[axis + "ticklabels"] = labels
         return self.set(**kwargs)
 
     def fill_between(
         self,
         x: Iterable,
-        lower: Iterable, upper: Iterable,
-        alpha: float = 0.5, linewidth: float = 0.,
-        index = (0, 0),
-        **kwargs
+        lower: Iterable,
+        upper: Iterable,
+        alpha: float = 0.5,
+        linewidth: float = 0.0,
+        index=(0, 0),
+        **kwargs,
     ):
-        r"""
-        Fill between lower and upper.
+        r"""Fill the area between lower and upper curves.
 
-        Parameters:
-        -----------
-        x: array
-            The x coordinates of the nodes defining the curves.
-        lower: array or scalar
-            The y coordinates of the nodes defining the first curve.
-        upper: array or scalar
-            The y coordinates of the nodes defining the second curve.
-        
-        Returns:
-        --------
-        PolyCollection
+        Parameters
+        ----------
+        x : iterable
+            X coordinates.
+        lower : iterable
+            Lower y coordinates.
+        upper : iterable
+            Upper y coordinates.
+        alpha : float, default=0.5
+            Fill opacity.
+        linewidth : float, default=0.0
+            Boundary line width.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        **kwargs
+            Additional keyword arguments passed to `Axes.fill_between`.
+
+        Returns
+        -------
+        matplotlib.collections.PolyCollection
+            Created fill artist.
         """
-        return self[index].fill_between(
-            x, lower, upper, alpha=alpha, linewidth=linewidth,
-            **kwargs
-        )
-    
+        return self[index].fill_between(x, lower, upper, alpha=alpha, linewidth=linewidth, **kwargs)
+
     def ticklabel_format(
-        self, style: str = 'sci', scilimits: Iterable[int] = (0, 0),
-        index: Union[Axes, str, Iterable[int], slice, None] = (0, 0), 
-        axis: str = 'y', **kwargs
+        self,
+        style: str = "sci",
+        scilimits: Iterable[int] = (0, 0),
+        index: Union[Axes, str, Iterable[int], slice, None] = (0, 0),
+        axis: str = "y",
+        **kwargs,
     ):
         r"""Configure the ScalarFormatter used by default for linear Axes.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.ticklabel_format.html?highlight=ticklabel_format#matplotlib.axes.Axes.ticklabel_format) for details.
 
-        Parameters:
-        -----------
-        style: 'sci'|'scientific'|'plain'
-            - `plain`: 7000000.
-            - `sci`: :math: `7 \times 10^6`
-        scilimits: (m, n)
-            Only numbers between 10^m and 10^n will be transformed to scientific notation.
-            - `(0, 0)`: All numbers will be transformed.
-        index:
-            - `None`: Apply it for all Axes.
-            - `slice`: ndarray slice supported.
-        axis: 'x'|'y'|'both'
-        **kwargs: other kwargs for `ticklabel_format`
+        Parameters
+        ----------
+        style : {"sci", "scientific", "plain"}, default="sci"
+            Tick label notation.
+        scilimits : iterable of int, default=(0, 0)
+            Scientific notation limits.
+        index : matplotlib.axes.Axes, str, iterable, slice, or None, default=(0, 0)
+            Target axes selector.
+        axis : {"x", "y", "both"}, default="y"
+            Axis name.
+        **kwargs
+            Additional keyword arguments passed to `Axes.ticklabel_format`.
 
-        Examples:
-        ---------
-        >>> fp.ticklabel_format(style='sci', index=(0, 0))
-        >>> fp.ticklabel_format(style='sci', index=None)
+        Examples
+        --------
+        >>> fp.ticklabel_format(style="sci", index=(0, 0))
+        >>> fp.ticklabel_format(style="sci", index=None)
         """
-        self.axes.ticklabel_format(index=index, style=style, scilimits=scilimits, axis=axis, **kwargs)
+        self.axes.ticklabel_format(
+            index=index, style=style, scilimits=scilimits, axis=axis, **kwargs
+        )
 
-    def get_container(self, index=(0, 0)) -> List[matplotlib.container.BarContainer]:
-        """Return containers that collect semantically related Artists such as the bars of a bar plot."""
+    def get_containers(self, index=(0, 0)) -> List[matplotlib.container.BarContainer]:
+        r"""Return artist containers from an axes.
+
+        Parameters
+        ----------
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+
+        Returns
+        -------
+        list[matplotlib.container.BarContainer]
+            Containers such as bar plot groups.
+        """
         ax = self[index]
         return ax.containers
 
@@ -550,7 +660,7 @@ class UnitPlot:
     @inherit_from_matplotlib
     def get_legend_handles_labels(self, index=(0, 0), legend_handler_map=None) -> Tuple[List]:
         """Return handles and labels for legend."""
-    
+
     @inherit_from_matplotlib
     def get_lines(self, index=(0, 0)) -> Iterable[matplotlib.lines.Line2D]:
         """Return the lines contained in the Axes."""
@@ -591,7 +701,7 @@ class UnitPlot:
     @inherit_from_matplotlib
     def get_yaxis(self, index=(0, 0)) -> matplotlib.axis.Axis:
         """Return the YAxis."""
-    
+
     @inherit_from_matplotlib
     def get_ylabel(self, index=(0, 0)) -> str:
         """Get the ylabel text string."""
@@ -614,55 +724,62 @@ class UnitPlot:
 
     @style_env
     def inset_axes(
-        self, 
-        xlims: Iterable[float], ylims: Iterable[float], bounds: Iterable[float],
-        *, style: Union[str, Iterable[str]] = None, index=(0, 0),
-        patch_params: dict = {'edgecolor':'black', 'linewidth':.7, 'alpha':.5},
-        line_params: dict = {'color':'gray', 'linewidth':.5, 'alpha':.7, 'linestyle':'--'}
+        self,
+        xlims: Iterable[float],
+        ylims: Iterable[float],
+        bounds: Iterable[float],
+        *,
+        style: Union[str, Iterable[str]] = None,
+        index=(0, 0),
+        patch_params: dict = {"edgecolor": "black", "linewidth": 0.7, "alpha": 0.5},
+        line_params: dict = {"color": "gray", "linewidth": 0.5, "alpha": 0.7, "linestyle": "--"},
     ) -> Tuple[Axes, matplotlib.patches.Patch, Iterable]:
-        r"""
-        Add a child inset Axes to this existing Axes.
-        See [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.inset_axes.html?highlight=inset_axes#matplotlib.axes.Axes.inset_axes) for details.
+        r"""Add a zoomed inset axes.
 
-        Parameters:
-        -----------
-        xlims|ylims: (l, r)|(b, t) 
-            Determines the retangle region from l to r and from b to t.
-        Bounds: (x0, y0, width, height) 
-            The new inseted ax located in rectangle (x0, y0) to (x0 + width, y0 + height).
-            Note that these values are according to the original ax, so they should be in [0, 1].
-        style: You must choose the same style as keep consistent with the original ax.
-        patch_params: You could specific the patch by passing a style dict;
-        line_params: You could specific the line by passing a style dict.
+        Parameters
+        ----------
+        xlims : iterable of float
+            X limits for the inset view.
+        ylims : iterable of float
+            Y limits for the inset view.
+        bounds : iterable of float
+            Inset bounds as `(x0, y0, width, height)` in parent axes coordinates.
+        style : str or iterable of str, optional
+            Style names resolved by `style_env`.
+        index : tuple[int, int] or str, default=(0, 0)
+            Parent axes index or title.
+        patch_params : dict, optional
+            Properties applied to the inset rectangle patch.
+        line_params : dict, optional
+            Properties applied to connector lines.
 
-        Examples:
-        ---------
+        Returns
+        -------
+        tuple
+            Inset axes, rectangle patch, and connector lines.
+
+        Examples
+        --------
         >>> fp = FreePlot((1, 1), (5, 4))
-        >>> fp.lineplot([1, 2, 3], [4, 5, 6], label='a')
-        >>> fp.lineplot([1, 2, 3], [3, 5, 7], label='b')
+        >>> fp.lineplot([1, 2, 3], [4, 5, 6], label="a")
+        >>> fp.lineplot([1, 2, 3], [3, 5, 7], label="b")
         >>> axins, patch, lines = fp.inset_axes(
         ...    xlims=(1.9, 2.1),
         ...    ylims=(4.9, 5.1),
         ...    bounds=(0.1, 0.7, 0.2, 0.2),
         ...    index=(0, 0),
-        ...    style='line' # The style should be consistent with the style of Axes[0, 0].
+        ...    style="line",
         ... )
-        >>> fp.lineplot([1, 2, 3], [4, 5, 6], index=axins)
-        >>> fp.lineplot([1, 2, 3], [3, 5, 7], index=axins)
-
-        Returns: 
-        --------
-        Axes, Patch, Lines
         """
         axins = self[index].inset_axes(bounds)
         axins.set_xlim(xlims[0], xlims[1])
         axins.set_ylim(ylims[0], ylims[1])
-        patch, lines = self[index].indicate_inset_zoom(axins, edgecolor='black')
+        patch, lines = self[index].indicate_inset_zoom(axins, edgecolor="black")
         for name, value in patch_params.items():
-            getattr(patch, 'set_' + name)(value)
+            getattr(patch, "set_" + name)(value)
         for name, value in line_params.items():
             for line in lines:
-                getattr(line, 'set_' + name)(value)
+                getattr(line, "set_" + name)(value)
         try:
             axins.get_legend().remove()
         except AttributeError:
@@ -670,133 +787,205 @@ class UnitPlot:
         axins.set(xlabel=None, ylabel=None, title=None)
         return axins, patch, lines
 
-    def legend(
-        self, 
-        x: float, y: float, ncol: int, 
-        index: Union[int, str] = (0, 0), 
+    def set_figure_legend(
+        self,
+        x: float,
+        y: float,
+        ncol: int,
+        index: Union[Tuple[int, int], str] = (0, 0),
         loc: str = "lower left",
         frameon: Optional[bool] = None,
         columnspacing: Optional[float] = None,
         title: Optional[str] = None,
-        **kwargs
-    ) -> None:
+        **kwargs,
+    ) -> matplotlib.legend.Legend:
         r"""Set the legend relative to the figure.
-        See [here](https://matplotlib.org/stable/api/legend_api.html?highlight=legend#module-matplotlib.legend) for details.
-        
-        Parameters:
-        -----------
-        (x, y): Coordinates relative to the figure.
-        ncol: Split legends into 'ncol' columns.
-        loc: 'upper left', 'upper right', 'lower left', 'lower right'
-            The location of the legend.
-        **kwargs: other kwargs for `legend`
-            - handles: A list of Artists (lines, patches) to be added to the legend
-            - labels: A list of labels to show next to the artists. 
-                    The length of handles and labels should be the same. 
-                    If they are not, they are truncated to the smaller of both lengths.
-            - fontsize: int or 'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large', 'xx-large'
-            - labelcolor: str or list
-            - markerscale: float 
-                    The relative size of legend markers compared with the originally drawn ones
-            - facecolor: 'inherit' or color
-            - edgecolor: 'inherit' or color
-            - ...
 
-        Notes:
-        ------
-        When you calling fp.legend(), please close the tight_layout in show() or savefig() !
+        Parameters
+        ----------
+        x : float
+            Legend anchor x coordinate in figure space.
+        y : float
+            Legend anchor y coordinate in figure space.
+        ncol : int
+            Number of legend columns.
+        index : tuple[int, int] or str, default=(0, 0)
+            Target axes index or title.
+        loc : str, default="lower left"
+            Legend location relative to the anchor.
+        frameon : bool, optional
+            Whether to draw a legend frame.
+        columnspacing : float, optional
+            Spacing between legend columns.
+        title : str, optional
+            Legend title.
+        **kwargs
+            Additional keyword arguments passed to `Axes.legend`.
 
-        Examples:
-        ---------
-        >>> fp.legend(0.3, 0.9, ncol=3) # Add legend to the top of the figure.
-        >>> fp.savefig(tight_layout=False) # !!!
-        >>> # The following operation will not conflict with tight_layout.
-        >>> fp[0, 0].legend() # Add legend in the Axes[0, 0].
+        Notes
+        -----
+        Figure-level legends can conflict with tight layout.
+
+        Returns
+        -------
+        matplotlib.legend.Legend
+            Created legend.
+
+        Examples
+        --------
+        >>> fp.set_figure_legend(0.3, 0.9, ncol=3)
+        >>> fp.savefig(tight_layout=False)
         """
         return self[index].legend(
-            bbox_to_anchor=(x, y), loc=loc,
-            bbox_transform=plt.gcf().transFigure, ncol=ncol,
-            frameon=frameon, columnspacing=columnspacing, title=title,
-            **kwargs
+            bbox_to_anchor=(x, y),
+            loc=loc,
+            bbox_transform=plt.gcf().transFigure,
+            ncol=ncol,
+            frameon=frameon,
+            columnspacing=columnspacing,
+            title=title,
+            **kwargs,
         )
 
     def subplots_adjust(
         self,
-        left: Optional[float] = None, 
-        bottom: Optional[float] = None, 
-        right: Optional[float] = None, 
-        top: Optional[float] = None, 
-        wspace: Optional[float] = None, 
-        hspace: Optional[float] = None
+        left: Optional[float] = None,
+        bottom: Optional[float] = None,
+        right: Optional[float] = None,
+        top: Optional[float] = None,
+        wspace: Optional[float] = None,
+        hspace: Optional[float] = None,
     ) -> None:
-        r"""
-        Adjust the subplot layout parameters.
-        See https://matplotlib.org/stable/api/figure_api.html?highlight=subplots_adjust#matplotlib.figure.Figure.subplots_adjust for details.
+        r"""Adjust subplot layout parameters.
+
+        Parameters
+        ----------
+        left : float, optional
+            Left side of the subplots.
+        bottom : float, optional
+            Bottom side of the subplots.
+        right : float, optional
+            Right side of the subplots.
+        top : float, optional
+            Top side of the subplots.
+        wspace : float, optional
+            Width reserved for space between subplots.
+        hspace : float, optional
+            Height reserved for space between subplots.
         """
         plt.subplots_adjust(left, bottom, right, top, wspace, hspace)
 
     @staticmethod
     def imread(filename: str, fmt: Optional[str] = None):
-        """Load Img."""
+        r"""Load an image.
+
+        Parameters
+        ----------
+        filename : str
+            Image path.
+        fmt : str, optional
+            Image format.
+
+        Returns
+        -------
+        np.ndarray
+            Loaded image data.
+        """
         return plt.imread(filename, fmt)
 
     @staticmethod
     def convert(img: np.ndarray, cur_fmt: str, nxt_fmt: str, **kwargs):
-        r"""
-        Convert the image into another type.
-            
-        Parameters:
-        -----------
-        img: Image
-        cur|nxt_fmt: gray, hed, hsv, lab, label, rgb, rgba, rgbcie, 
-            xyz, ycbcr, ycbdr, yiq, ypbpr, yuv
-        **kwargs: other kwargs for `skimage.color`
+        r"""Convert an image between color spaces.
+
+        Parameters
+        ----------
+        img : np.ndarray
+            Image data.
+        cur_fmt : str
+            Current color space.
+        nxt_fmt : str
+            Target color space.
+        **kwargs
+            Additional keyword arguments passed to `skimage.color` conversion.
+
+        Returns
+        -------
+        np.ndarray
+            Converted image.
         """
         from skimage import color
-        available = ('gray', 'hed', 'hsv', 'lab', 'label', 'rgb', 'rgba', 'rgbcie',
-                    'xyz', 'ycbcr', 'ycbdr', 'yiq', 'ypbpr', 'yuv')
+
+        available = (
+            "gray",
+            "hed",
+            "hsv",
+            "lab",
+            "label",
+            "rgb",
+            "rgba",
+            "rgbcie",
+            "xyz",
+            "ycbcr",
+            "ycbdr",
+            "yiq",
+            "ypbpr",
+            "yuv",
+        )
         cur_fmt, nxt_fmt = cur_fmt.lower(), nxt_fmt.lower()
         assert cur_fmt in available, f"current format is not in {available}"
         assert nxt_fmt in available, f"next format is not in {available}"
-        trans = '2'.join((cur_fmt, nxt_fmt))
+        trans = "2".join((cur_fmt, nxt_fmt))
         return getattr(color, trans)(img, **kwargs)
 
     def savefig(
-        self, filename: str, 
+        self,
+        filename: str,
         close_fig: bool = True,
         tight_layout: bool = False,
-        bbox_inches: str = 'tight', 
-        **kwargs
+        bbox_inches: str = "tight",
+        **kwargs,
     ) -> None:
-        r"""
-        Save the figure and close it.
+        r"""Save the figure.
 
-        Parameters:
-        -----------
-        close_fig: Close the figure to release memory if True (suggested).
-        tight_layout: `True`: wspace, hspace will be no use.
-        **kwargs: other kwargs for `plt.savefig`
-        
-        Notes:
-        ------
+        Parameters
+        ----------
+        filename : str
+            Output path.
+        close_fig : bool, default=True
+            Whether to close the figure after saving.
+        tight_layout : bool, default=False
+            Whether to call `matplotlib.pyplot.tight_layout` before saving.
+        bbox_inches : str, default="tight"
+            Bounding box mode passed to `Figure.savefig`.
+        **kwargs
+            Additional keyword arguments passed to `Figure.savefig`.
+
+        Notes
+        -----
         `tight_layout` will conflict with other settings sometimes.
         """
         if tight_layout:
             plt.tight_layout()
-        self.fig.savefig(
-            filename,
-            bbox_inches=bbox_inches,
-            **kwargs
-        )
+        self.fig.savefig(filename, bbox_inches=bbox_inches, **kwargs)
         if close_fig:
             self.close()
 
     def close(self) -> None:
-        """Close the figure."""
+        r"""Close the figure."""
         plt.close(self.fig)
-    
+
     def show(self, *args, tight_layout: bool = False, **kwargs):
-        """Show the figure."""
+        r"""Show the figure.
+
+        Parameters
+        ----------
+        *args
+            Positional arguments passed to `matplotlib.pyplot.show`.
+        tight_layout : bool, default=False
+            Whether to call `matplotlib.pyplot.tight_layout` before showing.
+        **kwargs
+            Keyword arguments passed to `matplotlib.pyplot.show`.
+        """
         if tight_layout:
             plt.tight_layout()
         return plt.show(*args, **kwargs)
@@ -804,15 +993,14 @@ class UnitPlot:
     def __getitem__(self, index: Union[Iterable[int], str, Axes]) -> Union[Axes, Axes3D]:
         r"""Get Axes.
 
-        Parameters:
-        -----------
-        index: titles or Tuple of index
-            - `str`: return the Axes whose title is `str`
-            - `(int, int)`: return the Axes located in `(int, int)`
-            - `Axes`: return `Axes`
+        Parameters
+        ----------
+        index : iterable of int, str, or matplotlib.axes.Axes
+            Axes selector.
 
-        Returns:
-        --------
-        Axes, Axes3D
+        Returns
+        -------
+        matplotlib.axes.Axes or mpl_toolkits.mplot3d.axes3d.Axes3D
+            Selected axes.
         """
         return self.axes[index]

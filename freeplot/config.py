@@ -1,10 +1,16 @@
-
-
 from cycler import cycler
+
+try:
+    import scienceplots as _scienceplots
+except ImportError:
+    _scienceplots = None
 
 
 class Config(dict):
-    '''
+    r"""Dictionary with attribute-style access.
+
+    Examples
+    --------
     >>> cfg = Config({1:2}, a=3)
     Traceback (most recent call last):
     ...
@@ -22,7 +28,8 @@ class Config(dict):
     Traceback (most recent call last):
     ...
     KeyError: 'd'
-    '''
+    """
+
     def __init__(self, *args, **kwargs):
         super(Config, self).__init__(*args, **kwargs)
         for name, attr in self.items():
@@ -44,47 +51,47 @@ COLORS = (
 
 
 MARKERS = (
-    'o',
-    '^',
-    's',
-    'D',
-    'p',
-    '*',
+    "o",
+    "^",
+    "s",
+    "D",
+    "p",
+    "*",
 )
 
 cfg = Config()
 
 
-#rc
+# runtime configuration
 
 _axes = {
     "prop_cycle": cycler(marker=MARKERS, color=COLORS),
     "titlesize": 11,
     "labelsize": 11,
-    "facecolor": 'white',
-    "grid": False
+    "facecolor": "white",
+    "grid": False,
 }
 
 _font = {
-        # "family": ["serif"],
-        'family': 'sans-serif',       # 默认文本字体
-        "weight": "normal",
-        'sans-serif': ['Arial', 'DejaVu Sans'],  # 备选字体
-        "size": 7
-    }
+    # "family": ["serif"],
+    "family": "sans-serif",
+    "weight": "normal",
+    "sans-serif": ["Arial", "DejaVu Sans"],
+    "size": 7,
+}
 
 _mathtext = {
-    'fontset': 'custom',      # 数学符号字体自定义
-    'it': 'Symbol:italic',    # 斜体符号
-    'rm': 'Symbol',           # 常规符号
-    'tt': 'monospace',        # 打字机字体
+    "fontset": "custom",
+    "it": "Symbol:italic",
+    "rm": "Symbol",
+    "tt": "monospace",
 }
 
 _lines = {
-    "linewidth": 1.,
+    "linewidth": 1.0,
     # "marker": None,
     "markersize": 5,
-    "markeredgewidth": .5,
+    "markeredgewidth": 0.5,
     "markerfacecolor": "auto",
     "markeredgecolor": "white",
 }
@@ -95,72 +102,72 @@ _markers = {
 
 
 _legend = {
-    'borderaxespad': 0.3,
-    'borderpad': 0.2,
-    'columnspacing': 0.1,
-    'edgecolor': '0.8',
-    'facecolor': 'inherit',
-    'fancybox': True,
-    'fontsize': 10,
-    'framealpha': 0.5,
-    'frameon': False,
-    'handleheight': 0.7,
-    'handlelength': 2.0,
-    'handletextpad': 0.8,
-    'labelspacing': 0.5,
-    'loc': 'best',
-    'markerscale': 1.0,
-    'numpoints': 1,
-    'scatterpoints': 1,
-    'shadow': False,
-    'title_fontsize': None,
+    "borderaxespad": 0.3,
+    "borderpad": 0.2,
+    "columnspacing": 0.1,
+    "edgecolor": "0.8",
+    "facecolor": "inherit",
+    "fancybox": True,
+    "fontsize": 10,
+    "framealpha": 0.5,
+    "frameon": False,
+    "handleheight": 0.7,
+    "handlelength": 2.0,
+    "handletextpad": 0.8,
+    "labelspacing": 0.5,
+    "loc": "best",
+    "markerscale": 1.0,
+    "numpoints": 1,
+    "scatterpoints": 1,
+    "shadow": False,
+    "title_fontsize": None,
 }
 
 _xtick = {
-    'alignment': 'center',
-    'bottom': True,
-    'color': 'black',
-    'direction': 'out',
-    'labelbottom': True,
-    'labelsize': 11,
-    'labeltop': False,
-    'major.bottom': True,
-    'major.pad': 3.5,
-    'major.size': 3.5,
-    'major.top': True,
-    'major.width': 0.5,
-    'minor.bottom': True,
-    'minor.pad': 3.4,
-    'minor.size': 2.0,
-    'minor.top': True,
-    'minor.visible': False,
-    'minor.width': 0.4,
-    'top': False,
+    "alignment": "center",
+    "bottom": True,
+    "color": "black",
+    "direction": "out",
+    "labelbottom": True,
+    "labelsize": 11,
+    "labeltop": False,
+    "major.bottom": True,
+    "major.pad": 3.5,
+    "major.size": 3.5,
+    "major.top": True,
+    "major.width": 0.5,
+    "minor.bottom": True,
+    "minor.pad": 3.4,
+    "minor.size": 2.0,
+    "minor.top": True,
+    "minor.visible": False,
+    "minor.width": 0.4,
+    "top": False,
 }
 
 _ytick = {
-    'alignment': 'center_baseline',
-    'color': 'black',
-    'direction': 'out',
-    'labelleft': True,
-    'labelright': False,
-    'labelsize': 11,
-    'left': True,
-    'major.left': True,
-    'major.pad': 3.5,
-    'major.right': True,
-    'major.size': 3.5,
-    'major.width': 0.5,
-    'minor.left': True,
-    'minor.pad': 3.4,
-    'minor.right': True,
-    'minor.size': 2.0,
-    'minor.visible': False,
-    'minor.width': 0.4,
-    'right': False
+    "alignment": "center_baseline",
+    "color": "black",
+    "direction": "out",
+    "labelleft": True,
+    "labelright": False,
+    "labelsize": 11,
+    "left": True,
+    "major.left": True,
+    "major.pad": 3.5,
+    "major.right": True,
+    "major.size": 3.5,
+    "major.width": 0.5,
+    "minor.left": True,
+    "minor.pad": 3.4,
+    "minor.right": True,
+    "minor.size": 2.0,
+    "minor.visible": False,
+    "minor.width": 0.4,
+    "right": False,
 }
 
-cfg['rc_params'] = Config(
+cfg["rc_params"] = Config(
     axes=_axes,
     font=_font,
     mathtext=_mathtext,
@@ -168,24 +175,23 @@ cfg['rc_params'] = Config(
     markers=_markers,
     legend=_legend,
     xtick=_xtick,
-    ytick=_ytick
+    ytick=_ytick,
 )
 
 style_cfg = Config()
 
-style_cfg['basic'] = ["science"]  # color style: bright, vibrant, muted, high-contrast, light, high-vis, retro
-style_cfg['line'] = [] 
-style_cfg['stack'] = [] 
-style_cfg['scatter'] = []
-style_cfg['heatmap'] = []
-style_cfg['image'] = ["bright"]
-style_cfg['bar'] = [{'lines.markersize': 0.0, 'lines.markeredgewidth': 0., "lines.linewidth": 0.7}]
-style_cfg['hist'] = []
-style_cfg['violin'] = []
-style_cfg['surface'] = [{"axes.facecolor":".3"}]
+style_cfg["basic"] = ["science"] if _scienceplots else ["default"]
+style_cfg["no-latex"] = [{"text.usetex": False}]
+style_cfg["bright"] = []
+style_cfg["line"] = []
+style_cfg["stack"] = []
+style_cfg["scatter"] = []
+style_cfg["heatmap"] = []
+style_cfg["image"] = ["bright"] if _scienceplots else []
+style_cfg["bar"] = [{"lines.markersize": 0.0, "lines.markeredgewidth": 0.0, "lines.linewidth": 0.7}]
+style_cfg["hist"] = []
+style_cfg["violin"] = []
+style_cfg["surface"] = [{"axes.facecolor": ".3"}]
 
-# zoo
-style_cfg['radar'] = []
-
-    
-
+# extension styles
+style_cfg["radar"] = []

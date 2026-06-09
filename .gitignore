@@ -1,5 +1,6 @@
 # My configurations
 
+.DS_Store
 infos/
 logs/
 media/
