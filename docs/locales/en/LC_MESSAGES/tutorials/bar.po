@@ -1,0 +1,31 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, MTandHJ
+# This file is distributed under the same license as the FreePlot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreePlot \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 12:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Sphinx gettext builder\n"
+
+#: ../../tutorials/bar.rst:2
+msgid "柱状图"
+msgstr "Bar Plot"
+
+#: ../../tutorials/bar.rst:4
+msgid "`barplot` 基于 DataFrame 绘制分组柱状图, 支持 `hue` 和 hatch。"
+msgstr "`barplot` draws grouped bar charts from a DataFrame and supports `hue` and hatch patterns."
+
+#: ../../tutorials/bar.rst:21
+msgid "bar plot"
+msgstr ""

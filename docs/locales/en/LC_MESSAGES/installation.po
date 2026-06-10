@@ -1,0 +1,43 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, MTandHJ
+# This file is distributed under the same license as the FreePlot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreePlot \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 12:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Sphinx gettext builder\n"
+
+#: ../../installation.rst:2
+msgid "安装"
+msgstr "Installation"
+
+#: ../../installation.rst:5
+msgid "环境要求"
+msgstr "Requirements"
+
+#: ../../installation.rst:7
+msgid "FreePlot 要求 Python 3.9 或更新版本。"
+msgstr "FreePlot requires Python 3.9 or later."
+
+#: ../../installation.rst:10
+msgid "从 PyPI 安装"
+msgstr "Install From PyPI"
+
+#: ../../installation.rst:17
+msgid "从源码开发安装"
+msgstr "Install From Source"
+
+#: ../../installation.rst:24
+msgid "运行验证"
+msgstr "Validate The Setup"

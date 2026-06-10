@@ -60,6 +60,12 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Documentation build artifacts
+docs/_build/
+docs/locales/**/*.mo
+docs/**/*.pot
+docs/**/.doctrees/
+
 # Translations
 *.mo
 *.pot
@@ -76,9 +82,6 @@ instance/
 
 # Scrapy stuff:
 .scrapy
-
-# Sphinx documentation
-docs/_build/
 
 # PyBuilder
 .pybuilder/

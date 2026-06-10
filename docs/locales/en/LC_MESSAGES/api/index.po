@@ -1,0 +1,1281 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, MTandHJ
+# This file is distributed under the same license as the FreePlot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreePlot \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 12:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Sphinx gettext builder\n"
+
+#: ../../api/index.rst:2
+msgid "API 参考"
+msgstr "API Reference"
+
+#: ../../api/index.rst:5
+msgid "核心绘图类"
+msgstr "Core Plotting Class"
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot:1
+msgid "High-level plotting container."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot:3
+msgid "`FreePlot` extends `UnitPlot` with common chart helpers while preserving direct access to Matplotlib axes."
+msgstr ""
+
+#: ../../api/index.rst:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set_title:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_title:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:0
+msgid "参数"
+msgstr "Parameters"
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:1
+msgid "Bar plotting according to pd.DataFrame."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:3
+msgid "Column name for the x-axis variable."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:5
+msgid "Column name for the y-axis variable."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:7
+msgid "Data source containing `x`, `y`, and optional `hue` columns."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:9
+msgid "Column name used to split bars into groups."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.add_patch:5
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:11
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:13
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:5
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:17
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:5
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:7
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:7
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:7
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:9
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:7
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:13
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_containers:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:15
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:5
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:5
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:5
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:5
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:11
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:9
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:9
+msgid "Target axes index or title."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:13
+msgid "Bar orientation."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:15
+msgid "Whether to auto-format x tick labels."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:17
+msgid "Hatch patterns applied to bar containers."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:19
+msgid "Repetition count for each hatch pattern."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:21
+msgid "Seaborn error bar method."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:23
+msgid "Width of error bar caps."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:25
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:15
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:15
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:19
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:9
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:9
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:9
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:9
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:9
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:13
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pre_radar:7
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:15
+msgid "Style names resolved by `style_env`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:27
+msgid "Additional keyword arguments passed to `seaborn.barplot`."
+msgstr ""
+
+#: ../../api/index.rst:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:0
+msgid "返回"
+msgstr "Returns"
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:29
+msgid "Legend handles and labels from the target axes."
+msgstr ""
+
+#: ../../api/index.rst:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:0
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set_title:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.close:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_facecolor:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_legend:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_legend_handles_labels:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_lines:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_patches:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_title:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xaxis:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xlabel:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xlim:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xscale:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xticklabels:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xticks:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yaxis:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_ylabel:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_ylim:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yscale:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yticklabels:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yticks:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:0
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_title:0
+msgid "返回类型"
+msgstr "Return type"
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:30
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:19
+msgid ":py:class:`tuple`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.barplot:33
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:27
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:23
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:24
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:14
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:17
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:17
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:17
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:23
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:17
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set_title:8
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:22
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:29
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:12
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:12
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:12
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:19
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:18
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_title:7
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:14
+msgid "示例"
+msgstr "Examples"
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:1
+msgid "Plot filled contours."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:3
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:3
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:3
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:3
+msgid "X coordinates."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:5
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:5
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:5
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:5
+msgid "Y coordinates."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:7
+msgid "Height values over which contours are drawn."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:9
+msgid "Number or positions of contour levels."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:11
+msgid "Whether to add a color bar."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:17
+msgid "Orientation and position of `Z[0, 0]`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:19
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:13
+msgid "Colormap used to map scalar values to colors."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:21
+msgid "Additional keyword arguments passed to `Axes.contourf`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:23
+msgid "Created contour set."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.contourf:24
+msgid ":py:class:`matplotlib.contour.QuadContourSet`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:1
+msgid "Compute and plot a histogram."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:3
+msgid "Input values."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:5
+msgid "Number of bins."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:7
+msgid "Whether to normalize counts to form a density."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:9
+msgid "Lower and upper range of bins."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:11
+msgid "Whether each bin includes counts from previous bins."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:13
+msgid "Histogram type passed to `Axes.hist`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:15
+msgid "Histogram color."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.histplot:21
+msgid "Additional keyword arguments passed to `Axes.hist`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:1
+msgid "Plot rectangular data as a color-encoded matrix."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:3
+msgid "Matrix-like data to plot."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:7
+msgid "Whether to write data values in cells."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:9
+msgid "Annotation format string."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:11
+msgid "Colormap name."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:13
+msgid "Width of lines that divide cells."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:17
+msgid "Additional keyword arguments passed to `seaborn.heatmap`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:19
+msgid "Target axes."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.heatmap:20
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX.ax:9
+msgid ":py:class:`matplotlib.axes.Axes`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:1
+msgid "Display data as an image."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:3
+msgid "Image data."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:7
+msgid "Whether to keep axis ticks visible."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.imageplot:11
+msgid "Additional keyword arguments passed to `Axes.imshow`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:1
+msgid "Draw a line plot."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:11
+msgid "Additional keyword arguments passed to `Axes.plot`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:13
+msgid "Created line artists."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.lineplot:14
+msgid ":py:class:`list[matplotlib.lines.Line2D]`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:1
+msgid "Draw a stacked area plot."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:3
+msgid "X coordinates with shape `(N,)`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:5
+msgid "Stacked values with shape `(M, N)`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:11
+msgid "Additional keyword arguments passed to `Axes.stackplot`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:13
+msgid "Created stacked area artists."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.stackplot:14
+msgid ":py:class:`list[matplotlib.collections.PolyCollection]`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:1
+msgid "A scatter plot of y vs. x with varying marker size and/or color."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:11
+msgid "Additional keyword arguments passed to `Axes.scatter`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:13
+msgid "Created scatter artist."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.scatterplot:14
+msgid ":py:class:`matplotlib.collections.PathCollection`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:1
+msgid "Create a surface plot."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:7
+msgid "Surface values."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:11
+msgid "Style names reserved for consistency with other plot methods."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:15
+msgid "Whether to draw antialiased surface edges."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:17
+msgid "Additional keyword arguments passed to `Axes3D.plot_surface`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:19
+msgid "Created surface artist."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.surfaceplot:20
+msgid ":py:class:`mpl_toolkits.mplot3d.art3d.Poly3DCollection`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:1
+msgid "Make a violin plot."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:3
+msgid "Dataset groups."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:5
+msgid "Labels for dataset groups."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:11
+msgid "Additional keyword arguments passed to `Axes.violinplot`."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:13
+msgid "Violin plot artist dictionary returned by Matplotlib."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.violinplot:14
+msgid ":py:class:`dict`"
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.add_patch:1
+msgid "Add a patch to an axes."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.add_patch:3
+msgid "Patch artist to add."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.add_patch:8
+msgid "Added patch artist."
+msgstr ""
+
+#: ../../../freeplot/base.py:docstring of freeplot.base.FreePlot.add_patch:9
+msgid ":py:class:`matplotlib.patches.Patch`"
+msgstr ""
+
+#: ../../api/index.rst:12
+msgid "基础容器"
+msgstr "Base Containers"
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX:1
+msgid "Lazy axes holder."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX:3
+msgid "Parent axes collection."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX:5
+msgid "Grid position in the figure."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX:7
+msgid "Anchor axes used for shared y-axis creation."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX:9
+msgid "Whether to share y-axis with `anchor`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX:11
+msgid "Additional keyword arguments passed to `Figure.add_subplot`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX.ax:1
+msgid "Create and return the wrapped Matplotlib axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX.ax:4
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:20
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:14
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:22
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:14
+msgid "备注"
+msgstr "Notes"
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX.ax:5
+msgid "Axes are created lazily so style settings can be applied before the first plotting call."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitAX.ax:8
+msgid "Created or cached axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes:1
+msgid "Grid collection of lazily created axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes:3
+msgid "Figure that owns the axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes:5
+msgid "Grid shape as `(rows, cols)`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes:7
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:7
+msgid "Titles used to access axes by name."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes:9
+msgid "Whether non-anchor axes in each row share y-axis with the row anchor."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes:11
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:15
+msgid "Matplotlib projection name."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set:1
+msgid "Set properties on selected axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:7
+msgid "Target axes selector."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set:5
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set:5
+msgid "Properties passed to `Axes.set`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set_title:1
+msgid "Set titles for all managed axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set_title:3
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_title:3
+msgid "Vertical title position."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.set_title:5
+msgid "Additional keyword arguments passed to `Axes.set_title`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:1
+msgid "Configure tick label formatting on selected axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:5
+msgid "The axis to configure.  Only major ticks are affected."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:7
+msgid "Whether to use scientific notation. The formatter default is to use scientific notation. 'sci' is equivalent to 'scientific'."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:11
+msgid "Scientific notation is used only for numbers outside the range 10\\ :sup:`m` to 10\\ :sup:`n` (and only if the formatter is configured to use scientific notation at all).  Use (0, 0) to include all numbers.  Use (m, m) where m != 0 to fix the order of magnitude to 10\\ :sup:`m`. The formatter default is ``axes.formatter.limits``."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:18
+msgid "If True, the offset is calculated as needed. If False, no offset is used. If a numeric value, it sets the offset. The formatter default is ``axes.formatter.useoffset``."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:23
+msgid "Whether to format the number using the current locale or using the C (English) locale.  This affects e.g. the decimal separator.  The formatter default is ``axes.formatter.use_locale``."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:27
+msgid "Render the offset and scientific notation in mathtext. The formatter default is ``axes.formatter.use_mathtext``."
+msgstr ""
+
+#: ../../api/index.rst:0
+msgid "抛出"
+msgstr "Raises"
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.FreeAxes.ticklabel_format:31
+msgid "If the current formatter is not a `.ScalarFormatter`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:1
+msgid "Grid-like plotting container."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:3
+msgid "Axes grid shape as `(rows, cols)`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:5
+msgid "Per-axes figure size as `(height, width)`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:9
+msgid "Whether axes in the same row share y-axis."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:11
+msgid "Whether to keep LaTeX-related style settings enabled."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:13
+msgid "Figure DPI."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:17
+msgid "Additional keyword arguments passed to `matplotlib.pyplot.figure`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot:21
+msgid "LaTeX must be installed in the local environment when `latex=True`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.styles:1
+msgid "Return available Matplotlib and FreePlot style names."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.rcParams:1
+msgid "Return current Matplotlib runtime settings."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set:1
+msgid "Set properties for selected axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_font:1
+msgid "Set the default Matplotlib font."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_font:3
+msgid "Font family."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_font:5
+msgid "Font size."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_style:1
+msgid "Apply one or more styles."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_style:3
+msgid "Style name or names. Use `styles` to inspect available names."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:1
+msgid "Set axis scale."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:3
+msgid "Scale name."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:7
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:7
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:7
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:9
+msgid "Axis name."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_scale:9
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:11
+msgid "Additional properties passed to `set`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:1
+msgid "Set axis limits."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_lim:3
+msgid "Lower and upper axis limits."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:1
+msgid "Set an axis label."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_label:3
+msgid "Axis label text."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:1
+msgid "Add text to an axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:3
+msgid "X coordinate in data space."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:5
+msgid "Y coordinate in data space."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:7
+msgid "Text content."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:11
+msgid "Text property overrides."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:13
+msgid "Additional keyword arguments passed to `Axes.text`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:15
+msgid "Created text artist."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_text:16
+msgid ":py:class:`matplotlib.text.Text`"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:1
+msgid "Add an arrow to an axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:3
+msgid "Arrow start x coordinate."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:5
+msgid "Arrow start y coordinate."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:7
+msgid "Arrow x offset."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:9
+msgid "Arrow y offset."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:11
+msgid "Arrow shaft width."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:13
+msgid "Arrow head width."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:17
+msgid "Arrow color."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:19
+msgid "Arrow opacity."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:21
+msgid "Additional keyword arguments passed to `Axes.arrow`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:23
+msgid "Created arrow artist."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_arrow:24
+msgid ":py:class:`matplotlib.patches.FancyArrow`"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_title:1
+msgid "Set configured titles on all axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:1
+msgid "Set the values of ticks."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:3
+msgid "Tick values."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:7
+msgid "Format string used to create tick labels."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_ticks:15
+msgid "Passing an empty `values` sequence hides the selected axis labels."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:1
+msgid "Fill the area between lower and upper curves."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:5
+msgid "Lower y coordinates."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:7
+msgid "Upper y coordinates."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:9
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:15
+msgid "Fill opacity."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:11
+msgid "Boundary line width."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:15
+msgid "Additional keyword arguments passed to `Axes.fill_between`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:17
+msgid "Created fill artist."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.fill_between:18
+msgid ":py:class:`matplotlib.collections.PolyCollection`"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:1
+msgid "Configure the ScalarFormatter used by default for linear Axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:3
+msgid "Tick label notation."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:5
+msgid "Scientific notation limits."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.ticklabel_format:11
+msgid "Additional keyword arguments passed to `Axes.ticklabel_format`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_containers:1
+msgid "Return artist containers from an axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_containers:6
+msgid "Containers such as bar plot groups."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_containers:7
+msgid ":py:class:`list[matplotlib.container.BarContainer]`"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_facecolor:1
+msgid "Get the facecolor of the Axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_legend:1
+msgid "Return Legend instance or None if no legend"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_legend_handles_labels:1
+msgid "Return handles and labels for legend."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_lines:1
+msgid "Return the lines contained in the Axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_patches:1
+msgid "Return the patches in the Axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_title:1
+msgid "Return the title of the Axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xaxis:1
+msgid "Return the XAxis."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xlabel:1
+msgid "Get the xlabel text string."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xlim:1
+msgid "Return the x-axis view limits."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xscale:1
+msgid "Return x-scale type."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xticklabels:1
+msgid "Get the xaxis' tick labels."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_xticks:1
+msgid "Return the xaxis' tick locations in data coordinates."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yaxis:1
+msgid "Return the YAxis."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_ylabel:1
+msgid "Get the ylabel text string."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_ylim:1
+msgid "Return the y-axis view limits."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yscale:1
+msgid "Return y-scale type."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yticklabels:1
+msgid "Get the yaxis' tick labels."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.get_yticks:1
+msgid "Return the yaxis' tick locations in data coordinates."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:1
+msgid "Add a zoomed inset axes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:3
+msgid "X limits for the inset view."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:5
+msgid "Y limits for the inset view."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:7
+msgid "Inset bounds as `(x0, y0, width, height)` in parent axes coordinates."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:11
+msgid "Parent axes index or title."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:13
+msgid "Properties applied to the inset rectangle patch."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:15
+msgid "Properties applied to connector lines."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.inset_axes:18
+msgid "Inset axes, rectangle patch, and connector lines."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:1
+msgid "Set the legend relative to the figure."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:3
+msgid "Legend anchor x coordinate in figure space."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:5
+msgid "Legend anchor y coordinate in figure space."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:7
+msgid "Number of legend columns."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:11
+msgid "Legend location relative to the anchor."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:13
+msgid "Whether to draw a legend frame."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:15
+msgid "Spacing between legend columns."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:17
+msgid "Legend title."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:19
+msgid "Additional keyword arguments passed to `Axes.legend`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:23
+msgid "Figure-level legends can conflict with tight layout."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:25
+msgid "Created legend."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.set_figure_legend:26
+msgid ":py:class:`matplotlib.legend.Legend`"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:1
+msgid "Adjust subplot layout parameters."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:3
+msgid "Left side of the subplots."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:5
+msgid "Bottom side of the subplots."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:7
+msgid "Right side of the subplots."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:9
+msgid "Top side of the subplots."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:11
+msgid "Width reserved for space between subplots."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.subplots_adjust:13
+msgid "Height reserved for space between subplots."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.imread:1
+msgid "Load an image."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.imread:3
+msgid "Image path."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.imread:5
+msgid "Image format."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.imread:8
+msgid "Loaded image data."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:12
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.imread:9
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pre_radar:11
+msgid ":py:class:`np.ndarray`"
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:1
+msgid "Convert an image between color spaces."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:5
+msgid "Current color space."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:7
+msgid "Target color space."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:9
+msgid "Additional keyword arguments passed to `skimage.color` conversion."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.convert:11
+msgid "Converted image."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:1
+msgid "Save the figure."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:3
+msgid "Output path."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:5
+msgid "Whether to close the figure after saving."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:7
+msgid "Whether to call `matplotlib.pyplot.tight_layout` before saving."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:9
+msgid "Bounding box mode passed to `Figure.savefig`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:11
+msgid "Additional keyword arguments passed to `Figure.savefig`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.savefig:15
+msgid "`tight_layout` will conflict with other settings sometimes."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.close:1
+msgid "Close the figure."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.show:1
+msgid "Show the figure."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.show:3
+msgid "Positional arguments passed to `matplotlib.pyplot.show`."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.show:4
+msgid "Whether to call `matplotlib.pyplot.tight_layout` before showing."
+msgstr ""
+
+#: ../../../freeplot/unit.py:docstring of freeplot.unit.UnitPlot.show:6
+msgid "Keyword arguments passed to `matplotlib.pyplot.show`."
+msgstr ""
+
+#: ../../api/index.rst:19
+msgid "扩展示例函数"
+msgstr "Extended Example Functions"
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:1
+msgid "Draw radar data on a registered radar projection."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:3
+msgid "Mapping from series name to values."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:5
+msgid "Variable labels."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:7
+msgid "Plot container created with `projection=\"radar\"`."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pos_radar:9
+msgid "Angular coordinates returned by `pre_radar`."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pre_radar:1
+msgid "Register a radar projection and return angular coordinates."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pre_radar:3
+msgid "Number of variables around the radar chart."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pre_radar:5
+msgid "Radar frame shape."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.pre_radar:10
+msgid "Angular coordinates."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:1
+msgid "Plot an ROC curve."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:3
+msgid "Prediction scores."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:5
+msgid "Ground-truth binary labels."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:7
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:7
+msgid "Plot container."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:11
+msgid "Display name for the plotted curve."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:13
+msgid "Estimator name shown in the display."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:15
+msgid "Seaborn axes style."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:17
+msgid "Style override dictionary passed to `seaborn.axes_style`."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:20
+msgid "True positive rates, false positive rates, and ROC-AUC score."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.roc_curve:21
+msgid ":py:class:`tuple[np.ndarray`, :py:class:`np.ndarray`, :py:class:`float]`"
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:1
+msgid "Plot t-SNE embeddings."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:3
+msgid "Feature matrix with shape `(n_samples, n_features)`."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:5
+msgid "Labels with shape `(n_samples,)`."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:11
+msgid "Annotation font size."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:13
+msgid "Whether to annotate each label group."
+msgstr ""
+
+#: ../../../freeplot/zoo.py:docstring of freeplot.zoo.tsne:17
+msgid "Additional keyword arguments passed to `FreePlot.scatterplot`."
+msgstr ""

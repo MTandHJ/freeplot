@@ -1,0 +1,31 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, MTandHJ
+# This file is distributed under the same license as the FreePlot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreePlot \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 12:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Sphinx gettext builder\n"
+
+#: ../../tutorials/scatter.rst:2
+msgid "散点图"
+msgstr "Scatter Plot"
+
+#: ../../tutorials/scatter.rst:4
+msgid "`scatterplot` 用于展示二维样本分布, 参数会透传给 Matplotlib `Axes.scatter`。"
+msgstr "`scatterplot` shows a two-dimensional sample distribution and forwards keyword arguments to Matplotlib `Axes.scatter`."
+
+#: ../../tutorials/scatter.rst:18
+msgid "scatter plot"
+msgstr ""

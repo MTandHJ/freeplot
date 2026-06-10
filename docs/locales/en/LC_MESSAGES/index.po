@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, MTandHJ
+# This file is distributed under the same license as the FreePlot package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: FreePlot \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 12:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Sphinx gettext builder\n"
+
+#: ../../index.rst:18
+msgid "入门"
+msgstr "Getting Started"
+
+#: ../../index.rst:25
+msgid "教程"
+msgstr "Tutorials"
+
+#: ../../index.rst:31
+msgid "API 参考"
+msgstr "API Reference"
+
+#: ../../index.rst:2
+msgid "FreePlot"
+msgstr ""
+
+#: ../../index.rst:4
+msgid "FreePlot 是一个基于 Matplotlib 的 Python 绘图库, 面向论文和实验图表场景, 提供更直接的图形容器、样式配置和常见绘图封装。"
+msgstr "FreePlot is a Python plotting library built on top of Matplotlib. It targets paper figures and experiment reports, with a direct figure container, reusable style configuration, and wrappers for common chart types."
+
+#: ../../index.rst:7
+msgid "核心特性"
+msgstr "Features"
+
+#: ../../index.rst:9
+msgid "基于 Matplotlib, 保留底层 Axes 的可控性。"
+msgstr "Built on Matplotlib while keeping direct access to the underlying axes."
+
+#: ../../index.rst:10
+msgid "提供网格化图形容器, 支持按位置或标题访问子图。"
+msgstr "Provides a grid-based figure container with position and title based access."
+
+#: ../../index.rst:11
+msgid "封装折线图、散点图、柱状图、热力图、雷达图、小提琴图和 3D 曲面图等常见图表。"
+msgstr "Wraps common charts, including line, scatter, bar, heatmap, radar, violin, and 3D surface plots."
+
+#: ../../index.rst:12
+msgid "面向无 GUI 环境的保存式示例, 便于测试和文档构建。"
+msgstr "Keeps examples save-oriented, so they work in headless environments and documentation builds."
+
+#: ../../index.rst:14
+msgid "FreePlot overview"
+msgstr "FreePlot overview"
